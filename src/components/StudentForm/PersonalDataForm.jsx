@@ -2,7 +2,8 @@ import React from "react";
 
 const PersonalDataForm = ({ register, errors }) => {
   return (
-    <>
+    <div className="mb-10">
+      <h2 className="text-xl font-semibold mb-4">Dados Pessoais</h2>
       <div className="mb-4 flex gap-x-5">
         <div className="w-1/2">
           <label
@@ -43,7 +44,7 @@ const PersonalDataForm = ({ register, errors }) => {
         <div className="w-full">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="birthday"
+            htmlFor="number"
           >
             Numero para contato
           </label>
@@ -97,7 +98,7 @@ const PersonalDataForm = ({ register, errors }) => {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
