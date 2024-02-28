@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Dashboard from "../pages/Dashboard";
 import Students from "../pages/Students";
 import Finances from "../pages/Finances";
+import { StudentProvider } from "../context/StudentContext";
 
 const routes = [
   {
@@ -22,7 +23,11 @@ const routes = [
 const router = createBrowserRouter(routes);
 
 const Routes = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <StudentProvider>
+      <RouterProvider router={router} />
+    </StudentProvider>
+  );
 };
 
 export default Routes;

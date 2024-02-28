@@ -1,9 +1,9 @@
 import React from "react";
-import { menuTabs } from "../utils/menuTabs";
 import { useNavigate } from "react-router-dom";
-import okamiLogo from "../assets/okami.png";
+import okamiLogo from "../../assets/okami.png";
+import { menuTabs } from "../../utils/menuTabs";
 
-const Menu = () => {
+const MenuVertical = () => {
   const navigate = useNavigate();
 
   const handleTabClick = (url) => {
@@ -30,4 +30,4 @@ const Menu = () => {
   );
 };
 
-export default Menu;
+export default MenuVertical;
