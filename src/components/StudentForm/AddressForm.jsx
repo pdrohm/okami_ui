@@ -10,7 +10,7 @@ const AddressForm = ({ register, errors }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="address"
           >
-            Endereco
+            Rua/Logradouro
           </label>
           <input
             className="student-form-input"

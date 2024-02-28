@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import PersonalDataForm from "./PersonalDataForm";
 import AddressForm from "./AddressForm";
+import EmergencyContactForm from "./EmergencyContactForm";
 
 const StudentForm = () => {
   const {
@@ -19,6 +20,7 @@ const StudentForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full">
         <PersonalDataForm register={register} errors={errors} />
         <AddressForm register={register} errors={errors} />
+        <EmergencyContactForm register={register} errors={errors} />
 
         <button
           className="bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors duration-300"
