@@ -6,45 +6,10 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import StudentContext from "../context/StudentContext";
-import SearchBar from "./Searchbar";
-import { MenuItem, Select } from "@mui/material";
-import Filters from "./Filters";
 
-export default function BasicTable() {
-  const { students } = useContext(StudentContext);
-  const [searchInput, setSearchInput] = useState("");
-  const [sortBy, setSortBy] = useState("name");
-
-  const handleSearchInputChange = (event) => {
-    setSearchInput(event.target.value);
-  };
-
-  const handleSortByChange = (event) => {
-    setSortBy(event.target.value);
-  };
-
-  const filteredStudents = students
-    .filter((student) =>
-      student.name.toLowerCase().includes(searchInput.toLowerCase())
-    )
-    .sort((a, b) => {
-      if (sortBy === "age") {
-        return a.birthday - b.birthday;
-      } else if (sortBy === "belt") {
-        return a.belt.localeCompare(b.belt);
-      } else {
-        return a.name.localeCompare(b.name);
-      }
-    });
-
+export default function StudentsTable({ students }) {
   return (
     <>
-      <div className="w-full flex gap-x-5 my-5">
-        <SearchBar value={searchInput} onChange={handleSearchInputChange} />
-        <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
-      </div>
-
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -57,7 +22,7 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredStudents.map((student) => (
+            {students.map((student) => (
               <TableRow
                 key={student.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}

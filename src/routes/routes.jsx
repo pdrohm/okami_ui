@@ -1,9 +1,10 @@
 import * as React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { StudentProvider } from "../context/StudentContext";
 import Dashboard from "../pages/Dashboard";
 import Students from "../pages/Students";
 import Finances from "../pages/Finances";
-import { StudentProvider } from "../context/StudentContext";
+import RegisterStudent from "../pages/RegisterStudent";
 
 const routes = [
   {
@@ -13,6 +14,10 @@ const routes = [
   {
     path: "/alunos",
     element: <Students />,
+  },
+  {
+    path: "/alunos/registro",
+    element: <RegisterStudent />,
   },
   {
     path: "/financeiro",
