@@ -1,5 +1,6 @@
 // studentService.js
 
+import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
 
 const studentService = {
@@ -26,9 +27,12 @@ const studentService = {
   createStudent: async (studentData) => {
     try {
       const response = await httpClient.post("/students", studentData);
+      toast.success("Aluno cadastrado com sucesso");
+
       return response.data;
     } catch (error) {
       console.error("Erro ao criar estudante:", error);
+      toast.error("Erro ao cadastrar aluno");
       throw error;
     }
   },

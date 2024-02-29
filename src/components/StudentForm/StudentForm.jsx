@@ -4,6 +4,7 @@ import PersonalDataForm from "./PersonalDataForm";
 import AddressForm from "./AddressForm";
 import EmergencyContactForm from "./EmergencyContactForm";
 import PictureForm from "./PictureForm";
+import studentService from "../../services/studentService";
 
 const StudentForm = () => {
   const {
@@ -14,8 +15,8 @@ const StudentForm = () => {
 
   const [imageFile, setImageFile] = useState(null);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async (data) => {
+    await studentService.createStudent(data);
   };
 
   return (

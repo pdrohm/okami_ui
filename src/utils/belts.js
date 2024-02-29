@@ -1,69 +1,69 @@
 const adultBelts = [
   {
-    value: "01",
+    value: 1,
     description: "Branca",
   },
   {
-    value: "02",
+    value: 2,
     description: "Azul",
   },
   {
-    value: "03",
+    value: 3,
     description: "Roxa",
   },
   {
-    value: "04",
+    value: 4,
     description: "Marrom",
   },
   {
-    value: "05",
+    value: 5,
     description: "Preta",
   },
   {
-    value: "06",
+    value: 6,
     description: "Coral",
   },
 ];
 
 const kidsBelts = [
   {
-    value: "11",
+    value: 11,
     description: "Branca ponta preta",
   },
   {
-    value: "12",
+    value: 12,
     description: "Branca ponta cinza",
   },
   {
-    value: "13",
+    value: 13,
     description: "Cinza ponta preta",
   },
   {
-    value: "14",
+    value: 14,
     description: "Cinza ponta amarela",
   },
   {
-    value: "15",
+    value: 15,
     description: "Amarela ponta preta",
   },
   {
-    value: "16",
+    value: 16,
     description: "Amarela ponta laranja",
   },
   {
-    value: "17",
+    value: 17,
     description: "Laranja ponta preta",
   },
   {
-    value: "18",
+    value: 18,
     description: "Laranja ponta verde",
   },
   {
-    value: "19",
+    value: 19,
     description: "Verde ponta preta",
   },
   {
-    value: "20",
+    value: 20,
     description: "Verde ponta azul",
   },
 ];

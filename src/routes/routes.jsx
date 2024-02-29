@@ -5,6 +5,8 @@ import Dashboard from "../pages/Dashboard";
 import Students from "../pages/Students";
 import Finances from "../pages/Finances";
 import RegisterStudent from "../pages/RegisterStudent";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const routes = [
   {
@@ -31,6 +33,7 @@ const Routes = () => {
   return (
     <StudentProvider>
       <RouterProvider router={router} />
+      <ToastContainer />
     </StudentProvider>
   );
 };

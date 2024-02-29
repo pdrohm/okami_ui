@@ -54,8 +54,8 @@ const PersonalDataForm = ({ register, errors }) => {
             type="text"
             {...register("number", { required: "Email is required" })}
           />
-          {errors.email && (
-            <p className="text-red-500 text-xs mt-1">{errors.email.message}</p>
+          {errors.number && (
+            <p className="text-red-500 text-xs mt-1">{errors.number.message}</p>
           )}
         </div>
 
@@ -110,13 +110,8 @@ const PersonalDataForm = ({ register, errors }) => {
           <input
             className="student-form-input"
             type="number"
-            {...register("weight", {
-              required: "weight is required",
-            })}
+            {...register("weight")}
           />
-          {errors.weight && (
-            <p className="text-red-500 text-xs mt-1">{errors.weight.message}</p>
-          )}
         </div>
 
         <div className="w-1/4">
