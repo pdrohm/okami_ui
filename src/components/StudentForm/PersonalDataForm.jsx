@@ -1,4 +1,5 @@
 import React from "react";
+import { adultBelts, kidsBelts } from "../../utils/belts";
 
 const PersonalDataForm = ({ register, errors }) => {
   return (
@@ -95,6 +96,119 @@ const PersonalDataForm = ({ register, errors }) => {
           </select>
           {errors.gender && (
             <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
+          )}
+        </div>
+      </div>
+      <div className="mb-4 flex gap-x-5">
+        <div className="w-1/4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="legal_guardian"
+          >
+            Peso
+          </label>
+          <input
+            className="student-form-input"
+            type="number"
+            {...register("weight", {
+              required: "weight is required",
+            })}
+          />
+          {errors.weight && (
+            <p className="text-red-500 text-xs mt-1">{errors.weight.message}</p>
+          )}
+        </div>
+
+        <div className="w-1/4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="belt"
+          >
+            Faixa
+          </label>
+          <select
+            className="student-form-input"
+            {...register("belt", { required: "Faixa obrigatória" })}
+          >
+            <option value="">Selecione...</option>
+            <optgroup label="Adulto">
+              {adultBelts.map((adultBelt) => (
+                <option key={adultBelt.value} value={adultBelt.value}>
+                  {adultBelt.description}
+                </option>
+              ))}
+            </optgroup>
+            <optgroup label="Infantil">
+              {kidsBelts.map((kidBelt) => (
+                <option key={kidBelt.value} value={kidBelt.value}>
+                  {kidBelt.description}
+                </option>
+              ))}
+            </optgroup>
+          </select>
+
+          {errors.weight && (
+            <p className="text-red-500 text-xs mt-1">{errors.weight.message}</p>
+          )}
+        </div>
+        <div className="w-1/4">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="degree"
+          >
+            Graus
+          </label>
+          <select
+            className="student-form-input"
+            {...register("degree", { required: "Grau obrigatório" })}
+          >
+            <option value="">Selecione...</option>
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+          </select>
+          {errors.weight && (
+            <p className="text-red-500 text-xs mt-1">{errors.weight.message}</p>
+          )}
+        </div>
+      </div>
+      <div className="mb-4 flex gap-x-5">
+        <div className="w-1/2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="legal_guardian"
+          >
+            Responsavel
+          </label>
+          <input
+            className="student-form-input"
+            type="text"
+            {...register("legal_guardian")}
+          />
+          {errors.legal_guardian && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.legal_guardian.message}
+            </p>
+          )}
+        </div>
+        <div className="w-1/2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="legal_guardian_number"
+          >
+            Numero para contato do responsavel
+          </label>
+          <input
+            className="student-form-input"
+            type="text"
+            {...register("legal_guardian")}
+          />
+          {errors.legal_guardian && (
+            <p className="text-red-500 text-xs mt-1">
+              {errors.legal_guardian.message}
+            </p>
           )}
         </div>
       </div>
