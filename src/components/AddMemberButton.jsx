@@ -9,12 +9,12 @@ const AddMemberButton = () => {
   };
 
   return (
-    <div
+    <button
       className="flex justify-center items-center bg-orange px-5 rounded-md cursor-pointer hover:border-[1px] hover:border-black hover:text-whiter"
       onClick={handleNavigate}
     >
       Adicionar Aluno
-    </div>
+    </button>
   );
 };
 
