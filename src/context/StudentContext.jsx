@@ -6,23 +6,16 @@ const StudentContext = createContext();
 export const StudentProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
 
-  console.log(`students`, students);
-
-  useEffect(() => {
-    console.log(`passou aqui`);
-    fetchStudents()
-      .then((data) => setStudents(data))
-      .catch((error) => console.error("Error fetching students:", error));
-  }, []);
-
   const fetchStudents = async () => {
     const studentsFetched = await studentService.getAllStudents();
-
-    return studentsFetched;
+    setStudents(studentsFetched);
   };
 
+  useEffect(() => {
+    fetchStudents();
+  }, []);
   return (
-    <StudentContext.Provider value={{ students }}>
+    <StudentContext.Provider value={{ students, fetchStudents }}>
       {children}
     </StudentContext.Provider>
   );

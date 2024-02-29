@@ -24,13 +24,13 @@ export default function StudentsTable({ students }) {
           <TableBody>
             {students.map((student) => (
               <TableRow
-                key={student.name}
+                key={student.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="student">
                   {student.name}
                 </TableCell>
-                <TableCell align="left">{student.calories}</TableCell>
+                <TableCell align="left">{student.number}</TableCell>
                 <TableCell align="left">{student.email}</TableCell>
                 <TableCell align="left">{student.birthday}</TableCell>
                 <TableCell align="left">{student.belt}</TableCell>

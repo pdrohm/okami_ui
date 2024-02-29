@@ -15,13 +15,8 @@ const AddressForm = ({ register, errors }) => {
           <input
             className="student-form-input"
             type="text"
-            {...register("address", { required: "Nome obrigatorio" })}
+            {...register("address")}
           />
-          {errors.address && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.address.message}
-            </p>
-          )}
         </div>
 
         <div className="w-1/2">
@@ -34,11 +29,8 @@ const AddressForm = ({ register, errors }) => {
           <input
             className="student-form-input"
             type="text"
-            {...register("city", { required: "city is required" })}
+            {...register("city")}
           />
-          {errors.city && (
-            <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>
-          )}
         </div>
 
         <div className="w-1/2">
@@ -51,11 +43,8 @@ const AddressForm = ({ register, errors }) => {
           <input
             className="student-form-input"
             type="text"
-            {...register("cep", { required: "cep is required" })}
+            {...register("cep")}
           />
-          {errors.cep && (
-            <p className="text-red-500 text-xs mt-1">{errors.cep.message}</p>
-          )}
         </div>
       </div>
       <div className="mb-4 flex gap-x-5">

@@ -20,6 +20,7 @@ const MenuVertical = () => {
       />
       {menuTabs.map((menuTab) => (
         <div
+          key={menuTab.url}
           onClick={() => handleTabClick(menuTab.url)}
           className="cursor-pointer border-b-[1px] w-full flex justify-center p-5 border-black hover:bg-light-orange"
         >

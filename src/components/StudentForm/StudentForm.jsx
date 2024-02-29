@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import PersonalDataForm from "./PersonalDataForm";
 import AddressForm from "./AddressForm";
 import EmergencyContactForm from "./EmergencyContactForm";
 import PictureForm from "./PictureForm";
 import studentService from "../../services/studentService";
+import StudentContext from "../../context/StudentContext";
 
 const StudentForm = () => {
   const {
@@ -13,10 +14,13 @@ const StudentForm = () => {
     formState: { errors },
   } = useForm();
 
+  const { fetchStudents } = useContext(StudentContext);
+
   const [imageFile, setImageFile] = useState(null);
 
   const onSubmit = async (data) => {
     await studentService.createStudent(data);
+    fetchStudents();
   };
 
   return (

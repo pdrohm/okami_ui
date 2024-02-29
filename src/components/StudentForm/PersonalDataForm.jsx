@@ -52,7 +52,7 @@ const PersonalDataForm = ({ register, errors }) => {
           <input
             className="student-form-input"
             type="text"
-            {...register("number", { required: "Email is required" })}
+            {...register("number", { required: "Numero is required" })}
           />
           {errors.number && (
             <p className="text-red-500 text-xs mt-1">{errors.number.message}</p>
@@ -121,10 +121,7 @@ const PersonalDataForm = ({ register, errors }) => {
           >
             Faixa
           </label>
-          <select
-            className="student-form-input"
-            {...register("belt", { required: "Faixa obrigatória" })}
-          >
+          <select className="student-form-input" {...register("belt")}>
             <option value="">Selecione...</option>
             <optgroup label="Adulto">
               {adultBelts.map((adultBelt) => (
@@ -153,10 +150,7 @@ const PersonalDataForm = ({ register, errors }) => {
           >
             Graus
           </label>
-          <select
-            className="student-form-input"
-            {...register("degree", { required: "Grau obrigatório" })}
-          >
+          <select className="student-form-input" {...register("degree")}>
             <option value="">Selecione...</option>
             <option value="0">0</option>
             <option value="1">1</option>
@@ -164,9 +158,6 @@ const PersonalDataForm = ({ register, errors }) => {
             <option value="3">3</option>
             <option value="4">4</option>
           </select>
-          {errors.weight && (
-            <p className="text-red-500 text-xs mt-1">{errors.weight.message}</p>
-          )}
         </div>
       </div>
       <div className="mb-4 flex gap-x-5">
