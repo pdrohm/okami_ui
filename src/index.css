@@ -5,3 +5,7 @@
 .student-form-input {
   @apply border border-gray-300 rounded-md p-2 w-full focus:outline-none focus:border-orange;
 }
+
+.picture-button {
+  @apply border-[1px] border-black rounded-3xl px-4 py-2 cursor-pointer flex justify-center items-center  hover:border-2 shadow-xl;
+}
