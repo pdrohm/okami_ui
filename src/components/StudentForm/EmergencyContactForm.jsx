@@ -55,6 +55,7 @@ const EmergencyContactForm = ({ register, errors }) => {
           <select className="student-form-input" {...register("relation")}>
             <option value="">Selecione...</option>
             <option value="parent">Pai/Mae</option>
+            <option value="spouse">Namorad@/Espos@</option>
             <option value="family_member">Familiar</option>
             <option value="friend">Amigo</option>
             <option value="other">Outro</option>
