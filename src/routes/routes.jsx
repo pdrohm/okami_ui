@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createHashRouter, RouterProvider } from "react-router-dom";
 import { StudentProvider } from "../context/StudentContext";
 import Dashboard from "../pages/Dashboard";
 import Students from "../pages/Students";
@@ -27,7 +27,7 @@ const routes = [
   },
 ];
 
-const router = createBrowserRouter(routes);
+const router = createHashRouter(routes);
 
 const Routes = () => {
   return (
