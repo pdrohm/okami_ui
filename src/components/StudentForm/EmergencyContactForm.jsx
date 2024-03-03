@@ -1,4 +1,5 @@
 import React from "react";
+import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
 
 const EmergencyContactForm = ({ register, errors }) => {
   return (
@@ -54,11 +55,10 @@ const EmergencyContactForm = ({ register, errors }) => {
           </label>
           <select className="student-form-input" {...register("relation")}>
             <option value="">Selecione...</option>
-            <option value="parent">Pai/Mae</option>
-            <option value="spouse">Namorad@/Espos@</option>
-            <option value="family_member">Familiar</option>
-            <option value="friend">Amigo</option>
-            <option value="other">Outro</option>
+
+            {relationEmergencyContact.map((relation) => (
+              <option value={relation.value}>{relation.description}</option>
+            ))}
           </select>
           {errors.gender && (
             <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>

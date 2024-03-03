@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
 import Layout from "../components/Layout";
-import StudentTable from "../components/StudentTable";
 import SearchBar from "../components/Searchbar";
 import Filters from "../components/Filters";
 import StudentContext from "../context/StudentContext";
 import AddMemberButton from "../components/AddMemberButton";
+import StudentsTable from "../components/StudentTable/StudentTable";
 
 const Students = () => {
   const { students } = useContext(StudentContext);
@@ -42,7 +42,7 @@ const Students = () => {
           <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
           <AddMemberButton />
         </div>
-        <StudentTable students={filteredStudents} />
+        <StudentsTable students={filteredStudents} />
       </div>
     </Layout>
   );
