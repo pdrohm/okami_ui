@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import okamiLogo from "../../assets/okami.png";
 import { menuTabs } from "../../utils/menuTabs";
 import LogoutButton from "../LogoutButton";
+import AuthContext from "../../context/AuthContext";
+import ProfileButton from "../ProfileButton";
 
 const LeftPanel = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+
+  console.log(`user`, user);
 
   const handleTabClick = (url) => {
     console.log(`url`, url);
@@ -33,7 +38,8 @@ const LeftPanel = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-center mb-5 text-white">
+      <div className="flex justify-center mb-5 text-white flex-col items-center gap-y-2 h-24 w-full">
+        <ProfileButton />
         <LogoutButton />
       </div>
     </div>

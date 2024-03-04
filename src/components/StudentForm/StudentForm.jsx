@@ -67,10 +67,7 @@ const StudentForm = ({ studentData }) => {
         <PictureForm setImageFile={setImageFile} />
 
         <div className="flex w-full justify-end">
-          <button
-            className="bg-orange px-4 py-2 rounded-3xl hover:bg-orange/80 hover:scale-105"
-            type="submit"
-          >
+          <button className="form-button" type="submit">
             Finalizar cadastro
           </button>
         </div>

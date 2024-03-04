@@ -1,0 +1,51 @@
+import React, { createContext, useState, useEffect } from "react";
+import { jwtDecode } from "jwt-decode";
+import authService from "../services/authService";
+
+const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        if (token) {
+          const decodedToken = jwtDecode(token);
+          setUser(decodedToken);
+        }
+      } catch (error) {
+        console.error("Erro ao obter informações do usuário:", error);
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  const login = async (username, password) => {
+    try {
+      const response = await authService.loginUser(username, password);
+      const data = await response.json();
+      localStorage.setItem("token", data.token);
+      const decodedToken = jwtDecode(data.token);
+      setUser(decodedToken);
+    } catch (error) {
+      console.error("Erro durante o login:", error);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ user, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export default AuthContext;
