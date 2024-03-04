@@ -6,12 +6,12 @@ import { InputAdornment } from "@mui/material";
 const SearchBar = ({ value, onChange }) => {
   return (
     <InputBase
-      placeholder="Search by name"
+      placeholder="Procurar pelo nome"
       value={value}
-      className="rounded-md bg-whiter"
+      className="rounded-md px-2 bg-whiter"
       onChange={onChange}
-      startAdornment={
-        <InputAdornment position="start">
+      endAdornment={
+        <InputAdornment position="end">
           <SearchIcon />
         </InputAdornment>
       }
