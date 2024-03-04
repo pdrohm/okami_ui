@@ -4,19 +4,13 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { Controller } from "react-hook-form";
 import ptBR from "date-fns/locale/pt-BR";
-
-const DateInput = ({ value, onChange }) => (
-  <DatePicker
-    className="student-form-input"
-    selected={value}
-    onChange={onChange}
-    dateFormat="dd/MM/yyyy"
-    placeholderText="dd/mm/yyyy"
-  />
-);
+import { getYear, setYear } from "date-fns";
 
 const PersonalDataForm = ({ register, errors, control }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+
+  const currentYear = getYear(new Date());
+  const maxDate = setYear(new Date(), currentYear);
 
   console.log(`selectedDate`, selectedDate);
 
@@ -98,6 +92,7 @@ const PersonalDataForm = ({ register, errors, control }) => {
                 showYearDropdown
                 showMonthDropdown
                 locale={ptBR}
+                maxDate={maxDate}
               />
             )}
           />

@@ -16,5 +16,19 @@
   }
 }
 
-.container-data {
+.react-datepicker__year-dropdown
+  .react-datepicker__year-option:first-child::before {
+  content: "\25B2";
+  position: absolute;
+  top: 3%;
+  left: 45%;
+  margin: auto;
+}
+
+.react-datepicker__year-dropdown::after {
+  content: "\25BC";
+  display: block;
+  position: absolute;
+  bottom: 3%;
+  left: 45%;
 }
