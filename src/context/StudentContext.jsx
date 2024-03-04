@@ -6,14 +6,18 @@ const StudentContext = createContext();
 export const StudentProvider = ({ children }) => {
   const [students, setStudents] = useState([]);
 
+  const token = localStorage.getItem("token");
+
   const fetchStudents = async () => {
     const studentsFetched = await studentService.getAllStudents();
     setStudents(studentsFetched);
   };
 
   useEffect(() => {
-    fetchStudents();
-  }, []);
+    if (token) {
+      fetchStudents();
+    }
+  }, [token]);
   return (
     <StudentContext.Provider value={{ students, fetchStudents }}>
       {children}
