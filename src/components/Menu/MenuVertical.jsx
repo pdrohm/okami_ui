@@ -12,7 +12,7 @@ const MenuVertical = () => {
   };
 
   return (
-    <div className="bg-blue-400 h-screen w-24 bg-orange flex flex-col items-center">
+    <div className="w-24 bg-orange flex flex-col items-center">
       <img
         src={okamiLogo}
         onClick={() => handleTabClick("/")}
