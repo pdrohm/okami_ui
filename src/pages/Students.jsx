@@ -6,6 +6,7 @@ import StudentContext from "../context/StudentContext";
 import AddMemberButton from "../components/AddMemberButton";
 import StudentsTable from "../components/StudentTable/StudentTable";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
+import { differenceInYears } from "date-fns";
 
 const Students = () => {
   const { students } = useContext(StudentContext);
@@ -25,8 +26,14 @@ const Students = () => {
       student.name.toLowerCase().includes(searchInput.toLowerCase())
     )
     .sort((a, b) => {
-      if (sortBy === "age") {
-        return a.birthday - b.birthday;
+      if (sortBy === "age_asc") {
+        const ageA = differenceInYears(new Date(), new Date(a.birthday));
+        const ageB = differenceInYears(new Date(), new Date(b.birthday));
+        return ageA - ageB;
+      } else if (sortBy === "age_desc") {
+        const ageA = differenceInYears(new Date(), new Date(a.birthday));
+        const ageB = differenceInYears(new Date(), new Date(b.birthday));
+        return ageB - ageA;
       } else if (sortBy === "belt") {
         return a.belt.localeCompare(b.belt);
       } else if (sortBy === "name_asc") {

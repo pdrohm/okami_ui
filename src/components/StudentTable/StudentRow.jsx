@@ -13,6 +13,7 @@ import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
 
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../ModalDelete";
+import { differenceInYears } from "date-fns";
 
 const StudentRow = ({ student }) => {
   const [open, setOpen] = useState(false);
@@ -23,6 +24,10 @@ const StudentRow = ({ student }) => {
   const handleEditStudent = (student) => {
     navigate("/alunos/registro", { state: { studentData: student } });
   };
+
+  const today = new Date();
+
+  const age = differenceInYears(today, student.birthday);
 
   return (
     <>
@@ -44,7 +49,7 @@ const StudentRow = ({ student }) => {
         </TableCell>
         <TableCell align="left">{student.number}</TableCell>
         <TableCell align="left">{student.email}</TableCell>
-        <TableCell align="left">{student.birthday}</TableCell>
+        <TableCell align="left">{age}</TableCell>
         <TableCell align="left">
           <EditIcon
             className="cursor-pointer hover:text-orange"
