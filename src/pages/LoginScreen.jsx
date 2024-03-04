@@ -1,0 +1,65 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import bannerOkami2 from "../../public/bannerOkami2.jpg";
+import okamiLogo from "../assets/okami.png";
+import authService from "../services/authService";
+
+const LoginScreen = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const userData = { username: username, password: password };
+      const response = await authService.loginUser(userData);
+      console.log(`AQUI`, response);
+      localStorage.setItem("token", response.token);
+      navigate("/");
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
+
+  return (
+    <div className="flex bg-[#3D3B40] ">
+      <div className="banner-container flex items-end h-screen justify-start w-2/3">
+        <img
+          src={bannerOkami2}
+          alt="banner Okami"
+          className="banner-image h-screen"
+        />
+      </div>
+      <div className="flex flex-col justify-center items-center w-full h-screen">
+        <div className="w-1/2 h-1/2 bg-whiter rounded-xl flex flex-col justify-center items-center gap-y-5">
+          <img src={okamiLogo} className="w-36" />
+          <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
+            <input
+              type="text"
+              placeholder="Usuário"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="student-form-input bg-white font-semibold"
+            />
+            <input
+              type="password"
+              placeholder="Senha"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="student-form-input bg-white font-semibold"
+            />
+            <button
+              type="submit"
+              className="w-full bg-orange px-5 py-2 rounded-md text-white font-semibold hover:bg-orange/80"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default LoginScreen;
