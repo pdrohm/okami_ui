@@ -29,12 +29,14 @@ const LeftPanel = () => {
           <div
             key={menuTab.url}
             onClick={() => handleTabClick(menuTab.url)}
-            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light hover:bg-orange-light"
+            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light group  "
           >
-            <div className="text-whiter">
+            <div className="text-whiter group-hover:text-orange-light">
               {React.createElement(menuTab.icon)}
             </div>
-            <span className="text-whiter">{menuTab.name}</span>
+            <span className="text-whiter group-hover:text-orange-light">
+              {menuTab.name}
+            </span>
           </div>
         ))}
       </div>
