@@ -72,9 +72,16 @@ const StudentRow = ({ student }) => {
               />
             </div>
             <div className="flex px-20 justify-center items-center">
-              <div className="w-20 container-data ml-10">
+              <div className="w-32 container-data ml-10">
                 <h1>Faixa</h1>
-                <span>{student.belt ?? "-"}</span>
+                <div className="flex gap-x-1">
+                  <span>{student.belt_description ?? "Nao informada"}</span>
+                  <span>
+                    {student.degree_description
+                      ? student.degree_description + " graus"
+                      : null}
+                  </span>
+                </div>
               </div>
               <div className="w-20 container-data">
                 <h1>Peso</h1>
