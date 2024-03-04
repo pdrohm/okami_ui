@@ -7,13 +7,16 @@ import PictureForm from "./PictureForm";
 import studentService from "../../services/studentService";
 import StudentContext from "../../context/StudentContext";
 import { useNavigate } from "react-router-dom";
+import { format } from "date-fns";
 
 const StudentForm = ({ studentData }) => {
+  console.log(studentData);
   const {
     register,
     handleSubmit,
     setValue,
     reset,
+    control,
     formState: { errors },
   } = useForm();
 
@@ -41,7 +44,12 @@ const StudentForm = ({ studentData }) => {
   useEffect(() => {
     if (studentData) {
       Object.keys(studentData).forEach((key) => {
-        setValue(key, studentData[key]);
+        if (key === "birthday") {
+          const date = new Date(studentData[key]);
+          setValue(key, date);
+        } else {
+          setValue(key, studentData[key]);
+        }
       });
     }
   }, [studentData, setValue]);
@@ -49,7 +57,11 @@ const StudentForm = ({ studentData }) => {
   return (
     <div className="max-w-4xl  mt-8 p-6 bg-whiter shadow-md rounded-md w-full flex-col flex justify-center">
       <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full">
-        <PersonalDataForm register={register} errors={errors} />
+        <PersonalDataForm
+          register={register}
+          errors={errors}
+          control={control}
+        />
         <AddressForm register={register} errors={errors} />
         <EmergencyContactForm register={register} errors={errors} />
         <PictureForm setImageFile={setImageFile} />

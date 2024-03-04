@@ -1,7 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { adultBelts, kidsBelts } from "../../utils/belts";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { Controller } from "react-hook-form";
+import ptBR from "date-fns/locale/pt-BR";
 
-const PersonalDataForm = ({ register, errors }) => {
+const DateInput = ({ value, onChange }) => (
+  <DatePicker
+    className="student-form-input"
+    selected={value}
+    onChange={onChange}
+    dateFormat="dd/MM/yyyy"
+    placeholderText="dd/mm/yyyy"
+  />
+);
+
+const PersonalDataForm = ({ register, errors, control }) => {
+  const [selectedDate, setSelectedDate] = useState(null);
+
+  console.log(`selectedDate`, selectedDate);
+
   return (
     <div className="mb-10">
       <h2 className="text-xl font-semibold mb-4">Dados Pessoais</h2>
@@ -66,10 +84,22 @@ const PersonalDataForm = ({ register, errors }) => {
           >
             Data de nascimento
           </label>
-          <input
-            className="student-form-input"
-            type="date"
-            {...register("birthday", { required: "Birthday is required" })}
+          <Controller
+            control={control}
+            name="birthday"
+            rules={{ required: "Data de nascimento é obrigatória" }}
+            render={({ field }) => (
+              <DatePicker
+                className="student-form-input"
+                selected={field.value}
+                onChange={(date) => field.onChange(date)}
+                dateFormat="dd/MM/yyyy"
+                placeholderText="dd/mm/yyyy"
+                showYearDropdown
+                showMonthDropdown
+                locale={ptBR}
+              />
+            )}
           />
           {errors.birthday && (
             <p className="text-red-500 text-xs mt-1">
