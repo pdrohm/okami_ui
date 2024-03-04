@@ -1,6 +1,7 @@
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
 import EditIcon from "@mui/icons-material/Edit";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Collapse } from "@mui/material";
@@ -11,9 +12,12 @@ import React, { useState } from "react";
 import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
 
 import { useNavigate } from "react-router-dom";
+import ModalDelete from "../ModalDelete";
 
 const StudentRow = ({ student }) => {
   const [open, setOpen] = useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+
   const navigate = useNavigate();
 
   const handleEditStudent = (student) => {
@@ -45,6 +49,10 @@ const StudentRow = ({ student }) => {
           <EditIcon
             className="cursor-pointer hover:text-orange"
             onClick={() => handleEditStudent(student)}
+          />
+          <DeleteForeverIcon
+            className="cursor-pointer hover:text-orange"
+            onClick={() => setModalOpen(true)}
           />
         </TableCell>
       </TableRow>
@@ -96,6 +104,11 @@ const StudentRow = ({ student }) => {
         </Collapse>
       </TableCell>
       <TableRow></TableRow>
+      <ModalDelete
+        student={student}
+        modalOpen={isModalOpen}
+        setModalOpen={setModalOpen}
+      />
     </>
   );
 };

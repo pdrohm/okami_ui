@@ -22,7 +22,7 @@ const MenuVertical = () => {
         <div
           key={menuTab.url}
           onClick={() => handleTabClick(menuTab.url)}
-          className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-light-orange hover:bg-light-orange"
+          className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light hover:bg-orange-light"
         >
           <div className="text-whiter">{React.createElement(menuTab.icon)}</div>
           <span className="text-whiter">{menuTab.name}</span>
