@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Routes from "./routes/routes";
+import OkamiRoutes from "./routes/routes";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Routes />
+    <OkamiRoutes />
   </React.StrictMode>
 );

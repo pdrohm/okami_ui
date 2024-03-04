@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import PersonalDataForm from "./PersonalDataForm";
 import AddressForm from "./AddressForm";
@@ -6,22 +6,45 @@ import EmergencyContactForm from "./EmergencyContactForm";
 import PictureForm from "./PictureForm";
 import studentService from "../../services/studentService";
 import StudentContext from "../../context/StudentContext";
+import { useNavigate } from "react-router-dom";
 
-const StudentForm = () => {
+const StudentForm = ({ studentData }) => {
   const {
     register,
     handleSubmit,
+    setValue,
+    reset,
     formState: { errors },
   } = useForm();
+
+  const navigate = useNavigate();
 
   const { fetchStudents } = useContext(StudentContext);
 
   const [imageFile, setImageFile] = useState(null);
 
   const onSubmit = async (data) => {
-    await studentService.createStudent(data);
-    fetchStudents();
+    if (studentData) {
+      await studentService.updateStudent(studentData.id, data);
+    } else {
+      await studentService.createStudent(data);
+    }
+    afterSubmit();
   };
+
+  const afterSubmit = () => {
+    fetchStudents();
+    reset();
+    navigate("/alunos");
+  };
+
+  useEffect(() => {
+    if (studentData) {
+      Object.keys(studentData).forEach((key) => {
+        setValue(key, studentData[key]);
+      });
+    }
+  }, [studentData, setValue]);
 
   return (
     <div className="max-w-4xl  mt-8 p-6 bg-whiter shadow-md rounded-md w-full flex-col flex justify-center">

@@ -1,5 +1,6 @@
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Collapse } from "@mui/material";
@@ -9,9 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import React, { useState } from "react";
 import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
 
+import { useNavigate } from "react-router-dom";
+
 const StudentRow = ({ student }) => {
-  console.log(student);
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleEditStudent = (student) => {
+    navigate("/alunos/registro", { state: { studentData: student } });
+  };
 
   return (
     <>
@@ -34,7 +41,12 @@ const StudentRow = ({ student }) => {
         <TableCell align="left">{student.number}</TableCell>
         <TableCell align="left">{student.email}</TableCell>
         <TableCell align="left">{student.birthday}</TableCell>
-        <TableCell align="left">EDITAR</TableCell>
+        <TableCell align="left">
+          <EditIcon
+            className="cursor-pointer hover:text-orange"
+            onClick={() => handleEditStudent(student)}
+          />
+        </TableCell>
       </TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
