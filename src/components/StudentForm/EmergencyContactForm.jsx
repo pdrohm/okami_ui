@@ -5,7 +5,7 @@ const EmergencyContactForm = ({ register, errors }) => {
   return (
     <>
       <h2 className="text-xl font-semibold mb-4 mt-10">
-        Contato de emergencia
+        Contato de emergência
       </h2>
       <div className="mb-4 flex gap-x-5">
         <div className="w-1/2">
@@ -32,7 +32,7 @@ const EmergencyContactForm = ({ register, errors }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="emergencyContactNumber"
           >
-            Numero do contato
+            Número do contato
           </label>
           <input
             className="student-form-input"
@@ -51,13 +51,15 @@ const EmergencyContactForm = ({ register, errors }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="relation"
           >
-            Relacao
+            Relação
           </label>
           <select className="student-form-input" {...register("relation")}>
             <option value="">Selecione...</option>
 
             {relationEmergencyContact.map((relation) => (
-              <option value={relation.value}>{relation.description}</option>
+              <option key={relation.value} value={relation.value}>
+                {relation.description}
+              </option>
             ))}
           </select>
           {errors.gender && (

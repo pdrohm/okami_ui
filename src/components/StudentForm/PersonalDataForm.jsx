@@ -59,12 +59,12 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="number"
           >
-            Numero para contato
+            Número para contato
           </label>
           <input
             className="student-form-input"
             type="text"
-            {...register("number", { required: "Numero is required" })}
+            {...register("number", { required: "Número is required" })}
           />
           {errors.number && (
             <p className="text-red-500 text-xs mt-1">{errors.number.message}</p>
@@ -191,7 +191,7 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="legal_guardian"
           >
-            Responsavel
+            Responsável
           </label>
           <input
             className="student-form-input"
@@ -209,7 +209,7 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="legal_guardian_number"
           >
-            Numero para contato do responsavel
+            Número para contato do responsável
           </label>
           <input
             className="student-form-input"

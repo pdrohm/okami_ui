@@ -88,15 +88,15 @@ const StudentRow = ({ student }) => {
                 <span>{student.weight ? student.weight + " kg" : "-"}</span>
               </div>
               <div className="w-28 container-data">
-                <h1>Genero</h1>
+                <h1>Gênero</h1>
                 <span>{student.gender == "M" ? "Masculino" : "Feminino"}</span>
               </div>
               <div className="w-64">
-                <h1 className="font-bold">Endereco</h1>
+                <h1 className="font-bold">Endereço</h1>
                 <span>{student.address ?? "-"}</span>
               </div>
               <div className="flex flex-col container-data">
-                <h1 className="font-bold">Contato emergencia</h1>
+                <h1 className="font-bold">Contato emergência</h1>
                 <div className="flex flex-col justify-start items-start">
                   <span>
                     {student.emergency_contact ?? ""}

@@ -1,5 +1,5 @@
 const relationEmergencyContact = [
-  { value: "parent", description: "Pai/Mae" },
+  { value: "parent", description: "Pai/Mãe" },
   { value: "spouse", description: "Namorad@/Espos@" },
   { value: "family_member", description: "Familiar" },
   { value: "friend", description: "Amigo" },
