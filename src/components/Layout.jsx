@@ -1,10 +1,10 @@
 import React from "react";
-import MenuVertical from "./Menu/MenuVertical";
+import LeftPanel from "./Menu/LeftPanel";
 
 const Layout = ({ children }) => {
   return (
     <div className="flex min-h-screen min-w-screen bg-white">
-      <MenuVertical />
+      <LeftPanel />
       <div className="w-full h-full"> {children}</div>
     </div>
   );
