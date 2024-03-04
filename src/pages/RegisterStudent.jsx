@@ -6,8 +6,7 @@ import { useLocation } from "react-router-dom";
 
 const RegisterStudent = () => {
   const location = useLocation();
-  console.log(`location`, location);
-  const { studentData } = location.state;
+  const { studentData } = location.state || {};
 
   return (
     <Layout>
