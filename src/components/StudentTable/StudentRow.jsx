@@ -63,15 +63,17 @@ const StudentRow = ({ student }) => {
                 <h1 className="font-bold">Endereco</h1>
                 <span>{student.address ?? "-"}</span>
               </div>
-              <div className="w-52 flex flex-col container-data">
+              <div className="flex flex-col container-data">
                 <h1 className="font-bold">Contato emergencia</h1>
                 <div className="flex flex-col justify-start items-start">
                   <span>
                     {student.emergency_contact ?? ""}
                     {student.relation
-                      ? relationEmergencyContact.find(
-                          (item) => item.value === student.relation
-                        )?.description
+                      ? ` - ${
+                          relationEmergencyContact.find(
+                            (item) => item.value === student.relation
+                          )?.description
+                        }`
                       : ""}
                   </span>
                   <span>{student.emergency_contact_number ?? "-"}</span>
