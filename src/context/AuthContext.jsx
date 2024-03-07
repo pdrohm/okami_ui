@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import authService from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,6 +32,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem("token", data.token);
       const decodedToken = jwtDecode(data.token);
       setUser(decodedToken);
+      navigate('/')
     } catch (error) {
       console.error("Erro durante o login:", error);
       throw error;

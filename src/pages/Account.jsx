@@ -9,7 +9,8 @@ const Account = () => {
   return (
     <Layout>
       <div className="flex justify-start w-full p-10 h-full flex-col">
-        <MyAccount user={user} />
+        
+        {user && <MyAccount user={user} /> }
         <AddUser />
       </div>
     </Layout>

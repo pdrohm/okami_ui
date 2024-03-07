@@ -28,10 +28,12 @@ const MyAccount = ({ user }) => {
               <h1 className="font-bold">Email</h1>
               <span>{user.email}</span>
             </div>
-            <div>
-              <h1 className="font-bold">Modalidade</h1>
-              <span>{user.profile.name}</span>
-            </div>
+            {user.profile && (
+              <div>
+                <h1 className="font-bold">Modalidade</h1>
+                <span>{user.profile.name}</span>
+              </div>
+            )}
           </div>
         </div>
       </div>
