@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-const AddMemberButton = () => {
+const AddMemberButton = ({title, urlNavigate}) => {
   const navigate = useNavigate();
 
+
   const handleNavigate = () => {
-    navigate("/alunos/registro");
+    navigate(urlNavigate);
   };
 
   return (
@@ -13,7 +14,7 @@ const AddMemberButton = () => {
       className="flex justify-center items-center bg-orange px-5 rounded-md cursor-pointer hover:border-[1px] hover:border-black hover:text-whiter"
       onClick={handleNavigate}
     >
-      Adicionar Aluno
+      {title}
     </button>
   );
 };

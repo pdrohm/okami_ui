@@ -55,7 +55,7 @@ const Students = () => {
         <div className="w-full flex gap-x-5 my-5">
           <SearchBar value={searchInput} onChange={handleSearchInputChange} />
           <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
-          <AddMemberButton />
+          <AddMemberButton title="Adicionar aluno" urlNavigate="/alunos/registro" />
         </div>
         <StudentsTable students={filteredStudents} />
       </div>
