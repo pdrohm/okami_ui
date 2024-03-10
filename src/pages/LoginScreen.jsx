@@ -24,15 +24,15 @@ const LoginScreen = () => {
 
   return (
     <div className="flex bg-green-dark">
-      <div className="banner-container flex items-end h-screen justify-start w-2/3">
+      <div className="banner-container items-end h-screen justify-start w-2/3 hidden lg:flex">
         <img
           src={bannerOkami2}
           alt="banner Okami"
           className="grayscale h-screen filter "
         />
       </div>
-      <div className="flex flex-col justify-center items-center w-full h-screen">
-        <div className="w-1/2 h-1/2 bg-whiter rounded-xl flex flex-col justify-center items-center gap-y-5">
+      <div className="flex flex-col justify-center items-center w-full h-screen mx-10 md:mx-0">
+        <div className="md:w-1/2 md:h-1/2 w-full h-1/2 bg-whiter rounded-xl flex flex-col justify-center items-center gap-y-5">
           <img src={okamiLogo} className="w-36" />
           <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
             <input
