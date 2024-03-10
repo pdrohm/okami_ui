@@ -23,12 +23,12 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="flex bg-[#3D3B40] ">
+    <div className="flex bg-green-dark">
       <div className="banner-container flex items-end h-screen justify-start w-2/3">
         <img
           src={bannerOkami2}
           alt="banner Okami"
-          className="banner-image h-screen"
+          className="grayscale h-screen filter "
         />
       </div>
       <div className="flex flex-col justify-center items-center w-full h-screen">
