@@ -1,22 +1,23 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bannerOkami2 from "../../public/bannerOkami2.jpg";
 import okamiLogo from "../assets/okami.png";
 import authService from "../services/authService";
+import AuthContext from "../context/AuthContext";
 
 const LoginScreen = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const { login } = useContext(AuthContext)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const userData = { username: username, password: password };
-      const response = await authService.loginUser(userData);
-      console.log(`AQUI`, response);
-      localStorage.setItem("token", response.token);
-      navigate("/");
+
+     
+      await login(userData);
+
     } catch (error) {
       console.error("Login failed:", error);
     }

@@ -25,14 +25,16 @@ export const AuthProvider = ({ children }) => {
     fetchUser();
   }, []);
 
+
+
   const login = async (username, password) => {
     try {
       const response = await authService.loginUser(username, password);
-      const data = await response.json();
-      localStorage.setItem("token", data.token);
-      const decodedToken = jwtDecode(data.token);
-      setUser(decodedToken);
-      navigate('/')
+
+      localStorage.setItem("token", response.token);
+      const decodedToken = jwtDecode(response.token);
+      await setUser(decodedToken);
+      navigate('/');
     } catch (error) {
       console.error("Erro durante o login:", error);
       throw error;
