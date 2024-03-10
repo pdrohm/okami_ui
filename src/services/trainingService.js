@@ -6,7 +6,7 @@ import httpClient from "../utils/httpClient";
 const trainingService = {
   getAllTrainings: async () => {
     try {
-      const response = await httpClient.get("/trainings");
+      const response = await httpClient.get("/training");
       return response.data;
     } catch (error) {
       console.error("Erro ao obter todos os treinos:", error);
@@ -16,7 +16,7 @@ const trainingService = {
 
   getTrainingById: async (id) => {
     try {
-      const response = await httpClient.get(`/trainings/${id}`);
+      const response = await httpClient.get(`/training/${id}`);
       return response.data;
     } catch (error) {
       console.error("Erro ao obter treino por ID:", error);
@@ -26,7 +26,7 @@ const trainingService = {
 
   createTraining: async (trainingData) => {
     try {
-      const response = await httpClient.post("/trainings", trainingData);
+      const response = await httpClient.post("/training", trainingData);
       toast.success("Treino cadastrado com sucesso");
 
       return response.data;
@@ -39,7 +39,7 @@ const trainingService = {
 
   updateTraining: async (id, trainingData) => {
     try {
-      const response = await httpClient.put(`/trainings/${id}`, trainingData);
+      const response = await httpClient.put(`/training/${id}`, trainingData);
       return response.data;
     } catch (error) {
       console.error("Erro ao atualizar treino:", error);
@@ -49,7 +49,7 @@ const trainingService = {
 
   deleteTraining: async (id) => {
     try {
-      const response = await httpClient.delete(`/trainings/${id}`);
+      const response = await httpClient.delete(`/training/${id}`);
       return response.data;
     } catch (error) {
       console.error("Erro ao excluir treino:", error);

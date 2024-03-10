@@ -6,9 +6,13 @@ const TrainingContext = createContext();
 export const TrainingProvider = ({ children }) => {
   const [trainings, setTrainings] = useState([]);
 
+  const token = localStorage.getItem("token");
+
+
   const fetchTrainings = async () => {
     try {
       const trainingsFetched = await trainingService.getAllTrainings();
+      console.log('trainingsFetched', trainingsFetched)
       setTrainings(trainingsFetched);
     } catch (error) {
       console.error("Erro ao buscar treinos:", error);
@@ -45,8 +49,9 @@ export const TrainingProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    fetchTrainings();
-  }, []);
+    if (token) {
+    fetchTrainings()}
+  }, [token]);
 
   return (
     <TrainingContext.Provider value={{ trainings, fetchTrainings, editTraining, checkStudent, markAttendance }}>
