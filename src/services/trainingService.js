@@ -27,6 +27,7 @@ const trainingService = {
   createTraining: async (trainingData) => {
     try {
       const response = await httpClient.post("/training", trainingData);
+      console.log('response', response)
       toast.success("Treino cadastrado com sucesso");
 
       return response.data;

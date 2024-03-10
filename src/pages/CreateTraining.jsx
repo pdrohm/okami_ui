@@ -3,10 +3,11 @@ import Layout from "../components/Layout";
 import StudentForm from "../components/StudentForm/StudentForm";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { useLocation } from "react-router-dom";
+import TrainingForm from "../components/Training/TrainingForm";
 
 const CreateTraining = () => {
   const location = useLocation();
-  const { studentData } = location.state || {};
+  const { trainingData } = location.state || {};
 
   return (
     <Layout>
@@ -17,7 +18,7 @@ const CreateTraining = () => {
           </div>
           <h1 className="text-4xl">Criar novo treino</h1>
         </div>
-        <StudentForm studentData={studentData} />
+        <TrainingForm trainingData={trainingData} />
       </div>
     </Layout>
   );
