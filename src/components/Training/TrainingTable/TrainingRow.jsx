@@ -1,27 +1,35 @@
+import React, { useContext, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 
 import TableRow from "@mui/material/TableRow";
-import React, { useState } from "react";
+
+import TrainingContext from "../../../context/TrainingContext";
+
 
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../../ModalDelete";
 import { differenceInYears } from "date-fns";
+import trainingService from "../../../services/trainingService";
 
 const TrainingRow = ({ training }) => {
-  console.log(training)
   const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const { fetchTrainings } = useContext(TrainingContext);
+
   const navigate = useNavigate();
 
+  console.log(training)
 
 
-  const today = new Date();
-
-  const age = differenceInYears(today, training.birthday);
+  const handleDeleteClick = async (id) => {
+    console.log('id', id)
+    await trainingService.deleteTraining(id);
+    fetchTrainings();
+  };
 
   return (
     <>
@@ -47,10 +55,14 @@ const TrainingRow = ({ training }) => {
       </TableRow>
      
       <ModalDelete
-        student={training}
+        data={training}
         modalOpen={isModalOpen}
         setModalOpen={setModalOpen}
+        fetch={fetchTrainings}
+        handleDelete={handleDeleteClick}
+        question={`Deseja excluir o treino ${training.training_name}?`}
       />
+
     </>
   );
 };

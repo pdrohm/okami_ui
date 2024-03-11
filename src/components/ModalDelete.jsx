@@ -1,18 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import studentService from "../services/studentService";
 import StudentContext from "../context/StudentContext";
 
-const ModalDelete = ({ student, modalOpen, setModalOpen }) => {
-  const { fetchStudents } = useContext(StudentContext);
+const ModalDelete = ({ data, question, fetch, modalOpen, setModalOpen, handleDelete }) => {
 
-  const handleDeleteClick = async (id) => {
-    await studentService.deleteStudent(id);
-    fetchStudents();
-  };
+
 
   const handleCancelClick = () => {
     setModalOpen(false);
   };
+
+  useEffect(() => {
+    fetch()
+  }, [])
 
   return (
     <div
@@ -43,7 +43,7 @@ const ModalDelete = ({ student, modalOpen, setModalOpen }) => {
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-headline"
                 >
-                  Deseja excluir o usuário {student.name}?
+                 {question}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
@@ -74,7 +74,7 @@ const ModalDelete = ({ student, modalOpen, setModalOpen }) => {
           </div>
           <div className="mt-5 sm:mt-6">
             <button
-              onClick={() => handleDeleteClick(student.id)}
+              onClick={ () => handleDelete(data.id)}
               type="button"
               className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-orange-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange sm:text-sm"
             >

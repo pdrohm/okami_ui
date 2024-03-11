@@ -8,16 +8,26 @@ import { Box, Collapse } from "@mui/material";
 import defaultAvatar from "../../assets/default_avatar.jpg";
 
 import TableRow from "@mui/material/TableRow";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
 
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../ModalDelete";
 import { differenceInYears } from "date-fns";
+import StudentContext from "../../context/StudentContext";
+import studentService from "../../services/studentService";
 
 const StudentRow = ({ student }) => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const { fetchStudents } = useContext(StudentContext);
+
+  const handleDeleteClick = async (id) => {
+    await studentService.deleteStudent(id);
+    fetchStudents();
+  };
+
 
   const navigate = useNavigate();
 
@@ -117,9 +127,13 @@ const StudentRow = ({ student }) => {
       </TableCell>
       <TableRow></TableRow>
       <ModalDelete
-        student={student}
+        data={student}
         modalOpen={isModalOpen}
         setModalOpen={setModalOpen}
+        fetch={fetchStudents}
+        handleDelete={handleDeleteClick}
+        question={`Deseja excluir o treino ${student.name}?`}
+
       />
     </>
   );
