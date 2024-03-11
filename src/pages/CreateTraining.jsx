@@ -11,6 +11,8 @@ const CreateTraining = () => {
   const location = useLocation();
   const { trainingData } = location.state || {};
 
+  console.log('trainingData', trainingData)
+
   return (
     <Layout>
       <div className="p-10 flex flex-col gap-y-10 justify-center items-center">

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import TrainingContext from "../../context/TrainingContext";
 import { useNavigate } from "react-router-dom";
-import trainingService from '../../services/trainingService';
+import trainingService from "../../services/trainingService";
 
 const TrainingForm = ({ trainingData }) => {
   const {
@@ -19,7 +19,6 @@ const TrainingForm = ({ trainingData }) => {
 
   const { fetchTrainings } = useContext(TrainingContext);
 
-
   const onSubmit = async (data) => {
     if (trainingData) {
       await trainingService.updateTraining(trainingData.id, data);
@@ -30,11 +29,18 @@ const TrainingForm = ({ trainingData }) => {
   };
 
   const afterSubmit = () => {
-    console.log("passiy after")
     fetchTrainings();
     reset();
     navigate("/treino");
   };
+
+  useEffect(() => {
+    if (trainingData) {
+      Object.keys(trainingData).forEach((key) => {
+        setValue(key, trainingData[key]);
+      });
+    }
+  }, [trainingData, setValue]);
 
   return (
     <div className="max-w-4xl  mt-8 p-6 bg-whiter shadow-md rounded-md w-full flex-col flex justify-center">
@@ -63,11 +69,11 @@ const TrainingForm = ({ trainingData }) => {
           <div className="w-1/2">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="emergencyContactNumber"
+              htmlFor="modality"
             >
               Modalidade
             </label>
-            <select className="student-form-input" {...register("relation")}>
+            <select className="student-form-input" {...register("modality")}>
               <option value="jiujitsu">Jiu Jitsu</option>
               <option value="yoga">Yoga</option>
               <option value="muaythai">Muay Thai</option>

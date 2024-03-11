@@ -22,14 +22,17 @@ const TrainingRow = ({ training }) => {
 
   const navigate = useNavigate();
 
-  console.log(training)
 
 
   const handleDeleteClick = async (id) => {
-    console.log('id', id)
     await trainingService.deleteTraining(id);
     fetchTrainings();
   };
+
+  const handleEditTraining = (training) => {
+    navigate("/treino/registro", { state: { trainingData: training } });
+
+  }
 
   return (
     <>
@@ -45,7 +48,7 @@ const TrainingRow = ({ training }) => {
         <TableCell align="left">
           <EditIcon
             className="cursor-pointer hover:text-orange"
-            onClick={() => handleEditStudent(training)}
+            onClick={() => handleEditTraining(training)}
           />
           <DeleteForeverIcon
             className="cursor-pointer hover:text-orange"

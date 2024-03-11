@@ -17,9 +17,8 @@ const Training = () => {
 
   return (
     <Layout>
-      <div className="p-10">
-        <div className="flex gap-x-3">
-          
+      <div className="p-10 flex flex-col gap-y-10">
+        <div className="flex gap-x-3 ">          
           <div className="flex justify-center items-end text-orange">
             <SportsKabaddiIcon fontSize="large" />
           </div>
