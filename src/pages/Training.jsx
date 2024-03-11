@@ -9,12 +9,6 @@ import AddMemberButton from "../components/AddMemberButton";
 const Training = () => {
   const { trainings } = useContext(TrainingContext);
 
-
-
-  console.log('training', trainings)
-
-
-
   return (
     <Layout>
       <div className="p-10 flex flex-col gap-y-10">

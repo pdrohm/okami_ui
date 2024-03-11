@@ -27,7 +27,6 @@ const trainingService = {
   createTraining: async (trainingData) => {
     try {
       const response = await httpClient.post("/training", trainingData);
-      console.log('response', response)
       toast.success("Treino cadastrado com sucesso");
 
       return response.data;
@@ -56,6 +55,17 @@ const trainingService = {
       console.error("Erro ao excluir treino:", error);
       throw error;
     }
+  },
+
+  getAttendancesByTraining: async (training_id) => {
+    try {
+      const response = await httpClient.get(`/training/${training_id}/attendances`);
+      return response.data;
+    } catch (error) {
+      console.error("Erro ao obter presenças do treino:", error);
+      throw error;
+    }
+
   },
 
   checkAttendance: async (code) => {

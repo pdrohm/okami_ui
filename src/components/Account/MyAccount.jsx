@@ -2,7 +2,6 @@ import React from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const MyAccount = ({ user }) => {
-  console.log(`user`, user);
   return (
     <>
       <div className="flex gap-x-3 ">

@@ -10,10 +10,8 @@ const LeftPanel = () => {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
 
-  console.log(`user`, user);
 
   const handleTabClick = (url) => {
-    console.log(`url`, url);
     navigate(url);
   };
 
