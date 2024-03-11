@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import StudentForm from "../components/StudentForm/StudentForm";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { useLocation } from "react-router-dom";
+import GetBack from "../components/GetBack";
 
 const RegisterStudent = () => {
   const location = useLocation();
@@ -12,6 +13,7 @@ const RegisterStudent = () => {
     <Layout>
       <div className="p-10 flex flex-col gap-y-10 justify-center items-center">
         <div className="flex gap-x-2 w-full">
+          <GetBack />
           <div className="flex justify-center items-end text-orange">
             <PersonAddAlt1Icon fontSize="large" />
           </div>
