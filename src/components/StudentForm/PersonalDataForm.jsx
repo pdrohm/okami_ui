@@ -59,7 +59,7 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="number"
           >
-            Número para contato
+            Número para contato *
           </label>
           <input
             className="student-form-input"
@@ -71,12 +71,12 @@ const PersonalDataForm = ({ register, errors, control }) => {
           )}
         </div>
 
-        <div className="w-full">
+        <div className="w-1/2">
           <label
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="birthday"
           >
-            Data de nascimento
+            Data de nascimento *
           </label>
           <Controller
             control={control}
@@ -108,7 +108,7 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="gender"
           >
-            Gênero
+            Gênero *
           </label>
           <select
             className="student-form-input"
@@ -121,6 +121,29 @@ const PersonalDataForm = ({ register, errors, control }) => {
           </select>
           {errors.gender && (
             <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
+          )}
+        </div>
+        <div className="w-1/2">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="gender"
+          >
+            Código *
+          </label>
+          <input
+            className="student-form-input"
+            type="tel"
+            maxLength={4}
+            {...register("code", {
+              required: "Código obrigatório",
+              pattern: {
+                value: /^\d{4}$/,
+                message: "Código deve ter 4 dígitos",
+              },
+            })}
+          />
+          {errors.code && (
+            <p className="text-red-500 text-xs mt-1">{errors.code.message}</p>
           )}
         </div>
       </div>

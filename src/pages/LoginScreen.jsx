@@ -10,6 +10,9 @@ const LoginScreen = () => {
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext)
 
+  const navigate = useNavigate(); 
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -17,6 +20,9 @@ const LoginScreen = () => {
 
      
       await login(userData);
+
+      navigate('/');
+
 
     } catch (error) {
       console.error("Login failed:", error);
