@@ -7,6 +7,7 @@ import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import TrainingContext from "../context/TrainingContext";
 import AttendanceDataGrid from "../components/AttendanceDataGrid";
+import GetBack from "../components/GetBack";
 
 const TrainingDetail = () => {
   const location = useLocation();
@@ -39,6 +40,7 @@ const TrainingDetail = () => {
     <Layout>
       <div className="p-10 flex flex-col gap-y-10">
         <div className="flex gap-x-3 ">
+          <GetBack />
           <div className="flex justify-center items-end text-orange">
             {iconComponent}
           </div>
