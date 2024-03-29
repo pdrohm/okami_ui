@@ -1,33 +1,43 @@
-import React, { useState, useContext, useRef } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import Layout from "../components/Layout";
 import TrainingContext from "../context/TrainingContext";
 import StudentContext from "../context/StudentContext";
 import trainingService from "../services/trainingService";
+import AttendancesTable from "../components/Training/AttendancesTable";
 
 const Checkin = () => {
   const [modality, setModality] = useState("jiujitsu");
   const [training, setTraining] = useState("");
   const [studentInfo, setStudentInfo] = useState(null);
 
-
-  const { trainings } = useContext(TrainingContext);
+  const {
+    trainings,
+    fetchAttendancesByTraining,
+    setAttendancesByTraining,
+    markAttendance,
+  } = useContext(TrainingContext);
   const { students } = useContext(StudentContext);
   const [participantes, setParticipantes] = useState([]);
   const inputRef = useRef(null);
 
-
+  const { name, email, belt_description, degree_description, birthday } =
+    studentInfo || {};
 
   const handleModalityChange = (e) => {
     setModality(e.target.value);
+    setAttendancesByTraining(null);
   };
 
   const handleTrainingChange = (e) => {
-    setTraining(e.target.value);
+    const trainingId = e.target.value;
+    setTraining(trainingId);
+    fetchAttendancesByTraining(trainingId);
   };
 
-  const handleCheckin = async (code, training_id) => {
+  const handleCheckin = async (code) => {
     if (code.length === 4) {
       try {
+        setStudentInfo(null);
         const userInfo = await trainingService.checkAttendance(code);
         setStudentInfo(userInfo);
       } catch (error) {
@@ -36,23 +46,22 @@ const Checkin = () => {
     }
   };
 
-  const handleSelectFocus = () => {
-    inputRef.current.focus();
-  };
-
-  const handleMarkAttendance = () => {
+  const handleMarkAttendance = async (code) => {
     if (studentInfo) {
-      console.log("Presença marcada!");
+      try {
+        await markAttendance(code, training);
+
+        setStudentInfo(null);
+      } catch {}
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      handleMarkAttendance();
+  const handleKeyDown = async (e) => {
+    if (e.key === "Enter") {
+      await handleMarkAttendance(e.target.value);
+      setStudentInfo(null);
     }
   };
-
-  
 
   return (
     <Layout>
@@ -65,7 +74,6 @@ const Checkin = () => {
               value={modality}
               onChange={handleModalityChange}
               className="student-form-input"
-              onClick={handleSelectFocus}
             >
               <option value="jiujitsu">Jiu Jitsu</option>
               <option value="yoga">Yoga</option>
@@ -80,7 +88,6 @@ const Checkin = () => {
               value={training}
               onChange={handleTrainingChange}
               className="student-form-input"
-              onClick={handleSelectFocus}
             >
               <option value="">Selecione um treino</option>
               {trainings
@@ -99,19 +106,27 @@ const Checkin = () => {
         <input
           type="text"
           ref={inputRef}
-          className={`w-1/3 h-20 rounded-lg bg-${training ? 'orange' : 'orange-dark'} text-white text-6xl text-center`}
+          className={`w-1/3 h-20 rounded-lg bg-${
+            training ? "orange" : "orange-dark"
+          } text-white text-6xl text-center`}
           maxLength={4}
           disabled={!training}
-          placeholder={`${training ? '' : 'SELECIONE O TREINO'}`}
+          placeholder={`${training ? "" : "SELECIONE O TREINO"}`}
           onChange={(e) => handleCheckin(e.target.value)}
           onKeyDown={handleKeyDown}
-
         />
-         <div className={`w-1/3 h-20 rounded-lg bg-${training ? 'green' : 'orange-dark'} text-white text-6xl text-center`}>
-
-</div>
       </div>
-     
+      {studentInfo && (
+        <div className="flex items-center justify-center my-5">
+          <div className="bg-orange-light w-1/4 rounded-md flex flex-col items-center text-white">
+            <span> {name}</span>
+            <span>
+              Faixa {belt_description} {degree_description} graus
+            </span>
+          </div>
+        </div>
+      )}
+      <AttendancesTable trainingName={"teste"} />
     </Layout>
   );
 };

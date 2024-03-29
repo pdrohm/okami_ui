@@ -79,6 +79,7 @@ const trainingService = {
   },
 
   markAttendance: async (code, training_id) => {
+    console.log("service", code, training_id)
     try {
       const response = await httpClient.post("/attendance", { code, training_id });
       toast.success("Presença marcada com sucesso");

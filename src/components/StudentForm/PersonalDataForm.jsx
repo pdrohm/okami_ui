@@ -128,17 +128,17 @@ const PersonalDataForm = ({ register, errors, control }) => {
             className="block text-gray-700 text-sm font-bold mb-2"
             htmlFor="gender"
           >
-            Código *
+            Senha *
           </label>
           <input
-            className="student-form-input"
+            className="student-form-input bg-orange text-white"
             type="tel"
             maxLength={4}
             {...register("code", {
-              required: "Código obrigatório",
+              required: "Senha é obrigatória",
               pattern: {
                 value: /^\d{4}$/,
-                message: "Código deve ter 4 dígitos",
+                message: "Senha deve ter 4 dígitos",
               },
             })}
           />
