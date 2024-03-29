@@ -2,12 +2,11 @@ import React, { useContext, useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import TableRow from "@mui/material/TableRow";
 
 import TrainingContext from "../../../context/TrainingContext";
-
 
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../../ModalDelete";
@@ -22,8 +21,6 @@ const TrainingRow = ({ training }) => {
 
   const navigate = useNavigate();
 
-
-
   const handleDeleteClick = async (id) => {
     await trainingService.deleteTraining(id);
     fetchTrainings();
@@ -31,8 +28,11 @@ const TrainingRow = ({ training }) => {
 
   const handleEditTraining = (training) => {
     navigate("/treino/registro", { state: { trainingData: training } });
+  };
 
-  }
+  const handleSelectTrain = (training) => {
+    navigate(`/treino/${training.id}`, { state: { trainingData: training } });
+  };
 
   return (
     <>
@@ -40,7 +40,6 @@ const TrainingRow = ({ training }) => {
         key={training.name}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
       >
-       
         <TableCell component="th" scope="training" align="center">
           {training.training_name}
         </TableCell>
@@ -55,8 +54,14 @@ const TrainingRow = ({ training }) => {
             onClick={() => setModalOpen(true)}
           />
         </TableCell>
+        <TableCell>
+          <VisibilityIcon
+            className="cursor-pointer hover:text-orange"
+            onClick={() => handleSelectTrain(training)}
+          />
+        </TableCell>
       </TableRow>
-     
+
       <ModalDelete
         data={training}
         modalOpen={isModalOpen}
@@ -65,7 +70,6 @@ const TrainingRow = ({ training }) => {
         handleDelete={handleDeleteClick}
         question={`Deseja excluir o treino ${training.training_name}?`}
       />
-
     </>
   );
 };

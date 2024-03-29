@@ -13,7 +13,8 @@ import Account from "../pages/Account";
 import Training from "../pages/Training";
 import Checkin from "../pages/Checkin";
 import { TrainingProvider } from "../context/TrainingContext";
-import CreateTraining from '../pages/CreateTraining';
+import CreateTraining from "../pages/CreateTraining";
+import TrainingDetail from "../pages/TrainingDetail";
 
 const OkamiRoutes = () => {
   const token = localStorage.getItem("token");
@@ -22,25 +23,29 @@ const OkamiRoutes = () => {
     <HashRouter>
       <AuthProvider>
         <StudentProvider>
-          <TrainingProvider >
-          <Routes>
-            {token ? (
-              <>
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/alunos" element={<Students />} />
-                <Route path="/alunos/registro" element={<RegisterStudent />} />
-                <Route path="/financeiro" element={<Finances />} />
-                <Route path="/conta" element={<Account />} />
-                <Route path="/treino" element={<Training />} />
-                <Route path="/treino/registro" element={<CreateTraining />} />
-                <Route path="/checkin" element={<Checkin />} />
-              </>
-            ) : (
-              <Route path="/" element={<Navigate to="/login" />} />
-            )}
-            <Route path="/login" element={<LoginScreen />} />
-          </Routes>
-          <ToastContainer />
+          <TrainingProvider>
+            <Routes>
+              {token ? (
+                <>
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/alunos" element={<Students />} />
+                  <Route
+                    path="/alunos/registro"
+                    element={<RegisterStudent />}
+                  />
+                  <Route path="/financeiro" element={<Finances />} />
+                  <Route path="/conta" element={<Account />} />
+                  <Route path="/treino" element={<Training />} />
+                  <Route path="/treino/:id" element={<TrainingDetail />} />
+                  <Route path="/treino/registro" element={<CreateTraining />} />
+                  <Route path="/checkin" element={<Checkin />} />
+                </>
+              ) : (
+                <Route path="/" element={<Navigate to="/login" />} />
+              )}
+              <Route path="/login" element={<LoginScreen />} />
+            </Routes>
+            <ToastContainer />
           </TrainingProvider>
         </StudentProvider>
       </AuthProvider>

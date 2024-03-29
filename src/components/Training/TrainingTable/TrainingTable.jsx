@@ -9,7 +9,6 @@ import Paper from "@mui/material/Paper";
 import TrainingRow from "./TrainingRow";
 
 export default function TrainingTable({ trainings }) {
-
   return (
     <>
       <TableContainer component={Paper}>
@@ -19,6 +18,7 @@ export default function TrainingTable({ trainings }) {
               <TableCell align="center">Treino</TableCell>
               <TableCell align="left">Modalidade</TableCell>
               <TableCell align="left">Acoes</TableCell>
+              <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
