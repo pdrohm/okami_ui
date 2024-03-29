@@ -2,6 +2,7 @@
 
 import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
+import { format } from "date-fns";
 
 const trainingService = {
   getAllTrainings: async () => {
@@ -14,9 +15,11 @@ const trainingService = {
     }
   },
 
-  getTrainingById: async (id) => {
+  getTrainingById: async (id, date) => {
     try {
+      
       const response = await httpClient.get(`/training/${id}`);
+      
       return response.data;
     } catch (error) {
       console.error("Erro ao obter treino por ID:", error);

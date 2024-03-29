@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
 import trainingService from "../services/trainingService";
+import { format } from "date-fns";
 
 const TrainingContext = createContext();
 
 export const TrainingProvider = ({ children }) => {
   const [trainings, setTrainings] = useState([]);
   const [attendancesByTraining, setAttendancesByTraining] = useState([]);
+  const [trainingAttendances, setTrainingAttendances] = useState({});
 
   const token = localStorage.getItem("token");
 
@@ -61,7 +63,16 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
-  console.log("attendancesByTraining", attendancesByTraining);
+  const getAttendancesByTraining = async (training_id, date) => {
+    try {
+      const trainingDetail = await trainingService.getAttendancesByTraining(
+        training_id
+      );
+      setTrainingAttendances(trainingDetail);
+    } catch (error) {
+      console.error("Erro ao buscar informações do treino:", error);
+    }
+  };
 
   useEffect(() => {
     if (token) {
@@ -80,6 +91,8 @@ export const TrainingProvider = ({ children }) => {
         attendancesByTraining,
         setAttendancesByTraining,
         fetchAttendancesByTraining,
+        getAttendancesByTraining,
+        trainingAttendances,
       }}
     >
       {children}
