@@ -15,6 +15,7 @@ import Checkin from "../pages/Checkin";
 import { TrainingProvider } from "../context/TrainingContext";
 import CreateTraining from "../pages/CreateTraining";
 import TrainingDetail from "../pages/TrainingDetail";
+import StudentDetail from "../pages/StudentDetail";
 
 const OkamiRoutes = () => {
   const token = localStorage.getItem("token");
@@ -33,6 +34,7 @@ const OkamiRoutes = () => {
                     path="/alunos/registro"
                     element={<RegisterStudent />}
                   />
+                  <Route path="/alunos/:id" element={<StudentDetail />} />
                   <Route path="/financeiro" element={<Finances />} />
                   <Route path="/conta" element={<Account />} />
                   <Route path="/treino" element={<Training />} />

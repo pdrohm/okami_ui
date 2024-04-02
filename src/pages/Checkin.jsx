@@ -102,13 +102,13 @@ const Checkin = () => {
         </div>
       </div>
 
-      <div className="flex justify-center items-center flex-col gap-y-10">
+      <div className="flex flex-col items-center justify-center gap-y-10">
         <input
           type="text"
           ref={inputRef}
-          className={`w-1/3 h-20 rounded-lg bg-${
+          className={`h-20 w-1/3 rounded-lg bg-${
             training ? "orange" : "orange-dark"
-          } text-white text-6xl text-center`}
+          } text-center text-3xl text-white`}
           maxLength={4}
           disabled={!training}
           placeholder={`${training ? "" : "SELECIONE O TREINO"}`}
@@ -117,8 +117,8 @@ const Checkin = () => {
         />
       </div>
       {studentInfo && (
-        <div className="flex items-center justify-center my-5">
-          <div className="bg-orange-light w-1/4 rounded-md flex flex-col items-center text-white">
+        <div className="my-5 flex items-center justify-center">
+          <div className="flex w-1/4 flex-col items-center rounded-md bg-orange-light text-white">
             <span> {name}</span>
             <span>
               Faixa {belt_description} {degree_description} graus

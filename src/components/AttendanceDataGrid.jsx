@@ -3,7 +3,6 @@ import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { format } from "date-fns";
 
 const AttendanceDataGrid = ({ attendancesByTraining }) => {
-  // Format checkin_time and sort the data in descending order
   const dataWithIds = React.useMemo(() => {
     return attendancesByTraining
       .map((row, index) => ({

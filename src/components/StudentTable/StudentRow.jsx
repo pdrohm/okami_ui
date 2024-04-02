@@ -16,11 +16,13 @@ import ModalDelete from "../ModalDelete";
 import { differenceInYears } from "date-fns";
 import StudentContext from "../../context/StudentContext";
 import studentService from "../../services/studentService";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 
 const StudentRow = ({ student }) => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
+  const navigate = useNavigate();
   const { fetchStudents } = useContext(StudentContext);
 
   const handleDeleteClick = async (id) => {
@@ -28,8 +30,9 @@ const StudentRow = ({ student }) => {
     fetchStudents();
   };
 
-
-  const navigate = useNavigate();
+  const handleSelectStudent = (student) => {
+    navigate(`/alunos/${student.id}`, { state: { studentData: student } });
+  };
 
   const handleEditStudent = (student) => {
     navigate("/alunos/registro", { state: { studentData: student } });
@@ -68,6 +71,12 @@ const StudentRow = ({ student }) => {
           <DeleteForeverIcon
             className="cursor-pointer hover:text-orange"
             onClick={() => setModalOpen(true)}
+          />
+        </TableCell>
+        <TableCell>
+          <VisibilityIcon
+            className="cursor-pointer hover:text-orange"
+            onClick={() => handleSelectStudent(student)}
           />
         </TableCell>
       </TableRow>
@@ -133,7 +142,6 @@ const StudentRow = ({ student }) => {
         fetch={fetchStudents}
         handleDelete={handleDeleteClick}
         question={`Deseja excluir o treino ${student.name}?`}
-
       />
     </>
   );
