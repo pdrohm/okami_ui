@@ -16,16 +16,16 @@ const AttendanceDataGrid = ({ attendancesByTraining }) => {
   const columns = [
     { field: "student_name", headerName: "Aluno", flex: 1 },
     { field: "belt_description", headerName: "Faixa", flex: 1 },
-    { field: "degree_description", headerName: "Grau", flex: 1 },
     { field: "checkin_time", headerName: "Checkin", flex: 1 },
   ];
 
   return (
-    <div className="w-full">
+    <div className="h-96 w-1/2">
       <DataGrid
         rows={dataWithIds}
         columns={columns}
         components={{ Toolbar: GridToolbar }}
+        pageSizeOptions={[10, 25, 50]}
       />
     </div>
   );

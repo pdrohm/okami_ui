@@ -24,10 +24,10 @@ export const TrainingProvider = ({ children }) => {
     try {
       const updatedTraining = await trainingService.updateTraining(
         id,
-        trainingData
+        trainingData,
       );
       const updatedTrainings = trainings.map((training) =>
-        training.id === id ? updatedTraining : training
+        training.id === id ? updatedTraining : training,
       );
       setTrainings(updatedTrainings);
     } catch (error) {
@@ -52,25 +52,15 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
-  const fetchAttendancesByTraining = async (training_id) => {
+  const fetchAttendancesByTraining = async (training_id, date = null) => {
     try {
       const attendances = await trainingService.getAttendancesByTraining(
-        training_id
+        training_id,
+        date,
       );
       setAttendancesByTraining(attendances);
     } catch (error) {
       console.error("Erro ao buscar as presenças do treino:", error);
-    }
-  };
-
-  const getAttendancesByTraining = async (training_id, date) => {
-    try {
-      const trainingDetail = await trainingService.getAttendancesByTraining(
-        training_id
-      );
-      setTrainingAttendances(trainingDetail);
-    } catch (error) {
-      console.error("Erro ao buscar informações do treino:", error);
     }
   };
 
@@ -91,7 +81,6 @@ export const TrainingProvider = ({ children }) => {
         attendancesByTraining,
         setAttendancesByTraining,
         fetchAttendancesByTraining,
-        getAttendancesByTraining,
         trainingAttendances,
       }}
     >

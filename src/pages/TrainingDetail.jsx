@@ -8,12 +8,17 @@ import SportsMmaIcon from "@mui/icons-material/SportsMma";
 import TrainingContext from "../context/TrainingContext";
 import AttendanceDataGrid from "../components/AttendanceDataGrid";
 import GetBack from "../components/GetBack";
+import Calendar from "../components/Calendar";
+import { useState } from "react";
+import dayjs from "dayjs";
 
 const TrainingDetail = () => {
+  const [date, setDate] = useState(dayjs(new Date()));
+
   const location = useLocation();
   const { trainingData } = location.state || {};
 
-  const { getAttendancesByTraining, trainingAttendances } =
+  const { attendancesByTraining, fetchAttendancesByTraining } =
     useContext(TrainingContext);
 
   let iconComponent;
@@ -30,25 +35,30 @@ const TrainingDetail = () => {
     default:
       iconComponent = <SportsKabaddiIcon fontSize="large" />;
   }
+
   useEffect(() => {
-    if (trainingData) {
-      getAttendancesByTraining(trainingData.id);
+    if (trainingData && date) {
+      fetchAttendancesByTraining(trainingData.id, date);
     }
-  }, []);
+  }, [date]);
+
+  console.log(date);
+  console.log(attendancesByTraining);
 
   return (
     <Layout>
-      <div className="p-10 flex flex-col gap-y-10">
+      <div className="flex flex-col gap-y-10 p-10">
         <div className="flex gap-x-3 ">
           <GetBack />
-          <div className="flex justify-center items-end text-orange">
+          <div className="flex items-end justify-center text-orange">
             {iconComponent}
           </div>
           <h1 className="text-4xl"> {trainingData.training_name} </h1>
         </div>
-        {trainingAttendances.length > 0 && (
-          <AttendanceDataGrid attendancesByTraining={trainingAttendances} />
-        )}
+        <div className="flex items-center justify-center">
+          <Calendar setDate={setDate} />
+          <AttendanceDataGrid attendancesByTraining={attendancesByTraining} />
+        </div>
       </div>
     </Layout>
   );

@@ -17,9 +17,8 @@ const trainingService = {
 
   getTrainingById: async (id, date) => {
     try {
-      
       const response = await httpClient.get(`/training/${id}`);
-      
+
       return response.data;
     } catch (error) {
       console.error("Erro ao obter treino por ID:", error);
@@ -60,15 +59,20 @@ const trainingService = {
     }
   },
 
-  getAttendancesByTraining: async (training_id) => {
+  getAttendancesByTraining: async (training_id, date = null) => {
     try {
-      const response = await httpClient.get(`/training/${training_id}/attendances`);
+      let url = `/training/${training_id}/attendances`;
+
+      if (date) {
+        url += `?date=${date}`;
+      }
+
+      const response = await httpClient.get(url);
       return response.data;
     } catch (error) {
       console.error("Erro ao obter presenças do treino:", error);
       throw error;
     }
-
   },
 
   checkAttendance: async (code) => {
@@ -82,9 +86,12 @@ const trainingService = {
   },
 
   markAttendance: async (code, training_id) => {
-    console.log("service", code, training_id)
+    console.log("service", code, training_id);
     try {
-      const response = await httpClient.post("/attendance", { code, training_id });
+      const response = await httpClient.post("/attendance", {
+        code,
+        training_id,
+      });
       toast.success("Presença marcada com sucesso");
       return response.data;
     } catch (error) {
