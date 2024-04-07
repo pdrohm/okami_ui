@@ -99,6 +99,15 @@ const trainingService = {
       throw error;
     }
   },
+
+  getTrainingDays: async () => {
+    try {
+      const response = await httpClient.get(`/training/training-days`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching training dates:", error);
+    }
+  },
 };
 
 export default trainingService;

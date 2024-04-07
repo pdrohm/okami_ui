@@ -1,15 +1,14 @@
 import React, { createContext, useState, useEffect } from "react";
 import trainingService from "../services/trainingService";
-import { format } from "date-fns";
 
 const TrainingContext = createContext();
 
 export const TrainingProvider = ({ children }) => {
   const [trainings, setTrainings] = useState([]);
   const [attendancesByTraining, setAttendancesByTraining] = useState([]);
-  const [trainingAttendances, setTrainingAttendances] = useState({});
+  const [daysWithTraining, setDaysWithTraining] = useState({});
 
-  const token = localStorage.getItem("token");
+  // const token = localStorage.getItem("token");
 
   const fetchTrainings = async () => {
     try {
@@ -24,10 +23,10 @@ export const TrainingProvider = ({ children }) => {
     try {
       const updatedTraining = await trainingService.updateTraining(
         id,
-        trainingData,
+        trainingData
       );
       const updatedTrainings = trainings.map((training) =>
-        training.id === id ? updatedTraining : training,
+        training.id === id ? updatedTraining : training
       );
       setTrainings(updatedTrainings);
     } catch (error) {
@@ -56,7 +55,7 @@ export const TrainingProvider = ({ children }) => {
     try {
       const attendances = await trainingService.getAttendancesByTraining(
         training_id,
-        date,
+        date
       );
       setAttendancesByTraining(attendances);
     } catch (error) {
@@ -64,11 +63,22 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    if (token) {
-      fetchTrainings();
+  const fetchDaysWithTraining = async () => {
+    try {
+      const days = await trainingService.getTrainingDays();
+      setDaysWithTraining(days);
+    } catch (error) {
+      console.error("Erro ao buscar as presenças do treino:", error);
     }
-  }, [token]);
+  };
+
+  useEffect(() => {
+    fetchTrainings();
+
+    fetchDaysWithTraining();
+  }, []);
+
+  console.log("days", daysWithTraining);
 
   return (
     <TrainingContext.Provider
@@ -81,7 +91,7 @@ export const TrainingProvider = ({ children }) => {
         attendancesByTraining,
         setAttendancesByTraining,
         fetchAttendancesByTraining,
-        trainingAttendances,
+        fetchDaysWithTraining,
       }}
     >
       {children}

@@ -9,7 +9,9 @@ const StudentDetail = () => {
   console.log(studentData);
   return (
     <Layout>
-      <div className="flex flex-col w-full h-full"></div>
+      <div className="flex flex-col w-full h-full">
+        <div></div>
+      </div>
     </Layout>
   );
 };

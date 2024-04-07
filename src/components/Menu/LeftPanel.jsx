@@ -8,8 +8,7 @@ import ProfileButton from "../ProfileButton";
 
 const LeftPanel = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-
+  // const { user } = useContext(AuthContext);
 
   const handleTabClick = (url) => {
     navigate(url);
@@ -38,10 +37,10 @@ const LeftPanel = () => {
           </div>
         ))}
       </div>
-      <div className="flex justify-center mb-5 text-white flex-col items-center gap-y-2 h-24 w-full">
+      {/* <div className="flex justify-center mb-5 text-white flex-col items-center gap-y-2 h-24 w-full">
         <ProfileButton />
         <LogoutButton />
-      </div>
+      </div> */}
     </div>
   );
 };

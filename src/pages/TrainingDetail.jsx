@@ -18,8 +18,11 @@ const TrainingDetail = () => {
   const location = useLocation();
   const { trainingData } = location.state || {};
 
-  const { attendancesByTraining, fetchAttendancesByTraining } =
-    useContext(TrainingContext);
+  const {
+    attendancesByTraining,
+    fetchAttendancesByTraining,
+    daysWithTraining,
+  } = useContext(TrainingContext);
 
   let iconComponent;
   switch (trainingData?.modality) {
@@ -42,9 +45,6 @@ const TrainingDetail = () => {
     }
   }, [date]);
 
-  console.log(date);
-  console.log(attendancesByTraining);
-
   return (
     <Layout>
       <div className="flex flex-col gap-y-10 p-10">
@@ -56,7 +56,7 @@ const TrainingDetail = () => {
           <h1 className="text-4xl"> {trainingData.training_name} </h1>
         </div>
         <div className="flex items-center justify-center">
-          <Calendar setDate={setDate} />
+          <Calendar setDate={setDate} daysWithTraining={daysWithTraining} />
           <AttendanceDataGrid attendancesByTraining={attendancesByTraining} />
         </div>
       </div>
