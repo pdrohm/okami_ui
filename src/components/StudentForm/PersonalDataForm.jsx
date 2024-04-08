@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { Controller } from "react-hook-form";
 import ptBR from "date-fns/locale/pt-BR";
 import { getYear, setYear } from "date-fns";
+import InputMask from "react-input-mask";
 
 const PersonalDataForm = ({ register, errors, control }) => {
   const [selectedDate, setSelectedDate] = useState(null);
@@ -61,9 +62,11 @@ const PersonalDataForm = ({ register, errors, control }) => {
           >
             Número para contato *
           </label>
-          <input
+          <InputMask
             className="student-form-input"
-            type="text"
+            mask="(99) 99999-9999"
+            placeholder="(48) 0000-0000"
+            type="tel"
             {...register("number", { required: "Número is required" })}
           />
           {errors.number && (
@@ -234,9 +237,11 @@ const PersonalDataForm = ({ register, errors, control }) => {
           >
             Número para contato do responsável
           </label>
-          <input
+          <InputMask
             className="student-form-input"
-            type="text"
+            mask="(99) 99999-9999"
+            placeholder="(48) 0000-0000"
+            type="tel"
             {...register("legal_guardian")}
           />
           {errors.legal_guardian && (

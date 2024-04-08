@@ -1,5 +1,6 @@
 import React from "react";
 import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
+import InputMask from "react-input-mask";
 
 const EmergencyContactForm = ({ register, errors }) => {
   return (
@@ -34,9 +35,11 @@ const EmergencyContactForm = ({ register, errors }) => {
           >
             Número do contato
           </label>
-          <input
+          <InputMask
             className="student-form-input"
-            type="text"
+            mask="(99) 99999-9999"
+            placeholder="(48) 0000-0000"
+            type="tel"
             {...register("emergency_contact_number")}
           />
           {errors.emergency_contact_number && (
