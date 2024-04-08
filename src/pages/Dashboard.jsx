@@ -5,6 +5,8 @@ import BarChart from "../components/Dashboard/BarChart";
 import TrainingContext from "../context/TrainingContext";
 import ToggleChart from "../components/Dashboard/ToggleChart";
 import MonthChartSelector from "../components/Dashboard/MonthChartSelector";
+import TotalStudentsRegistered from "../components/Dashboard/TotalStudentsRegistered";
+import TotalTrainingsCreated from "../components/Dashboard/TotalTrainingsCreated";
 
 const Dashboard = () => {
   const currentMonth = new Date().getMonth() + 1;
@@ -21,7 +23,7 @@ const Dashboard = () => {
 
   return (
     <Layout>
-      <div className="p-10">
+      <div className="p-10 flex xl:flex-row flex-col xl:gap-x-10 gap-y-5">
         <div className="flex flex-col justify-center items-start w-1/2 gap-y-2">
           <div className="flex justify-center items-center w-full gap-x-2">
             <ToggleChart
@@ -39,6 +41,10 @@ const Dashboard = () => {
           ) : (
             <LineChart studentsCountByModality={studentsCountByModality} />
           )}
+        </div>
+        <div className="flex gap-x-2">
+          <TotalStudentsRegistered />
+          <TotalTrainingsCreated />
         </div>
       </div>
     </Layout>

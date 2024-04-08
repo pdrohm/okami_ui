@@ -26,7 +26,7 @@ const MonthChartSelector = ({ selectedMonth, setSelectedMonth }) => {
         id="monthSelect"
         value={selectedMonth}
         onChange={handleChange}
-        className="appearance-none bg-whiter rounded-lg border border-gray-300 h-9 text-gray-700 px-2 py-1 pr-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+        className="appearance-none bg-whiter rounded-lg border border-gray-300 h-9 text-gray-700 px-2 py-1 pr-6 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 cursor-pointer"
       >
         {monthNames.map((month, index) => (
           <option key={index + 1} value={index + 1}>
