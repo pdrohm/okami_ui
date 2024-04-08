@@ -6,7 +6,12 @@ const TrainingContext = createContext();
 export const TrainingProvider = ({ children }) => {
   const [trainings, setTrainings] = useState([]);
   const [attendancesByTraining, setAttendancesByTraining] = useState([]);
-  const [daysWithTraining, setDaysWithTraining] = useState({});
+  const [studentsCountByModality, setStudentsCountByModality] = useState({
+    muaythai: [],
+    outro: [],
+    jiujitsu: [],
+    yoga: [],
+  });
 
   // const token = localStorage.getItem("token");
 
@@ -52,6 +57,7 @@ export const TrainingProvider = ({ children }) => {
   };
 
   const fetchAttendancesByTraining = async (training_id, date = null) => {
+    console.log("fetch");
     try {
       const attendances = await trainingService.getAttendancesByTraining(
         training_id,
@@ -63,10 +69,21 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
-  const fetchDaysWithTraining = async () => {
+  // const fetchDaysWithTraining = async () => {
+  //   try {
+  //     const days = await trainingService.getTrainingDays();
+  //     setDaysWithTraining(days);
+  //   } catch (error) {
+  //     console.error("Erro ao buscar as presenças do treino:", error);
+  //   }
+  // };
+
+  const fetchStudentsCountPerDayByModality = async (month) => {
     try {
-      const days = await trainingService.getTrainingDays();
-      setDaysWithTraining(days);
+      const studentsPerDay =
+        await trainingService.getStudentsCountPerDayByModality(month);
+
+      setStudentsCountByModality(studentsPerDay);
     } catch (error) {
       console.error("Erro ao buscar as presenças do treino:", error);
     }
@@ -74,11 +91,10 @@ export const TrainingProvider = ({ children }) => {
 
   useEffect(() => {
     fetchTrainings();
-
-    fetchDaysWithTraining();
+    const currentMonth = new Date().getMonth() + 1;
+    fetchStudentsCountPerDayByModality(currentMonth);
+    console.log("passou");
   }, []);
-
-  console.log("days", daysWithTraining);
 
   return (
     <TrainingContext.Provider
@@ -91,7 +107,10 @@ export const TrainingProvider = ({ children }) => {
         attendancesByTraining,
         setAttendancesByTraining,
         fetchAttendancesByTraining,
-        fetchDaysWithTraining,
+        // fetchDaysWithTraining,
+        studentsCountByModality,
+        setStudentsCountByModality,
+        fetchStudentsCountPerDayByModality,
       }}
     >
       {children}

@@ -7,9 +7,12 @@ const AttendancesTable = () => {
   const { attendancesByTraining } = useContext(TrainingContext);
   console.log(attendancesByTraining);
 
-  const todayAttendances = attendancesByTraining.filter((attendance) =>
-    isToday(new Date(attendance.checkin_time)),
-  );
+  const todayAttendances = attendancesByTraining
+    ? attendancesByTraining.filter(
+        (attendance) =>
+          attendance.checkin_time && isToday(new Date(attendance.checkin_time))
+      )
+    : [];
 
   return (
     todayAttendances.length > 0 && (
@@ -19,7 +22,7 @@ const AttendancesTable = () => {
           {attendancesByTraining[0].checkin_time
             ? format(
                 new Date(attendancesByTraining[0].checkin_time),
-                "dd/MM/yy",
+                "dd/MM/yy"
               )
             : ""}
         </h1>

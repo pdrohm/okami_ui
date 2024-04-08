@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { Line } from "react-chartjs-2";
+import { Bar } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend,
@@ -15,8 +14,7 @@ import TrainingContext from "../../context/TrainingContext";
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  PointElement,
-  LineElement,
+  BarElement,
   Title,
   Tooltip,
   Legend
@@ -24,23 +22,9 @@ ChartJS.register(
 
 const options = {
   responsive: true,
-  interaction: {
-    mode: "index",
-    intersect: false,
-  },
-  stacked: false,
-  plugins: {
-    title: {
-      display: true,
-      text: "Checkins diários por modalidade",
-    },
-  },
   scales: {
     y: {
-      type: "linear",
-      display: true,
-      position: "left",
-      min: 0,
+      beginAtZero: true,
       max: 40,
       ticks: {
         stepSize: 5,
@@ -48,12 +32,18 @@ const options = {
       },
     },
   },
-  maintainAspectRatio: false,
+  plugins: {
+    legend: {
+      position: "top",
+    },
+    title: {
+      display: true,
+      text: "Checkins diários por modalidade",
+    },
+  },
 };
 
-const LineChart = ({ studentsCountByModality }) => {
-  console.log("studentsCountByModality", studentsCountByModality);
-
+const BarChart = ({ studentsCountByModality }) => {
   if (!studentsCountByModality) {
     return <div>Carregando dados...</div>;
   }
@@ -70,20 +60,17 @@ const LineChart = ({ studentsCountByModality }) => {
   );
 
   const colorsByModality = {
-    jiujitsu: { borderColor: "#FF914C", backgroundColor: "#FF914C80" },
-    muaythai: { borderColor: "#485C40", backgroundColor: "#485C4080" },
-    yoga: { borderColor: "#D6A0F2", backgroundColor: "#D6A0F280" },
-    other: { borderColor: "#86A7FC", backgroundColor: "#86A7FC80" },
+    jiujitsu: { backgroundColor: "#FF914C" },
+    muaythai: { backgroundColor: "#485C40" },
+    yoga: { backgroundColor: "#D6A0F2" },
+    other: { backgroundColor: "#86A7FC" },
   };
-
-  const defaultColor = "#000000";
 
   const data = {
     labels: labels,
     datasets: modalities.map((modality, index) => {
       const colorConfig = colorsByModality[modality] || {
-        borderColor: defaultColor,
-        backgroundColor: defaultColor,
+        backgroundColor: "#000000",
       };
       return {
         label: modality,
@@ -93,18 +80,16 @@ const LineChart = ({ studentsCountByModality }) => {
           );
           return studentInfo ? parseInt(studentInfo.student_count) : 0;
         }),
-        borderColor: colorConfig.borderColor,
         backgroundColor: colorConfig.backgroundColor,
-        yAxisID: "y",
       };
     }),
   };
 
   return (
     <div className="w-[620px] h-96 bg-whiter rounded-lg p-2 border">
-      <Line options={options} data={data} responsive />
+      <Bar options={options} data={data} responsive />
     </div>
   );
 };
 
-export default LineChart;
+export default BarChart;

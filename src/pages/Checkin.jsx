@@ -16,8 +16,6 @@ const Checkin = () => {
     setAttendancesByTraining,
     markAttendance,
   } = useContext(TrainingContext);
-  const { students } = useContext(StudentContext);
-  const [participantes, setParticipantes] = useState([]);
   const inputRef = useRef(null);
 
   const { name, email, belt_description, degree_description, birthday } =
@@ -63,6 +61,9 @@ const Checkin = () => {
     }
   };
 
+  console.log(`trainings`, trainings);
+  console.log(`modality`, modality);
+
   return (
     <Layout>
       <div className="p-10">
@@ -91,7 +92,7 @@ const Checkin = () => {
             >
               <option value="">Selecione um treino</option>
               {trainings
-                .filter((training) => training.modality === modality)
+                .filter((training) => training.modality == modality)
                 .map((training) => (
                   <option key={training.id} value={training.id}>
                     {training.training_name}

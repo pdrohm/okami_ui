@@ -108,6 +108,17 @@ const trainingService = {
       console.error("Error fetching training dates:", error);
     }
   },
+
+  getStudentsCountPerDayByModality: async (month) => {
+    try {
+      const response = await httpClient.get(
+        `/training/students-count-modality/${month}`
+      );
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching training dates:", error);
+    }
+  },
 };
 
 export default trainingService;
