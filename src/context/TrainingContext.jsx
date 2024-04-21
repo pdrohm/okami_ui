@@ -89,6 +89,19 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
+  const getTopStudentsByTraining = async () => {
+    try {
+      const topStudents =
+        await trainingService.getTopStudents();
+
+        console.log('topStudents', topStudents)
+
+      return topStudents;
+    } catch (error) {
+      console.error("Erro ao buscar as presenças do treino:", error);
+    }
+  };
+
   useEffect(() => {
     fetchTrainings();
     const currentMonth = new Date().getMonth() + 1;
@@ -111,6 +124,7 @@ export const TrainingProvider = ({ children }) => {
         studentsCountByModality,
         setStudentsCountByModality,
         fetchStudentsCountPerDayByModality,
+        getTopStudentsByTraining,
       }}
     >
       {children}

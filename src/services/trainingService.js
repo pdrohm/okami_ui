@@ -119,6 +119,14 @@ const trainingService = {
       console.error("Error fetching training dates:", error);
     }
   },
+  getTopStudents: async () => {
+    try {
+      const response = await httpClient.get(`/attendance/top-students`);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching top students:", error);
+    }
+  },
 };
 
 export default trainingService;
