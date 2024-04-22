@@ -14,7 +14,6 @@ import { differenceInYears } from "date-fns";
 import trainingService from "../../../services/trainingService";
 
 const TrainingRow = ({ training }) => {
-  const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { fetchTrainings } = useContext(TrainingContext);

@@ -69,14 +69,7 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
-  // const fetchDaysWithTraining = async () => {
-  //   try {
-  //     const days = await trainingService.getTrainingDays();
-  //     setDaysWithTraining(days);
-  //   } catch (error) {
-  //     console.error("Erro ao buscar as presenças do treino:", error);
-  //   }
-  // };
+
 
   const fetchStudentsCountPerDayByModality = async (month) => {
     try {
@@ -102,6 +95,19 @@ export const TrainingProvider = ({ children }) => {
     }
   };
 
+  const getAttendancesByStudent = async (studentId) => {
+    try {
+      const attendancesByStudent =
+        await trainingService.getAttendancesByStudent(studentId);
+
+
+      return attendancesByStudent;
+    } catch (error) {
+      console.error("Erro ao buscar as presenças do aluno:", error);
+
+    }
+  }
+
   useEffect(() => {
     fetchTrainings();
     const currentMonth = new Date().getMonth() + 1;
@@ -125,6 +131,7 @@ export const TrainingProvider = ({ children }) => {
         setStudentsCountByModality,
         fetchStudentsCountPerDayByModality,
         getTopStudentsByTraining,
+        getAttendancesByStudent
       }}
     >
       {children}

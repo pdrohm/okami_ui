@@ -67,8 +67,9 @@ const StudentForm = ({ studentData }) => {
 
         <div className="flex w-full justify-end">
           <button className="form-button" type="submit">
-            Finalizar cadastro
+            Enviar
           </button>
+          
         </div>
       </form>
     </div>

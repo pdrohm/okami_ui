@@ -20,7 +20,6 @@ export default function StudentsTable({ students }) {
               <TableCell align="left">Contato</TableCell>
               <TableCell align="left">Email</TableCell>
               <TableCell align="left">Idade</TableCell>
-              <TableCell align="left">Acoes</TableCell>
               <TableCell align="left"></TableCell>
             </TableRow>
           </TableHead>

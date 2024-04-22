@@ -9,7 +9,7 @@ const studentService = {
       const response = await httpClient.get("/students");
       return response.data;
     } catch (error) {
-      console.error("Erro ao obter todos os estudantes:", error);
+      console.error("Erro ao obter todos os alunos:", error);
       throw error;
     }
   },
@@ -19,7 +19,7 @@ const studentService = {
       const response = await httpClient.get(`/students/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Erro ao obter estudante por ID:", error);
+      console.error("Erro ao obter aluno por ID:", error);
       throw error;
     }
   },
@@ -31,7 +31,7 @@ const studentService = {
 
       return response.data;
     } catch (error) {
-      console.error("Erro ao criar estudante:", error);
+      console.error("Erro ao criar aluno:", error);
       toast.error("Erro ao cadastrar aluno");
       throw error;
     }
@@ -42,7 +42,9 @@ const studentService = {
       const response = await httpClient.put(`/students/${id}`, studentData);
       return response.data;
     } catch (error) {
-      console.error("Erro ao atualizar estudante:", error);
+      console.error("Erro ao atualizar aluno:", error);
+      toast.error("Erro ao editar aluno");
+
       throw error;
     }
   },
@@ -52,7 +54,7 @@ const studentService = {
       const response = await httpClient.delete(`/students/${id}`);
       return response.data;
     } catch (error) {
-      console.error("Erro ao excluir estudante:", error);
+      console.error("Erro ao excluir aluno:", error);
       throw error;
     }
   },

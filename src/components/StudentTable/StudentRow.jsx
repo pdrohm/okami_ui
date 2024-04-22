@@ -35,7 +35,7 @@ const StudentRow = ({ student }) => {
   };
 
   const handleEditStudent = (student) => {
-    navigate("/alunos/registro", { state: { studentData: student } });
+    navigate("/alunos/registro", { state: { studentData: student, editStudent: true } });
   };
 
   const today = new Date();
@@ -63,20 +63,11 @@ const StudentRow = ({ student }) => {
         <TableCell align="left">{student.number}</TableCell>
         <TableCell align="left">{student.email}</TableCell>
         <TableCell align="left">{age}</TableCell>
-        <TableCell align="left">
-          <EditIcon
-            className="cursor-pointer hover:text-orange"
-            onClick={() => handleEditStudent(student)}
-          />
-          <DeleteForeverIcon
-            className="cursor-pointer hover:text-orange"
-            onClick={() => setModalOpen(true)}
-          />
-        </TableCell>
+       
         <TableCell>
           <VisibilityIcon
             className="cursor-pointer hover:text-orange"
-            onClick={() => handleSelectStudent(student)}
+            onClick={() => handleEditStudent(student)}
           />
         </TableCell>
       </TableRow>

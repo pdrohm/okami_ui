@@ -5,7 +5,6 @@ import { isToday } from "date-fns";
 
 const AttendancesTable = () => {
   const { attendancesByTraining } = useContext(TrainingContext);
-  console.log(attendancesByTraining);
 
   const todayAttendances = attendancesByTraining
     ? attendancesByTraining.filter(

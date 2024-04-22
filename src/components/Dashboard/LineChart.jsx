@@ -52,7 +52,6 @@ const options = {
 };
 
 const LineChart = ({ studentsCountByModality }) => {
-  console.log("studentsCountByModality", studentsCountByModality);
 
   if (!studentsCountByModality) {
     return <div>Carregando dados...</div>;

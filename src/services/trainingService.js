@@ -15,7 +15,7 @@ const trainingService = {
     }
   },
 
-  getTrainingById: async (id, date) => {
+  getTrainingById: async (id) => {
     try {
       const response = await httpClient.get(`/training/${id}`);
 
@@ -127,6 +127,17 @@ const trainingService = {
       console.error("Error fetching top students:", error);
     }
   },
+  getAttendancesByStudent: async (studentId) => {
+    try {
+      const response = await httpClient.get(`/training/student-attendances/${studentId}`);
+
+      console.log('AQUI',response.data)
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching top students:", error);
+    }
+  },
+
 };
 
 export default trainingService;
