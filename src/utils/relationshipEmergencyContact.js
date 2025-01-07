@@ -1,4 +1,4 @@
-const relationEmergencyContact = [
+const relationshipEmergencyContact = [
   { value: "parent", description: "Pai/Mãe" },
   { value: "spouse", description: "Namorad@/Espos@" },
   { value: "family_member", description: "Familiar" },
@@ -6,4 +6,4 @@ const relationEmergencyContact = [
   { value: "other", description: "Outro" },
 ];
 
-export { relationEmergencyContact };
+export { relationshipEmergencyContact };

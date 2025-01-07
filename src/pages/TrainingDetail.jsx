@@ -1,16 +1,16 @@
-import React, { useContext, useEffect } from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import { useLocation } from "react-router-dom";
 import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 
 import SelfImprovementIcon from "@mui/icons-material/SelfImprovement";
 import SportsMmaIcon from "@mui/icons-material/SportsMma";
-import TrainingContext from "../context/TrainingContext";
 import AttendanceDataGrid from "../components/AttendanceDataGrid";
 import GetBack from "../components/GetBack";
 import Calendar from "../components/Calendar";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { useStudentStore } from "../store/useStudentStore";
 
 const TrainingDetail = () => {
   const [date, setDate] = useState(dayjs(new Date()));
@@ -22,7 +22,7 @@ const TrainingDetail = () => {
     attendancesByTraining,
     fetchAttendancesByTraining,
     daysWithTraining,
-  } = useContext(TrainingContext);
+  } = useStudentStore();
 
   let iconComponent;
   switch (trainingData?.modality) {

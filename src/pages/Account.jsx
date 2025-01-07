@@ -1,16 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import Layout from "../components/Layout";
-import AuthContext from "../context/AuthContext";
 import MyAccount from "../components/Account/MyAccount";
 import AddUser from "../components/Account/AddUser";
+import { useAuthStore } from "../store/useAuthStore";
 
 const Account = () => {
-  const { user } = useContext(AuthContext);
+  const { user } = useAuthStore();
+
   return (
     <Layout>
       <div className="flex justify-start w-full p-10 h-full flex-col">
-        
-        {user && <MyAccount user={user} /> }
+        {user && <MyAccount user={user} />}
         <AddUser />
       </div>
     </Layout>

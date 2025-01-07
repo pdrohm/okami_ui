@@ -1,78 +1,68 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import PersonalDataForm from "./PersonalDataForm";
+import React from "react";
+import { useForm, FormProvider } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as Yup from "yup";
+import PersonalDetailsForm from "./PersonalDetailsForm";
 import AddressForm from "./AddressForm";
 import EmergencyContactForm from "./EmergencyContactForm";
-import PictureForm from "./PictureForm";
-import studentService from "../../services/studentService";
-import StudentContext from "../../context/StudentContext";
-import { useNavigate } from "react-router-dom";
-import { format } from "date-fns";
+import PhysicalDetailsForm from "./PhysicalDetailsForm";
 
-const StudentForm = ({ studentData }) => {
-  const {
-    register,
-    handleSubmit,
-    setValue,
-    reset,
-    control,
-    formState: { errors },
-  } = useForm();
+const validationSchema = Yup.object().shape({
+  name: Yup.string().required("Nome é obrigatório"),
+  email: Yup.string().email("Email inválido").required("Email é obrigatório"),
+  phone: Yup.string().required("Telefone é obrigatório"),
+  weight: Yup.number().positive("Peso deve ser positivo").required("Peso é obrigatório"),
+  height: Yup.number().positive("Altura deve ser positiva").required("Altura é obrigatória"),
+  birthDate: Yup.date().required("Data de Nascimento é obrigatória"),
+});
 
-  const navigate = useNavigate();
-
-  const { fetchStudents } = useContext(StudentContext);
-
-  const [imageFile, setImageFile] = useState(null);
-
-  const onSubmit = async (data) => {
-    if (studentData) {
-      await studentService.updateStudent(studentData.id, data);
-    } else {
-      await studentService.createStudent(data);
-    }
-    afterSubmit();
-  };
-
-  const afterSubmit = () => {
-    fetchStudents();
-    reset();
-    navigate("/alunos");
-  };
-
-  useEffect(() => {
-    if (studentData) {
-      Object.keys(studentData).forEach((key) => {
-        if (key === "birthday") {
-          const date = new Date(studentData[key]);
-          setValue(key, date);
-        } else {
-          setValue(key, studentData[key]);
-        }
-      });
-    }
-  }, [studentData, setValue]);
+const StudentForm = ({ initialValues, onSubmit }) => {
+  const methods = useForm({
+    resolver: yupResolver(validationSchema),
+    defaultValues: initialValues || {
+      name: "",
+      birthDate: "",
+      email: "",
+      phone: "",
+      gender: "",
+      legalGuardian: "",
+      emergencyContact: "",
+      emergencyPhone: "",
+      relationship: "",
+      observation: "",
+      address: "",
+      postalCode: "",
+      city: "",
+      state: "",
+      country: "",
+      weight: "",
+      height: "",
+      beltId: "",
+      degreeId: "",
+    },
+  });
 
   return (
-    <div className="max-w-4xl  mt-8 p-6 bg-whiter shadow-md rounded-md w-full flex-col flex justify-center">
-      <form onSubmit={handleSubmit(onSubmit)} className="w-full h-full">
-        <PersonalDataForm
-          register={register}
-          errors={errors}
-          control={control}
-        />
-        <AddressForm register={register} errors={errors} />
-        <EmergencyContactForm register={register} errors={errors} />
-        <PictureForm setImageFile={setImageFile} />
-
-        <div className="flex w-full justify-end">
-          <button className="form-button" type="submit">
-            Enviar
-          </button>
-          
-        </div>
+    <FormProvider {...methods}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit)}
+        className="space-y-6 bg-white shadow-md rounded-lg p-8 max-w-4xl mx-auto"
+      >
+        <h1 className="text-2xl font-bold text-gray-700 text-center">
+          {initialValues ? "Editar Aluno" : "Cadastrar Aluno"}
+        </h1>
+        <PersonalDetailsForm />
+        <AddressForm />
+        <EmergencyContactForm />
+        <PhysicalDetailsForm />
+        <button
+          type="submit"
+          className="w-full bg-black hover:bg-blue-600 text-white ont-bold py-2 px-4 rounded-lg transition"
+        >
+          {initialValues ? "Atualizar" : "Cadastrar"}
+        </button>
       </form>
-    </div>
+    </FormProvider>
   );
 };
 

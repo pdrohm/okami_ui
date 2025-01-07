@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import TrainingContext from "../../context/TrainingContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useTrainingStore } from "../../store/useTrainingStore";
 
 const TotalTrainingsCreated = () => {
-  const { trainings } = useContext(TrainingContext);
+  const { trainings} = useTrainingStore()
   const navigate = useNavigate();
 
   return (

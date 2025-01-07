@@ -1,18 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import studentService from "../services/studentService";
-import StudentContext from "../context/StudentContext";
+import React, { useEffect } from "react";
 
-const ModalDelete = ({ data, question, fetch, modalOpen, setModalOpen, handleDelete }) => {
-
-
-
+const ModalDelete = ({
+  data,
+  question,
+  fetch,
+  modalOpen,
+  setModalOpen,
+  handleDelete,
+}) => {
   const handleCancelClick = () => {
     setModalOpen(false);
   };
 
   useEffect(() => {
-    fetch()
-  }, [])
+    fetch();
+  }, []);
 
   return (
     <div
@@ -43,7 +45,7 @@ const ModalDelete = ({ data, question, fetch, modalOpen, setModalOpen, handleDel
                   className="text-lg leading-6 font-medium text-gray-900"
                   id="modal-headline"
                 >
-                 {question}
+                  {question}
                 </h3>
                 <div className="mt-2">
                   <p className="text-sm text-gray-500">
@@ -74,7 +76,7 @@ const ModalDelete = ({ data, question, fetch, modalOpen, setModalOpen, handleDel
           </div>
           <div className="mt-5 sm:mt-6">
             <button
-              onClick={ () => handleDelete(data.id)}
+              onClick={() => handleDelete(data.id)}
               type="button"
               className="inline-flex justify-center w-full rounded-md border border-transparent shadow-sm px-4 py-2 bg-orange text-base font-medium text-white hover:bg-orange-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-orange sm:text-sm"
             >

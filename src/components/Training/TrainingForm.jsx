@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
-import TrainingContext from "../../context/TrainingContext";
 import { useNavigate } from "react-router-dom";
 import trainingService from "../../services/trainingService";
+import { useTrainingStore } from "../../store/useTrainingStore";
 
 const TrainingForm = ({ trainingData }) => {
   const {
@@ -17,7 +17,7 @@ const TrainingForm = ({ trainingData }) => {
 
   const navigate = useNavigate();
 
-  const { fetchTrainings } = useContext(TrainingContext);
+  const { fetchTrainings } = useTrainingStore();
 
   const onSubmit = async (data) => {
     if (trainingData) {

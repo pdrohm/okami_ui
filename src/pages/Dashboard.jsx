@@ -1,13 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import LineChart from "../components/Dashboard/LineChart";
 import BarChart from "../components/Dashboard/BarChart";
-import TrainingContext from "../context/TrainingContext";
 import ToggleChart from "../components/Dashboard/ToggleChart";
 import MonthChartSelector from "../components/Dashboard/MonthChartSelector";
 import TotalStudentsRegistered from "../components/Dashboard/TotalStudentsRegistered";
 import TotalTrainingsCreated from "../components/Dashboard/TotalTrainingsCreated";
 import TopStudentsTable from "../components/Dashboard/TopStudentsTable";
+import { useStudentStore } from "../store/useStudentStore";
+import { useTrainingStore } from "../store/useTrainingStore";
 
 const Dashboard = () => {
   const currentMonth = new Date().getMonth() + 1;
@@ -20,7 +21,7 @@ const Dashboard = () => {
     studentsCountByModality,
     fetchStudentsCountPerDayByModality,
     getTopStudentsByTraining,
-  } = useContext(TrainingContext);
+  } = useTrainingStore();
 
   const fetchTopStudents = async () => {
     const students = await getTopStudentsByTraining();

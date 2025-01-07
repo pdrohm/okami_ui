@@ -1,73 +1,77 @@
 import React from "react";
-import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
+import { useFormContext } from "react-hook-form";
+import { relationshipEmergencyContact } from "../../utils/relationshipEmergencyContact";
 
-const EmergencyContactForm = ({ register, errors }) => {
+const EmergencyContactForm = () => {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
   return (
-    <>
-      <h2 className="text-xl font-semibold mb-4 mt-10">
-        Contato de emergência
+    <div className="space-y-4">
+      <h2 className="text-lg font-semibold text-gray-700">
+        Contato de Emergência
       </h2>
-      <div className="mb-4 flex gap-x-5">
-        <div className="w-1/2">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="emergencyContact"
-          >
-            Nome do contato
-          </label>
-          <input
-            className="student-form-input"
-            type="text"
-            {...register("emergency_contact")}
-          />
-          {errors.emergency_contact && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.emergency_contact.message}
-            </p>
-          )}
-        </div>
-
-        <div className="w-1/2">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="emergencyContactNumber"
-          >
-            Número do contato
-          </label>
-          <input
-            className="student-form-input"
-            type="text"
-            {...register("emergency_contact_number")}
-          />
-          {errors.emergency_contact_number && (
-            <p className="text-red-500 text-xs mt-1">
-              {errors.emergency_contact_number.message}
-            </p>
-          )}
-        </div>
-
-        <div className="w-1/2">
-          <label
-            className="block text-gray-700 text-sm font-bold mb-2"
-            htmlFor="relation"
-          >
-            Relação
-          </label>
-          <select className="student-form-input" {...register("relation")}>
-            <option value="">Selecione...</option>
-
-            {relationEmergencyContact.map((relation) => (
-              <option key={relation.value} value={relation.value}>
-                {relation.description}
-              </option>
-            ))}
-          </select>
-          {errors.gender && (
-            <p className="text-red-500 text-xs mt-1">{errors.gender.message}</p>
-          )}
-        </div>
+      <div>
+        <label className="block text-gray-600 font-medium">
+          Responsável Legal
+        </label>
+        <input
+          {...register("legalGuardian")}
+          type="text"
+          className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p className="text-red-500 text-sm">{errors.legalGuardian?.message}</p>
       </div>
-    </>
+      <div>
+        <label className="block text-gray-600 font-medium">
+          Contato de Emergência
+        </label>
+        <input
+          {...register("emergencyContact")}
+          type="text"
+          className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p className="text-red-500 text-sm">
+          {errors.emergencyContact?.message}
+        </p>
+      </div>
+      <div>
+        <label className="block text-gray-600 font-medium">
+          Telefone de Emergência
+        </label>
+        <input
+          {...register("emergencyPhone")}
+          type="text"
+          className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p className="text-red-500 text-sm">{errors.emergencyPhone?.message}</p>
+      </div>
+      <div>
+        <label className="block text-gray-600 font-medium">
+          Relacionamento
+        </label>
+        <select className="student-form-input" {...register("relationship")}>
+          <option value="">Selecione...</option>
+
+          {relationshipEmergencyContact.map((relationship) => (
+            <option key={relationship.value} value={relationship.value}>
+              {relationship.description}
+            </option>
+          ))}
+        </select>
+        <p className="text-red-500 text-sm">{errors.relationship?.message}</p>
+      </div>
+      <div>
+        <label className="block text-gray-600 font-medium">Observações</label>
+        <textarea
+          {...register("observation")}
+          className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <p className="text-red-500 text-sm">{errors.observation?.message}</p>
+      </div>
+    </div>
   );
 };
 

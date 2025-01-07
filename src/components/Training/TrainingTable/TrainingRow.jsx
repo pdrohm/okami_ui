@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import TableCell from "@mui/material/TableCell";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
@@ -6,17 +6,16 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 
 import TableRow from "@mui/material/TableRow";
 
-import TrainingContext from "../../../context/TrainingContext";
-
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../../ModalDelete";
 import { differenceInYears } from "date-fns";
 import trainingService from "../../../services/trainingService";
+import { useTrainingStore } from "../../../store/useTrainingStore";
 
 const TrainingRow = ({ training }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const { fetchTrainings } = useContext(TrainingContext);
+  const { fetchTrainings } = useTrainingStore();
 
   const navigate = useNavigate();
 

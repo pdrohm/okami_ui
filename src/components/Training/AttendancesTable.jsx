@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import { format } from "date-fns";
-import TrainingContext from "../../context/TrainingContext";
 import { isToday } from "date-fns";
+import { useTrainingStore } from "../../store/useTrainingStore";
 
 const AttendancesTable = () => {
-  const { attendancesByTraining } = useContext(TrainingContext);
+  const { attendancesByTraining } = useTrainingStore();
 
   const todayAttendances = attendancesByTraining
     ? attendancesByTraining.filter(

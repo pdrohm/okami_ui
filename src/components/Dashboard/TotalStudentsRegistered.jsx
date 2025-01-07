@@ -1,9 +1,9 @@
-import React, { useContext } from "react";
-import StudentContext from "../../context/StudentContext";
+import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useStudentStore } from "../../store/useStudentStore";
 
 const TotalStudentsRegistered = () => {
-  const { students } = useContext(StudentContext);
+  const { students } = useStudentStore()
   const navigate = useNavigate();
 
   return (

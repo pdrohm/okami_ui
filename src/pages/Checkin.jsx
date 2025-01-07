@@ -1,9 +1,9 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Layout from "../components/Layout";
-import TrainingContext from "../context/TrainingContext";
-import StudentContext from "../context/StudentContext";
+
 import trainingService from "../services/trainingService";
 import AttendancesTable from "../components/Training/AttendancesTable";
+import { useTrainingStore } from "../store/useTrainingStore";
 
 const Checkin = () => {
   const [modality, setModality] = useState("jiujitsu");
@@ -15,10 +15,10 @@ const Checkin = () => {
     fetchAttendancesByTraining,
     setAttendancesByTraining,
     markAttendance,
-  } = useContext(TrainingContext);
+  } = useTrainingStore();
   const inputRef = useRef(null);
 
-  const { name, email, belt_description, degree_description, birthday } =
+  const { name, email, belt_description, degree_description, birthDate } =
     studentInfo || {};
 
   const handleModalityChange = (e) => {
@@ -50,7 +50,9 @@ const Checkin = () => {
         await markAttendance(code, training);
 
         setStudentInfo(null);
-      } catch {}
+      } catch (error){
+        console.log(error)
+      }
     }
   };
 

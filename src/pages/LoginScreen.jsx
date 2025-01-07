@@ -1,29 +1,25 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bannerOkami2 from "../../public/bannerOkami2.jpg";
 import okamiLogo from "../assets/okami.png";
-import authService from "../services/authService";
-import AuthContext from "../context/AuthContext";
+
+import { useAuthStore } from "../store/useAuthStore";
 
 const LoginScreen = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useContext(AuthContext)
+  const { login } = useAuthStore();
 
-  const navigate = useNavigate(); 
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const userData = { username: username, password: password };
+      const userData = { email: email, password: password };
 
-     
       await login(userData);
 
-      navigate('/');
-
-
+      navigate("/");
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -45,8 +41,8 @@ const LoginScreen = () => {
             <input
               type="text"
               placeholder="Usuário"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="student-form-input bg-white font-semibold"
             />
             <input

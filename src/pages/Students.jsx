@@ -1,15 +1,15 @@
-import React, { useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import SearchBar from "../components/Searchbar";
 import Filters from "../components/Filters";
-import StudentContext from "../context/StudentContext";
 import AddMemberButton from "../components/AddMemberButton";
 import StudentsTable from "../components/StudentTable/StudentTable";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { differenceInYears } from "date-fns";
+import { useStudentStore } from "../store/useStudentStore";
 
 const Students = () => {
-  const { students } = useContext(StudentContext);
+  const { students, fetchStudents } = useStudentStore();
   const [searchInput, setSearchInput] = useState("");
   const [sortBy, setSortBy] = useState("name_asc");
 
@@ -27,12 +27,12 @@ const Students = () => {
     )
     .sort((a, b) => {
       if (sortBy === "age_asc") {
-        const ageA = differenceInYears(new Date(), new Date(a.birthday));
-        const ageB = differenceInYears(new Date(), new Date(b.birthday));
+        const ageA = differenceInYears(new Date(), new Date(a.birthDate));
+        const ageB = differenceInYears(new Date(), new Date(b.birthDate));
         return ageA - ageB;
       } else if (sortBy === "age_desc") {
-        const ageA = differenceInYears(new Date(), new Date(a.birthday));
-        const ageB = differenceInYears(new Date(), new Date(b.birthday));
+        const ageA = differenceInYears(new Date(), new Date(a.birthDate));
+        const ageB = differenceInYears(new Date(), new Date(b.birthDate));
         return ageB - ageA;
       } else if (sortBy === "belt") {
         return a.belt.localeCompare(b.belt);
@@ -43,6 +43,11 @@ const Students = () => {
       }
     });
 
+    useEffect(() => {
+      fetchStudents()
+    }, []);
+
+    console.log('studentsdata', students)
   return (
     <Layout>
       <div className="p-10">

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,7 +10,6 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
-import TrainingContext from "../../context/TrainingContext";
 
 ChartJS.register(
   CategoryScale,

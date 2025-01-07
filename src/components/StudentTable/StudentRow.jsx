@@ -1,29 +1,28 @@
 import TableCell from "@mui/material/TableCell";
 import IconButton from "@mui/material/IconButton";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { Box, Collapse } from "@mui/material";
 import defaultAvatar from "../../assets/default_avatar.jpg";
 
 import TableRow from "@mui/material/TableRow";
-import React, { useContext, useState } from "react";
-import { relationEmergencyContact } from "../../utils/relationEmergencyContact";
+import React, { useState } from "react";
+import { relationshipEmergencyContact } from "../../utils/relationshipEmergencyContact";
 
 import { useNavigate } from "react-router-dom";
 import ModalDelete from "../ModalDelete";
 import { differenceInYears } from "date-fns";
-import StudentContext from "../../context/StudentContext";
 import studentService from "../../services/studentService";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useStudentStore } from "../../store/useStudentStore";
 
 const StudentRow = ({ student }) => {
   const [open, setOpen] = useState(false);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { fetchStudents } = useContext(StudentContext);
+  const { fetchStudents } =  useStudentStore()
 
   const handleDeleteClick = async (id) => {
     await studentService.deleteStudent(id);
@@ -40,7 +39,7 @@ const StudentRow = ({ student }) => {
 
   const today = new Date();
 
-  const age = differenceInYears(today, student.birthday);
+  const age = differenceInYears(today, student.birthDate);
 
   return (
     <>
@@ -110,9 +109,9 @@ const StudentRow = ({ student }) => {
                 <div className="flex flex-col justify-start items-start">
                   <span>
                     {student.emergency_contact ?? ""}
-                    {student.relation
+                    {student.relationship
                       ? ` - ${
-                          relationEmergencyContact.find(
+                        relationshipEmergencyContact.find(
                             (item) => item.value === student.relation
                           )?.description
                         }`
