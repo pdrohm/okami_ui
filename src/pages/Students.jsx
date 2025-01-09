@@ -9,7 +9,7 @@ import { differenceInYears } from "date-fns";
 import { useStudentStore } from "../store/useStudentStore";
 
 const Students = () => {
-  const { students, fetchStudents } = useStudentStore();
+  const { students, getStudents } = useStudentStore();
   const [searchInput, setSearchInput] = useState("");
   const [sortBy, setSortBy] = useState("name_asc");
 
@@ -44,7 +44,7 @@ const Students = () => {
     });
 
     useEffect(() => {
-      fetchStudents()
+      getStudents()
     }, []);
 
     console.log('studentsdata', students)

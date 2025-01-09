@@ -1,13 +1,13 @@
 import React from "react";
 import { format } from "date-fns";
 import { isToday } from "date-fns";
-import { useTrainingStore } from "../../store/useTrainingStore";
+import { useClassStore } from "../../store/useClassStore";
 
 const AttendancesTable = () => {
-  const { attendancesByTraining } = useTrainingStore();
+  const { attendancesByClass } = useClassStore();
 
-  const todayAttendances = attendancesByTraining
-    ? attendancesByTraining.filter(
+  const todayAttendances = attendancesByClass
+    ? attendancesByClass.filter(
         (attendance) =>
           attendance.checkin_time && isToday(new Date(attendance.checkin_time))
       )
@@ -17,10 +17,10 @@ const AttendancesTable = () => {
     todayAttendances.length > 0 && (
       <div className="flex flex-col items-center justify-center">
         <h1 className="my-5 font-semibold uppercase">
-          {attendancesByTraining[0].training_name} -{" "}
-          {attendancesByTraining[0].checkin_time
+          {attendancesByClass[0].name} -{" "}
+          {attendancesByClass[0].checkin_time
             ? format(
-                new Date(attendancesByTraining[0].checkin_time),
+                new Date(attendancesByClass[0].checkin_time),
                 "dd/MM/yy"
               )
             : ""}

@@ -3,7 +3,7 @@ import studentService from "../services/studentService";
 
 export const useStudentStore = create((set) => ({
   students: [],
-  fetchStudents: async () => {
+  getStudents: async () => {
     try {
       const { data } = await studentService.getAllStudents();
       set({ students: data });
@@ -12,11 +12,20 @@ export const useStudentStore = create((set) => ({
     }
   },
   createStudent: async (student) => {
+      try {
+        const newStudent = await studentService.createStudent(student);
+        set((state) => ({ students: [...state.students, newStudent] }));
+      } catch (error) {
+        console.error("Erro ao criar estudante:", error);
+        throw error; 
+      }
+    },
+  editStudent: async (student) => {
     try {
-      const newStudent = await studentService.createStudent(student);
-      set((state) => ({ students: [...state.students, newStudent] }));
+      const editedStudent = await studentService.editStudent(student);
+      set((state) => ({ students: [...state.students, editedStudent] }));
     } catch (error) {
-      console.error("Erro ao criar estudante:", error);
+      console.error("Erro ao editar estudante:", error);
     }
   }
 }));

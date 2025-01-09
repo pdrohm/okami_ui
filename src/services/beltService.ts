@@ -12,6 +12,15 @@ const beltService = {
           throw error;
         }
       },
+      getDegrees: async (beltId: number): Promise<Belt[]> => {
+        try {
+          const response = await httpClient.get<Belt[]>(`/degrees`);
+          return response.data;
+        } catch (error: any) {
+          console.error("Erro ao obter todos os graus da faixa:", error);
+          throw error;
+        }
+      }
 }
 
 export default beltService;

@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import StudentForm from "../components/StudentForm/StudentForm";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { useLocation } from "react-router-dom";
-import TrainingForm from "../components/Training/TrainingForm";
+import ClassForm from "../components/Class/ClassForm";
 import GetBack from "../components/GetBack";
+import { useClassStore } from "../store/useClassStore";
 
-const CreateTraining = () => {
+const CreateClass = () => {
   const location = useLocation();
-  const { trainingData } = location.state || {};
+  const { classData } = location.state || {};
+  const { getModalities} = useClassStore()
 
-  console.log('trainingData', trainingData)
+  useEffect(() => {
+    getModalities();
+  }, []);
+
 
   return (
     <Layout>
@@ -25,10 +30,10 @@ const CreateTraining = () => {
           </div>
           <h1 className="text-4xl">Criar novo treino</h1>
         </div>
-        <TrainingForm trainingData={trainingData} />
+        <ClassForm classData={classData} />
       </div>
     </Layout>
   );
 };
 
-export default CreateTraining;
+export default CreateClass;

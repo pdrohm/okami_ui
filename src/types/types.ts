@@ -26,7 +26,7 @@ export interface Student {
   }
 
 
-  export interface Training {
+  export interface Class {
     id: number;
     name: string;
     description: string;

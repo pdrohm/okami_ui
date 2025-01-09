@@ -5,10 +5,10 @@ import BarChart from "../components/Dashboard/BarChart";
 import ToggleChart from "../components/Dashboard/ToggleChart";
 import MonthChartSelector from "../components/Dashboard/MonthChartSelector";
 import TotalStudentsRegistered from "../components/Dashboard/TotalStudentsRegistered";
-import TotalTrainingsCreated from "../components/Dashboard/TotalTrainingsCreated";
 import TopStudentsTable from "../components/Dashboard/TopStudentsTable";
 import { useStudentStore } from "../store/useStudentStore";
-import { useTrainingStore } from "../store/useTrainingStore";
+import { useClassStore } from "../store/useClassStore";
+import TotalClassesCreated from "../components/Dashboard/TotalClassesCreated";
 
 const Dashboard = () => {
   const currentMonth = new Date().getMonth() + 1;
@@ -19,17 +19,17 @@ const Dashboard = () => {
 
   const {
     studentsCountByModality,
-    fetchStudentsCountPerDayByModality,
-    getTopStudentsByTraining,
-  } = useTrainingStore();
+    getStudentsCountPerDayByModality,
+    getTopStudentsByClass
+  } = useClassStore();
 
   const fetchTopStudents = async () => {
-    const students = await getTopStudentsByTraining();
+    const students = await getTopStudentsByClass();
     setTopStudents(students);
   };
 
   useEffect(() => {
-    fetchStudentsCountPerDayByModality(selectedMonth);
+    getStudentsCountPerDayByModality(selectedMonth);
   }, [selectedMonth]);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Dashboard = () => {
         <div className="flex   flex-col ">
           <div className="flex gap-x-2">
             <TotalStudentsRegistered />
-            <TotalTrainingsCreated />
+            <TotalClassesCreated />
           </div>
           <div>
             {topStudents &&

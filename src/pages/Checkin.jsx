@@ -1,21 +1,21 @@
 import React, { useState, useRef, useEffect } from "react";
 import Layout from "../components/Layout";
 
-import trainingService from "../services/trainingService";
-import AttendancesTable from "../components/Training/AttendancesTable";
-import { useTrainingStore } from "../store/useTrainingStore";
+import classService from "../services/classService";
+import AttendancesTable from "../components/Class/AttendancesTable";
+import { useClassStore } from "../store/useClassStore";
 
 const Checkin = () => {
   const [modality, setModality] = useState("jiujitsu");
-  const [training, setTraining] = useState("");
+  const [classe, setClass] = useState("");
   const [studentInfo, setStudentInfo] = useState(null);
 
   const {
-    trainings,
-    fetchAttendancesByTraining,
-    setAttendancesByTraining,
+    classes,
+    getAttendancesByClass,
+    setAttendancesByClass,
     markAttendance,
-  } = useTrainingStore();
+  } = useClassStore();
   const inputRef = useRef(null);
 
   const { name, email, belt_description, degree_description, birthDate } =
@@ -23,20 +23,20 @@ const Checkin = () => {
 
   const handleModalityChange = (e) => {
     setModality(e.target.value);
-    setAttendancesByTraining(null);
+    setAttendancesByClass(null);
   };
 
-  const handleTrainingChange = (e) => {
-    const trainingId = e.target.value;
-    setTraining(trainingId);
-    fetchAttendancesByTraining(trainingId);
+  const handleClassChange = (e) => {
+    const classId = e.target.value;
+    setClass(classId);
+    getAttendancesByClass(classId);
   };
 
   const handleCheckin = async (code) => {
     if (code.length === 4) {
       try {
         setStudentInfo(null);
-        const userInfo = await trainingService.checkAttendance(code);
+        const userInfo = await classService.checkAttendance(code);
         setStudentInfo(userInfo);
       } catch (error) {
         console.error("Erro ao verificar a presença:", error);
@@ -47,7 +47,7 @@ const Checkin = () => {
   const handleMarkAttendance = async (code) => {
     if (studentInfo) {
       try {
-        await markAttendance(code, training);
+        await markAttendance(code, classe);
 
         setStudentInfo(null);
       } catch (error){
@@ -63,7 +63,7 @@ const Checkin = () => {
     }
   };
 
-  console.log(`trainings`, trainings);
+  console.log(`classes`, classes);
   console.log(`modality`, modality);
 
   return (
@@ -85,19 +85,19 @@ const Checkin = () => {
           </div>
 
           <div>
-            <label htmlFor="training">Treino:</label>
+            <label htmlFor="classes">Treino:</label>
             <select
-              id="training"
-              value={training}
-              onChange={handleTrainingChange}
+              id="classes"
+              value={classe}
+              onChange={handleClassChange}
               className="student-form-input"
             >
               <option value="">Selecione um treino</option>
-              {trainings
-                .filter((training) => training.modality == modality)
-                .map((training) => (
-                  <option key={training.id} value={training.id}>
-                    {training.training_name}
+              {classes
+                .filter((singleClass) => singleClass.modality == modality)
+                .map((singleClass) => (
+                  <option key={singleClass.id} value={singleClass.id}>
+                    {singleClass.name}
                   </option>
                 ))}
             </select>
@@ -110,11 +110,11 @@ const Checkin = () => {
           type="text"
           ref={inputRef}
           className={`h-20 w-1/3 rounded-lg bg-${
-            training ? "orange" : "orange-dark"
+            classes ? "orange" : "orange-dark"
           } text-center text-3xl text-white`}
           maxLength={4}
-          disabled={!training}
-          placeholder={`${training ? "" : "SELECIONE O TREINO"}`}
+          disabled={!classes}
+          placeholder={`${classes ? "" : "SELECIONE O TREINO"}`}
           onChange={(e) => handleCheckin(e.target.value)}
           onKeyDown={handleKeyDown}
         />
@@ -129,7 +129,7 @@ const Checkin = () => {
           </div>
         </div>
       )}
-      <AttendancesTable trainingName={"teste"} />
+      <AttendancesTable className={"teste"} />
     </Layout>
   );
 };

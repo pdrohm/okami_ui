@@ -1,8 +1,14 @@
 import React from "react";
 import { useFormContext } from "react-hook-form";
+import CPFInput from "../CPFInput";
 
 const PersonalDetailsForm = () => {
-  const { register, formState: { errors } } = useFormContext();
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext();
+
+  console.log('errors', errors)
 
   return (
     <div className="space-y-4">
@@ -18,7 +24,9 @@ const PersonalDetailsForm = () => {
           <p className="text-red-500 text-sm">{errors.name?.message}</p>
         </div>
         <div>
-          <label className="block text-gray-600 font-medium">Data de Nascimento</label>
+          <label className="block text-gray-600 font-medium">
+            Data de Nascimento
+          </label>
           <input
             {...register("birthDate")}
             type="date"
@@ -47,17 +55,20 @@ const PersonalDetailsForm = () => {
           <p className="text-red-500 text-sm">{errors.phone?.message}</p>
         </div>
       </div>
-      <div>
-        <label className="block text-gray-600 font-medium">Gênero</label>
-        <select
-          {...register("gender")}
-          className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        >
-          <option value="">Selecione o Gênero</option>
-          <option value="Masculino">Masculino</option>
-          <option value="Feminino">Feminino</option>
-        </select>
-        <p className="text-red-500 text-sm">{errors.gender?.message}</p>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-gray-600 font-medium">Gênero</label>
+          <select
+            {...register("gender")}
+            className="w-full border rounded-lg px-3 py-2 mt-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">Selecione o Gênero</option>
+            <option value="Masculino">Masculino</option>
+            <option value="Feminino">Feminino</option>
+          </select>
+          <p className="text-red-500 text-sm">{errors.gender?.message}</p>
+        </div>
+        <CPFInput register={register} error={errors.document} />
       </div>
     </div>
   );

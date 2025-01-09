@@ -4,7 +4,7 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import dayjs from "dayjs";
 
-const Calendar = ({ setDate, daysWithTraining }) => {
+const Calendar = ({ setDate, daysWithClasses}) => {
   const [selectedDate, setSelectedDate] = useState(dayjs(new Date()));
 
   const handleDateChange = (date) => {
@@ -16,16 +16,16 @@ const Calendar = ({ setDate, daysWithTraining }) => {
 
   const renderDay = (day, _, DayProps) => {
     const formattedDay = dayjs(day).format("YYYY-MM-DD");
-    const hasTraining = daysWithTraining.includes(formattedDay);
+    const hasClass = daysWithClasses.includes(formattedDay);
 
     return (
       <div
         {...DayProps}
         style={{
-          backgroundColor: hasTraining ? "orange" : "transparent",
+          backgroundColor: hasClass ? "orange" : "transparent",
           borderRadius: "50%",
-          width: hasTraining ? "8px" : "auto",
-          height: hasTraining ? "8px" : "auto",
+          width: hasClass ? "8px" : "auto",
+          height: hasClass ? "8px" : "auto",
         }}
       />
     );

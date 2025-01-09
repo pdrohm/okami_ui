@@ -2,7 +2,6 @@ import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
 import { Student } from "../types/types";
 
-
 const studentService = {
   getAllStudents: async (): Promise<Student[]> => {
     try {
@@ -29,19 +28,27 @@ const studentService = {
       console.log("studentData", studentData);
 
       const response = await httpClient.post<Student>("/students", studentData);
-      toast.success("Aluno cadastrado com sucesso");
-
+      toast.success("Aluno cadastrado com sucesso"); // Sucesso tratado aqui
       return response.data;
     } catch (error: any) {
       console.error("Erro ao criar aluno:", error);
-      toast.error("Erro ao cadastrar aluno");
-      throw error;
+
+      const errorMessage =
+        error.response?.data?.message || "Erro ao cadastrar aluno";
+      toast.error(errorMessage); // Erro tratado aqui
+      throw error; // O erro ainda é propagado
     }
   },
 
-  updateStudent: async (id: number, studentData: Partial<Student>): Promise<Student> => {
+  updateStudent: async (
+    id: number,
+    studentData: Partial<Student>
+  ): Promise<Student> => {
     try {
-      const response = await httpClient.put<Student>(`/students/${id}`, studentData);
+      const response = await httpClient.put<Student>(
+        `/students/${id}`,
+        studentData
+      );
       return response.data;
     } catch (error: any) {
       console.error("Erro ao atualizar aluno:", error);

@@ -22,11 +22,11 @@ const StudentRow = ({ student }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { fetchStudents } =  useStudentStore()
+  const { getStudents } =  useStudentStore()
 
   const handleDeleteClick = async (id) => {
     await studentService.deleteStudent(id);
-    fetchStudents();
+    getStudents();
   };
 
   const handleSelectStudent = (student) => {
@@ -129,7 +129,7 @@ const StudentRow = ({ student }) => {
         data={student}
         modalOpen={isModalOpen}
         setModalOpen={setModalOpen}
-        fetch={fetchStudents}
+        fetch={getStudents}
         handleDelete={handleDeleteClick}
         question={`Deseja excluir o treino ${student.name}?`}
       />

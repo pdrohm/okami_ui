@@ -2,16 +2,16 @@ import * as React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { format } from "date-fns";
 
-const AttendanceDataGrid = ({ attendancesByTraining }) => {
+const AttendanceDataGrid = ({ attendancesByClass }) => {
   const dataWithIds = React.useMemo(() => {
-    return attendancesByTraining
+    return attendancesByClass
       .map((row, index) => ({
         ...row,
         id: index + 1,
         checkin_time: format(new Date(row.checkin_time), "HH:mm dd/MM/yyyy"),
       }))
       .sort((a, b) => new Date(b.checkin_time) - new Date(a.checkin_time));
-  }, [attendancesByTraining]);
+  }, [attendancesByClass]);
 
   const columns = [
     { field: "student_name", headerName: "Aluno", flex: 1 },

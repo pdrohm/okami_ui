@@ -11,21 +11,19 @@ import Calendar from "../components/Calendar";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { useStudentStore } from "../store/useStudentStore";
+import { useClassStore } from "../store/useClassStore";
 
-const TrainingDetail = () => {
+const ClassDetail = () => {
   const [date, setDate] = useState(dayjs(new Date()));
 
   const location = useLocation();
-  const { trainingData } = location.state || {};
+  const { classData } = location.state || {};
 
-  const {
-    attendancesByTraining,
-    fetchAttendancesByTraining,
-    daysWithTraining,
-  } = useStudentStore();
+
+  const { getAttendancesByClass, attendancesByClass, daysWithClasses } = useClassStore();
 
   let iconComponent;
-  switch (trainingData?.modality) {
+  switch (classData?.modality) {
     case "jiujitsu":
       iconComponent = <SportsKabaddiIcon fontSize="large" />;
       break;
@@ -40,8 +38,8 @@ const TrainingDetail = () => {
   }
 
   useEffect(() => {
-    if (trainingData && date) {
-      fetchAttendancesByTraining(trainingData.id, date);
+    if (classData && date) {
+      getAttendancesByClass(classData.id, date);
     }
   }, [date]);
 
@@ -53,15 +51,15 @@ const TrainingDetail = () => {
           <div className="flex items-end justify-center text-orange">
             {iconComponent}
           </div>
-          <h1 className="text-4xl"> {trainingData.training_name} </h1>
+          <h1 className="text-4xl"> {classData.name} </h1>
         </div>
         <div className="flex items-center justify-center">
-          <Calendar setDate={setDate} daysWithTraining={daysWithTraining} />
-          <AttendanceDataGrid attendancesByTraining={attendancesByTraining} />
+          <Calendar setDate={setDate} daysWithClasses={daysWithClasses} />
+          <AttendanceDataGrid attendancesByClass={attendancesByClass} />
         </div>
       </div>
     </Layout>
   );
 };
 
-export default TrainingDetail;
+export default ClassDetail;

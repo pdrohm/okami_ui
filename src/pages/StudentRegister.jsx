@@ -3,20 +3,27 @@ import Layout from "../components/Layout";
 import StudentForm from "../components/StudentForm/StudentForm";
 import { useStudentStore } from "../store/useStudentStore";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const StudentRegister = () => {
-  const {createStudent} = useStudentStore();
-    const navigate = useNavigate();
-  
+  const { createStudent } = useStudentStore();
+  const navigate = useNavigate();
 
   const handleSubmit = async (data) => {
+    if (data.document) {
+      data.document = data.document.replace(/\D/g, "");
+    }
     if (data.birthDate) {
       const date = new Date(data.birthDate);
       data.birthDate = date.toISOString();
     }
-  
-    await createStudent(data);
-    navigate("/students");
+
+    try {
+      await createStudent(data); 
+      navigate("/alunos"); 
+    } catch (error) {
+      console.error("Erro ao criar aluno:", error);
+    }
   };
 
   return (

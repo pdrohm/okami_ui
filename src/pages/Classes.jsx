@@ -1,13 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 
 import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
-import TrainingTable from "../components/Training/TrainingTable/TrainingTable";
+import ClassTable from "../components/Class/ClassTable/ClassTable";
 import AddMemberButton from "../components/AddMemberButton";
-import { useTrainingStore } from "../store/useTrainingStore";
+import { useClassStore } from "../store/useClassStore";
 
-const Training = () => {
-  const { trainings } = useTrainingStore();
+const Classes = () => {
+  const { classes, getClasses } = useClassStore();
+
+  useEffect(() => {
+    getClasses();
+  }, []);
 
   return (
     <Layout>
@@ -23,10 +27,10 @@ const Training = () => {
           />
         </div>
 
-        <TrainingTable trainings={trainings} />
+        <ClassTable classes={classes} />
       </div>
     </Layout>
   );
 };
 
-export default Training;
+export default Classes;

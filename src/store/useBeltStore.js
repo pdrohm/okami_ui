@@ -1,18 +1,36 @@
-import { create } from 'zustand';
-import beltService from '../services/beltService';
+import { create } from "zustand";
+import beltService from "../services/beltService";
 
 export const useBeltStore = create((set) => ({
   adultBelts: [],
   kidsBelts: [],
-  fetchBelts: async () => {
+  degrees: [],
+  getBelts: async () => {
     try {
-      const beltsData = await beltService.getBelts();
+      const { data } = await beltService.getBelts();
+
+      const adultBelts = data.filter((belt) => belt.type === "ADULT");
+      const kidsBelts = data.filter((belt) => belt.type === "KID");
+
       set({
-        adultBelts: beltsData.adultBelts,
-        kidsBelts: beltsData.kidsBelts,
+        adultBelts,
+        kidsBelts,
       });
     } catch (error) {
-      console.error('Erro ao buscar faixas:', error);
+      console.error("Erro ao buscar faixas:", error);
+    }
+  },
+  getDegrees: async () => {
+    try {
+      const { data } = await beltService.getDegrees();
+
+      console.log('data', data);
+
+      set({
+        degrees: data,
+      });
+    } catch (error) {
+      console.error("Erro ao buscar faixas:", error);
     }
   },
 }));

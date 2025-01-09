@@ -6,9 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import TrainingRow from "./TrainingRow";
+import ClassRow from "./ClassRow";
 
-export default function TrainingTable({ trainings }) {
+export default function ClassTable({ classes }) {
+  console.log('classes', classes)
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -16,13 +18,13 @@ export default function TrainingTable({ trainings }) {
           <TableRow>
             <TableCell align="center">Treino</TableCell>
             <TableCell align="left">Modalidade</TableCell>
-            <TableCell align="left">Acoes</TableCell>
-            <TableCell align="left"></TableCell>
+            <TableCell align="left">Horário</TableCell>
+            <TableCell align="right">Ações</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {trainings.map((training) => (
-            <TrainingRow key={training.id} training={training} />
+          {classes.map((singleClass) => (
+            <ClassRow key={singleClass.id} singleClass={singleClass} />
           ))}
         </TableBody>
       </Table>

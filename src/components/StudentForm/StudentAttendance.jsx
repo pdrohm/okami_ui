@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { format } from "date-fns";
 
 const columns = [
-  { field: "training_name", headerName: "Treino", flex: 1 },
+  { field: "name", headerName: "Treino", flex: 1 },
   { field: "checkin_time", headerName: "Checkin", flex: 1 },
 ];
 

@@ -1,63 +1,63 @@
 import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
-import { Attendance, Training, TopStudent } from "../types/types";
+import { Attendance, Class, TopStudent } from "../types/types";
 
-const trainingService = {
-  getAllTrainings: async (): Promise<Training[]> => {
+const classService = {
+  getAllClasses: async (): Promise<Class[]> => {
     try {
-      const response = await httpClient.get<Training[]>("/training");
+      const response = await httpClient.get<Class[]>("/classes");
       return response.data;
     } catch (error: any) {
-      console.error("Erro ao obter todos os treinos:", error);
+      console.error("Erro ao obter todas as aulas:", error);
       throw error;
     }
   },
 
-  getTrainingById: async (id: number): Promise<Training> => {
+  getClassById: async (id: number): Promise<Class> => {
     try {
-      const response = await httpClient.get<Training>(`/training/${id}`);
+      const response = await httpClient.get<Class>(`/classes/${id}`);
       return response.data;
     } catch (error: any) {
-      console.error("Erro ao obter treino por ID:", error);
+      console.error("Erro ao obter aula por ID:", error);
       throw error;
     }
   },
 
-  createTraining: async (trainingData: Omit<Training, "id">): Promise<Training> => {
+  createClass: async (classData: Omit<Class, "id">): Promise<Class> => {
     try {
-      const response = await httpClient.post<Training>("/training", trainingData);
-      toast.success("Treino cadastrado com sucesso");
+      const response = await httpClient.post<Class>("/classes", classData);
+      toast.success("Aula cadastrada com sucesso");
       return response.data;
     } catch (error: any) {
-      console.error("Erro ao criar treino:", error);
-      toast.error("Erro ao cadastrar treino");
+      console.error("Erro ao criar aula:", error);
+      toast.error("Erro ao cadastrar aula");
       throw error;
     }
   },
 
-  updateTraining: async (id: number, trainingData: Partial<Training>): Promise<Training> => {
+  updateClass: async (id: number, classData: Partial<Class>): Promise<Class> => {
     try {
-      const response = await httpClient.put<Training>(`/training/${id}`, trainingData);
+      const response = await httpClient.put<Class>(`/classes/${id}`, classData);
       return response.data;
     } catch (error: any) {
-      console.error("Erro ao atualizar treino:", error);
+      console.error("Erro ao atualizar aula:", error);
       throw error;
     }
   },
 
-  deleteTraining: async (id: number): Promise<void> => {
+  deleteClass: async (id: number): Promise<void> => {
     try {
-      await httpClient.delete(`/training/${id}`);
-      toast.success("Treino excluído com sucesso");
+      await httpClient.delete(`/classes/${id}`);
+      toast.success("Aula excluída com sucesso");
     } catch (error: any) {
-      console.error("Erro ao excluir treino:", error);
+      console.error("Erro ao excluir aula:", error);
       throw error;
     }
   },
 
-  getAttendancesByTraining: async (trainingId: number, date: string | null = null): Promise<Attendance[]> => {
+  getAttendancesByClass: async (classId: number, date: string | null = null): Promise<Attendance[]> => {
     try {
-      let url = `/training/${trainingId}/attendances`;
+      let url = `/classes/${classId}/attendances`;
       if (date) {
         url += `?date=${date}`;
       }
@@ -65,7 +65,7 @@ const trainingService = {
       const response = await httpClient.get<Attendance[]>(url);
       return response.data;
     } catch (error: any) {
-      console.error("Erro ao obter presenças do treino:", error);
+      console.error("Erro ao obter presenças da aula:", error);
       throw error;
     }
   },
@@ -80,10 +80,10 @@ const trainingService = {
     }
   },
 
-  markAttendance: async (code: string, trainingId: number): Promise<Attendance> => {
-    console.log("service", code, trainingId);
+  markAttendance: async (code: string, classId: number): Promise<Attendance> => {
+    console.log("service", code, classId);
     try {
-      const response = await httpClient.post<Attendance>("/attendance", { code, training_id: trainingId });
+      const response = await httpClient.post<Attendance>("/attendance", { code, class_id: classId });
       toast.success("Presença marcada com sucesso");
       return response.data;
     } catch (error: any) {
@@ -92,12 +92,12 @@ const trainingService = {
     }
   },
 
-  getTrainingDays: async (): Promise<string[]> => {
+  getClassDays: async (): Promise<string[]> => {
     try {
-      const response = await httpClient.get<string[]>(`/training/training-days`);
+      const response = await httpClient.get<string[]>(`/classes/classes-days`);
       return response.data;
     } catch (error: any) {
-      console.error("Error fetching training dates:", error);
+      console.error("Error fetching class dates:", error);
       throw error;
     }
   },
@@ -105,7 +105,7 @@ const trainingService = {
   getStudentsCountPerDayByModality: async (month: string): Promise<Record<string, number>> => {
     try {
       const response = await httpClient.get<Record<string, number>>(
-        `/training/students-count-modality/${month}`
+        `/classes/students-count-modality/${month}`
       );
       return response.data;
     } catch (error: any) {
@@ -126,14 +126,23 @@ const trainingService = {
 
   getAttendancesByStudent: async (studentId: number): Promise<Attendance[]> => {
     try {
-      const response = await httpClient.get<Attendance[]>(`/training/student-attendances/${studentId}`);
-      console.log("AQUI", response.data);
+      const response = await httpClient.get<Attendance[]>(`/classes/student-attendances/${studentId}`);
       return response.data;
     } catch (error: any) {
       console.error("Erro ao obter presenças do aluno:", error);
       throw error;
     }
   },
+
+  getModalities: async (): Promise<string[]> => {
+    try {
+      const response = await httpClient.get<string[]>(`/modalities`);
+      return response.data;
+    } catch (error: any) {
+      console.error("Error fetching modalities:", error);
+      throw error;
+    }
+  }
 };
 
-export default trainingService;
+export default classService;
