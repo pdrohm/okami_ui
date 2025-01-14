@@ -1,6 +1,7 @@
 import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
 import { Attendance, Class, TopStudent } from "../types/types";
+import dayjs from "dayjs";
 
 const classService = {
   getAllClasses: async (): Promise<Class[]> => {
@@ -35,7 +36,10 @@ const classService = {
     }
   },
 
-  updateClass: async (id: number, classData: Partial<Class>): Promise<Class> => {
+  updateClass: async (
+    id: number,
+    classData: Partial<Class>
+  ): Promise<Class> => {
     try {
       const response = await httpClient.put<Class>(`/classes/${id}`, classData);
       return response.data;
@@ -55,14 +59,13 @@ const classService = {
     }
   },
 
+
   getAttendancesByClass: async (classId: number, date: string | null = null): Promise<Attendance[]> => {
     try {
-      let url = `/classes/${classId}/attendances`;
-      if (date) {
-        url += `?date=${date}`;
-      }
-
-      const response = await httpClient.get<Attendance[]>(url);
+      const resolvedDate = date || dayjs().format('YYYY-MM-DD');
+      const response = await httpClient.get<Attendance[]>(
+        `/classes/${classId}/students?date=${resolvedDate}`
+      );
       return response.data;
     } catch (error: any) {
       console.error("Erro ao obter presenças da aula:", error);
@@ -72,7 +75,9 @@ const classService = {
 
   checkAttendance: async (code: string): Promise<Attendance> => {
     try {
-      const response = await httpClient.post<Attendance>("/attendance/check", { code });
+      const response = await httpClient.post<Attendance>("/attendance/check", {
+        code,
+      });
       return response.data;
     } catch (error: any) {
       console.error("Erro ao verificar presença do aluno:", error);
@@ -80,10 +85,15 @@ const classService = {
     }
   },
 
-  markAttendance: async (code: string, classId: number): Promise<Attendance> => {
-    console.log("service", code, classId);
+  markAttendance: async (
+    studentId: string,
+    classId: number
+  ): Promise<Attendance> => {
+    console.log("service", studentId, classId);
     try {
-      const response = await httpClient.post<Attendance>("/students/{id}/check-in", { code, class_id: classId });
+      const response = await httpClient.post(
+        `/students/${studentId}/check-in/${classId}`
+      );
       toast.success("Presença marcada com sucesso");
       return response.data;
     } catch (error: any) {
@@ -102,7 +112,9 @@ const classService = {
     }
   },
 
-  getStudentsCountPerDayByModality: async (month: string): Promise<Record<string, number>> => {
+  getStudentsCountPerDayByModality: async (
+    month: string
+  ): Promise<Record<string, number>> => {
     try {
       const response = await httpClient.get<Record<string, number>>(
         `/classes/students-count-modality/${month}`
@@ -116,7 +128,9 @@ const classService = {
 
   getTopStudents: async (): Promise<TopStudent[]> => {
     try {
-      const response = await httpClient.get<TopStudent[]>(`/attendance/top-students`);
+      const response = await httpClient.get<TopStudent[]>(
+        `/attendance/top-students`
+      );
       return response.data;
     } catch (error: any) {
       console.error("Error fetching top students:", error);
@@ -126,7 +140,9 @@ const classService = {
 
   getAttendancesByStudent: async (studentId: number): Promise<Attendance[]> => {
     try {
-      const response = await httpClient.get<Attendance[]>(`/classes/student-attendances/${studentId}`);
+      const response = await httpClient.get<Attendance[]>(
+        `/classes/student-attendances/${studentId}`
+      );
       return response.data;
     } catch (error: any) {
       console.error("Erro ao obter presenças do aluno:", error);
@@ -142,7 +158,7 @@ const classService = {
       console.error("Error fetching modalities:", error);
       throw error;
     }
-  }
+  },
 };
 
 export default classService;

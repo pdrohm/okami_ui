@@ -1,17 +1,18 @@
-import React, { useRef, useEffect } from "react";
-import Layout from "../components/Layout";
+import React, { useRef, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
+import LockIcon from "@mui/icons-material/Lock";
+import UnlockIcon from "@mui/icons-material/LockOpen";
 import AttendancesTable from "../components/Class/AttendancesTable";
 import { useClassStore } from "../store/useClassStore";
-import classService from "../services/classService";
 import { useStudentStore } from "../store/useStudentStore";
+import StudentInfoCard from "../components/Class/StudentInfoCard";
 
 const Checkin = () => {
-  const { watch, setValue, register, reset } = useForm({
+  const { watch, setValue, register, reset, getValues } = useForm({
     defaultValues: {
-      modalityId: "",
-      classId: "",
+      modalityId: localStorage.getItem("selectedModality") || "",
+      classId: localStorage.getItem("selectedClass") || "",
       checkInCode: "",
     },
   });
@@ -27,18 +28,24 @@ const Checkin = () => {
     getClasses,
   } = useClassStore();
 
-  const { getStudentByPassword, student } = useStudentStore();
+  const { getStudentByPassword } = useStudentStore();
 
-  const [studentInfo, setStudentInfo] = React.useState(null);
-  const inputRef = useRef(null);
+  const [studentInfo, setStudentInfo] = useState(null);
+  const [modalityLocked, setModalityLocked] = useState(
+    !!localStorage.getItem("selectedModality")
+  );
+  const [classLocked, setClassLocked] = useState(
+    !!localStorage.getItem("selectedClass")
+  );
 
   const selectedModality = watch("modalityId");
   const selectedClass = watch("classId");
 
+  // Lida com a mudança de modalidade
   const handleModalityChange = async (option) => {
     const modalityId = option?.value || "";
     setValue("modalityId", modalityId);
-    setValue("classId", ""); // Reseta o campo de treino
+    setValue("classId", "");
     setAttendancesByClass(null);
 
     if (modalityId) {
@@ -50,31 +57,63 @@ const Checkin = () => {
     }
   };
 
+  // Lida com a mudança de treino
   const handleClassChange = (option) => {
     const classId = option?.value || "";
     setValue("classId", classId);
+    setAttendancesByClass(null);
 
     if (classId) {
       getAttendancesByClass(classId);
     }
   };
 
+  // Salva modalidade no localStorage
+  const lockModality = () => {
+    if (modalityLocked) {
+      localStorage.removeItem("selectedModality");
+      setModalityLocked(false);
+    } else {
+      localStorage.setItem("selectedModality", selectedModality);
+      setModalityLocked(true);
+    }
+  };
+
+  // Salva treino no localStorage
+  const lockClass = () => {
+    if (classLocked) {
+      localStorage.removeItem("selectedClass");
+      setClassLocked(false);
+    } else {
+      localStorage.setItem("selectedClass", selectedClass);
+      setClassLocked(true);
+    }
+  };
+
+  // Lida com o check-in do código
   const handleCheckin = async (code) => {
     if (code.length === 4) {
       try {
-        setStudentInfo(null);
+        setStudentInfo(null); // Limpa estado anterior
         const userInfo = await getStudentByPassword(code);
+
+        if (!userInfo) {
+          throw new Error("Estudante não encontrado");
+        }
+
         setStudentInfo(userInfo);
       } catch (error) {
-        console.error("Erro ao verificar a presença:", error);
+        console.error("Erro ao verificar a presença:", error.message || error);
+        setValue("checkInCode", ""); // Limpa o campo de input
       }
     }
   };
 
-  const handleMarkAttendance = async (code) => {
+  // Marca a presença ao pressionar Enter
+  const handleMarkAttendance = async () => {
     if (studentInfo && selectedClass) {
       try {
-        await markAttendance(code, selectedClass);
+        await markAttendance(studentInfo.id, selectedClass);
         setStudentInfo(null);
         reset({ checkInCode: "" });
       } catch (error) {
@@ -83,22 +122,40 @@ const Checkin = () => {
     }
   };
 
-  const handleKeyDown = async (e) => {
-    if (e.key === "Enter") {
-      await handleMarkAttendance(e.target.value);
-    }
-  };
+  // Evento global para capturar números e Enter
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      const isNumber = /^[0-9]$/.test(e.key);
+
+      if (isNumber) {
+        const currentCode = getValues("checkInCode");
+        const newCode = (currentCode + e.key).slice(0, 4); // Limita a 4 caracteres
+        setValue("checkInCode", newCode);
+        handleCheckin(newCode);
+      }
+
+      if (e.key === "Enter" && studentInfo) {
+        handleMarkAttendance();
+      }
+    };
+
+    window.addEventListener("keydown", handleGlobalKeyDown);
+    return () => {
+      window.removeEventListener("keydown", handleGlobalKeyDown);
+    };
+  }, [studentInfo, selectedClass]);
 
   useEffect(() => {
     getModalities();
     getClasses();
+    setAttendancesByClass(null);
   }, []);
 
   return (
     <>
       <div className="p-10">
         <form className="flex items-center justify-center gap-x-4">
-          <div>
+          <div className="flex items-center gap-x-2">
             <label htmlFor="modalityId">Modalidade:</label>
             <Select
               options={modalities.map((modality) => ({
@@ -109,11 +166,19 @@ const Checkin = () => {
               className="w-full mt-1"
               placeholder="Selecione uma modalidade"
               isSearchable
+              isDisabled={modalityLocked}
             />
+            <button
+              type="button"
+              onClick={lockModality}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              {modalityLocked ? <LockIcon /> : <UnlockIcon />}
+            </button>
             <input {...register("modalityId")} type="hidden" />
           </div>
 
-          <div>
+          <div className="flex items-center gap-x-2">
             <label htmlFor="classes">Treino:</label>
             <Select
               options={classes.map((singleClass) => ({
@@ -124,8 +189,15 @@ const Checkin = () => {
               className="w-full mt-1"
               placeholder="Selecione um treino"
               isSearchable
-              isDisabled={!selectedModality}
+              isDisabled={!selectedModality || classLocked}
             />
+            <button
+              type="button"
+              onClick={lockClass}
+              className="text-gray-500 hover:text-gray-700"
+            >
+              {classLocked ? <LockIcon /> : <UnlockIcon />}
+            </button>
             <input {...register("classId")} type="hidden" />
           </div>
         </form>
@@ -135,45 +207,21 @@ const Checkin = () => {
         <input
           {...register("checkInCode")}
           type="text"
-          ref={inputRef}
-          className={`h-20 w-1/3 rounded-lg bg-${
-            selectedClass ? "orange" : "orange-dark"
-          } text-center text-3xl text-white`}
+          className="h-20 w-1/3 rounded-lg bg-orange text-center text-3xl text-white"
           maxLength={4}
-          disabled={!selectedClass}
-          placeholder={`${selectedClass ? "" : "SELECIONE O TREINO"}`}
-          onChange={(e) => handleCheckin(e.target.value)}
-          onKeyDown={handleKeyDown}
+          readOnly
         />
       </div>
 
       {studentInfo && (
-        <div className="my-5 flex items-center justify-center">
-          <div className="flex w-1/4 flex-col items-center rounded-md bg-orange-light text-white">
-            <span>{studentInfo.name}</span>
-            <span>
-              Faixa {studentInfo.belt_description}
-              {studentInfo.degree_description} graus
-            </span>
-            <div className="flex mt-4 gap-x-4">
-              <button
-                className="px-4 py-2 bg-green-500 rounded-lg text-white"
-                onClick={() => handleMarkAttendance(studentInfo.id)}
-              >
-                Check
-              </button>
-              <button
-                className="px-4 py-2 bg-red-500 rounded-lg text-white"
-                onClick={() => setStudentInfo(null)}
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
+        <StudentInfoCard
+          handleMarkAttendance={handleMarkAttendance}
+          studentInfo={studentInfo}
+          setStudentInfo={setStudentInfo}
+        />
       )}
 
-      <AttendancesTable className="teste" />
+      <AttendancesTable />
     </>
   );
 };

@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import classService from "../services/classService";
+import dayjs from "dayjs";
 
 export const useClassStore = create((set) => ({
   classes: [],
@@ -45,8 +46,8 @@ export const useClassStore = create((set) => ({
     }));
   },
 
-  markAttendance: async (code, classId) => {
-    await classService.markAttendance(code, classId);
+  markAttendance: async (password, classId) => {
+    await classService.markAttendance(password, classId);
     useClassStore.getState().getAttendancesByClass(classId);
   },
 
@@ -55,7 +56,8 @@ export const useClassStore = create((set) => ({
     set({ modalities: data });
   },
 
-  getAttendancesByClass: async (classId, date = null) => {
+  getAttendancesByClass: async (classId) => {
+    const date = dayjs().format('YYYY-MM-DD');
     const attendances = await classService.getAttendancesByClass(classId, date);
     set({ attendancesByClass: attendances });
   },
