@@ -1,18 +1,17 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import LockIcon from "@mui/icons-material/Lock";
 import UnlockIcon from "@mui/icons-material/LockOpen";
 import AttendancesTable from "../components/Class/AttendancesTable";
 import { useClassStore } from "../store/useClassStore";
-import { useStudentStore } from "../store/useStudentStore";
+import { useCheckinStore } from "../store/useCheckinStore";
 import StudentInfoCard from "../components/Class/StudentInfoCard";
+import { useStudentStore } from "../store/useStudentStore";
 
 const Checkin = () => {
   const { watch, setValue, register, reset, getValues } = useForm({
     defaultValues: {
-      modalityId: localStorage.getItem("selectedModality") || "",
-      classId: localStorage.getItem("selectedClass") || "",
       checkInCode: "",
     },
   });
@@ -21,80 +20,54 @@ const Checkin = () => {
     classes,
     getClassesByModality,
     getAttendancesByClass,
-    setAttendancesByClass,
-    markAttendance,
     getModalities,
     modalities,
     getClasses,
+    markAttendance,
   } = useClassStore();
-
   const { getStudentByPassword } = useStudentStore();
+  const {
+    selectedModality,
+    selectedClass,
+    setSelectedModality,
+    setSelectedClass,
+  } = useCheckinStore();
+
+  console.log("selectedModality", selectedModality);
+  console.log("selectedClass", selectedClass);
 
   const [studentInfo, setStudentInfo] = useState(null);
-  const [modalityLocked, setModalityLocked] = useState(
-    !!localStorage.getItem("selectedModality")
-  );
-  const [classLocked, setClassLocked] = useState(
-    !!localStorage.getItem("selectedClass")
-  );
+  const [locked, setLocked] = useState(!!selectedModality && !!selectedClass);
 
-  const selectedModality = watch("modalityId");
-  const selectedClass = watch("classId");
-
-  // Lida com a mudança de modalidade
   const handleModalityChange = async (option) => {
-    const modalityId = option?.value || "";
-    setValue("modalityId", modalityId);
-    setValue("classId", "");
-    setAttendancesByClass(null);
-
-    if (modalityId) {
-      try {
-        await getClassesByModality(modalityId);
-      } catch (error) {
-        console.error("Erro ao buscar classes pela modalidade:", error);
-      }
+    setSelectedModality(option);
+    setSelectedClass(null);
+    if (option) {
+      await getClassesByModality(option.value);
     }
   };
 
-  // Lida com a mudança de treino
   const handleClassChange = (option) => {
-    const classId = option?.value || "";
-    setValue("classId", classId);
-    setAttendancesByClass(null);
-
-    if (classId) {
-      getAttendancesByClass(classId);
+    setSelectedClass(option);
+    if (option) {
+      getAttendancesByClass(option.value);
     }
   };
 
-  // Salva modalidade no localStorage
-  const lockModality = () => {
-    if (modalityLocked) {
-      localStorage.removeItem("selectedModality");
-      setModalityLocked(false);
+  const handleLock = () => {
+    if (locked) {
+      setSelectedModality(null);
+      setSelectedClass(null);
+      setLocked(false);
     } else {
-      localStorage.setItem("selectedModality", selectedModality);
-      setModalityLocked(true);
+      setLocked(true);
     }
   };
 
-  // Salva treino no localStorage
-  const lockClass = () => {
-    if (classLocked) {
-      localStorage.removeItem("selectedClass");
-      setClassLocked(false);
-    } else {
-      localStorage.setItem("selectedClass", selectedClass);
-      setClassLocked(true);
-    }
-  };
-
-  // Lida com o check-in do código
   const handleCheckin = async (code) => {
     if (code.length === 4) {
       try {
-        setStudentInfo(null); // Limpa estado anterior
+        setStudentInfo(null);
         const userInfo = await getStudentByPassword(code);
 
         if (!userInfo) {
@@ -104,16 +77,17 @@ const Checkin = () => {
         setStudentInfo(userInfo);
       } catch (error) {
         console.error("Erro ao verificar a presença:", error.message || error);
-        setValue("checkInCode", ""); // Limpa o campo de input
+        setValue("checkInCode", "");
       }
     }
   };
 
-  // Marca a presença ao pressionar Enter
   const handleMarkAttendance = async () => {
     if (studentInfo && selectedClass) {
       try {
-        await markAttendance(studentInfo.id, selectedClass);
+        console.log('studentInfo', studentInfo)
+        console.log('selectedClass', selectedClass)
+        await markAttendance(studentInfo.id, selectedClass.value);
         setStudentInfo(null);
         reset({ checkInCode: "" });
       } catch (error) {
@@ -122,19 +96,25 @@ const Checkin = () => {
     }
   };
 
-  // Evento global para capturar números e Enter
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
-      const isNumber = /^[0-9]$/.test(e.key);
+      if (!selectedModality || !selectedClass) return;
 
+      const isNumber = /^[0-9]$/.test(e.key);
       if (isNumber) {
         const currentCode = getValues("checkInCode");
-        const newCode = (currentCode + e.key).slice(0, 4); // Limita a 4 caracteres
+        const newCode = (currentCode + e.key).slice(0, 4);
         setValue("checkInCode", newCode);
         handleCheckin(newCode);
       }
 
+      if (e.key === "Backspace") {
+        setValue("checkInCode", "");
+        setStudentInfo(null);
+      }
+
       if (e.key === "Enter" && studentInfo) {
+        console.log('entrou')
         handleMarkAttendance();
       }
     };
@@ -143,12 +123,11 @@ const Checkin = () => {
     return () => {
       window.removeEventListener("keydown", handleGlobalKeyDown);
     };
-  }, [studentInfo, selectedClass]);
+  }, [studentInfo, selectedClass, selectedModality]);
 
   useEffect(() => {
     getModalities();
     getClasses();
-    setAttendancesByClass(null);
   }, []);
 
   return (
@@ -163,19 +142,12 @@ const Checkin = () => {
                 label: modality.name,
               }))}
               onChange={handleModalityChange}
+              value={selectedModality}
               className="w-full mt-1"
               placeholder="Selecione uma modalidade"
               isSearchable
-              isDisabled={modalityLocked}
+              isDisabled={locked}
             />
-            <button
-              type="button"
-              onClick={lockModality}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              {modalityLocked ? <LockIcon /> : <UnlockIcon />}
-            </button>
-            <input {...register("modalityId")} type="hidden" />
           </div>
 
           <div className="flex items-center gap-x-2">
@@ -186,31 +158,34 @@ const Checkin = () => {
                 label: singleClass.name,
               }))}
               onChange={handleClassChange}
+              value={selectedClass}
               className="w-full mt-1"
               placeholder="Selecione um treino"
               isSearchable
-              isDisabled={!selectedModality || classLocked}
+              isDisabled={!selectedModality || locked}
             />
-            <button
-              type="button"
-              onClick={lockClass}
-              className="text-gray-500 hover:text-gray-700"
-            >
-              {classLocked ? <LockIcon /> : <UnlockIcon />}
-            </button>
-            <input {...register("classId")} type="hidden" />
           </div>
+
+          <button
+            type="button"
+            onClick={handleLock}
+            className="text-gray-500 hover:text-gray-700"
+          >
+            {locked ? <LockIcon /> : <UnlockIcon />}
+          </button>
         </form>
       </div>
 
       <div className="flex flex-col items-center justify-center gap-y-10">
-        <input
-          {...register("checkInCode")}
-          type="text"
-          className="h-20 w-1/3 rounded-lg bg-orange text-center text-3xl text-white"
-          maxLength={4}
-          readOnly
-        />
+        {selectedModality && selectedClass && (
+          <input
+            {...register("checkInCode")}
+            type="text"
+            className="h-20 w-1/3 rounded-lg bg-orange text-center text-3xl text-white"
+            maxLength={4}
+            readOnly
+          />
+        )}
       </div>
 
       {studentInfo && (
