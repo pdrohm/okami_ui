@@ -21,6 +21,15 @@ export const useClassStore = create((set) => ({
       throw error;
     }
   },
+  getClassesByModality: (modalityId) => {
+    console.log("modalityId", modalityId);
+    const allClasses = useClassStore.getState().classes;
+    console.log("allClasses", allClasses);
+    const filteredClasses = allClasses.filter(
+      (classItem) => classItem.modality.id === modalityId
+    );
+    set({ classes: filteredClasses });
+  },
 
   createClass: async (classData) => {
     const newClass = await classService.createClass(classData);
@@ -48,6 +57,10 @@ export const useClassStore = create((set) => ({
 
   getAttendancesByClass: async (classId, date = null) => {
     const attendances = await classService.getAttendancesByClass(classId, date);
+    set({ attendancesByClass: attendances });
+  },
+
+  setAttendancesByClass: (attendances) => {
     set({ attendancesByClass: attendances });
   },
 

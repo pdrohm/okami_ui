@@ -19,20 +19,18 @@ const StudentRegister = () => {
     }
 
     try {
-      await createStudent(data); 
-      navigate("/alunos"); 
+      await createStudent(data);
+      navigate("/alunos");
     } catch (error) {
       console.error("Erro ao criar aluno:", error);
     }
   };
 
   return (
-    <Layout>
-      <div className="p-10">
-        <h1 className="text-4xl mb-6">Cadastro de Aluno</h1>
-        <StudentForm onSubmit={handleSubmit} />
-      </div>
-    </Layout>
+    <div className="p-10">
+      <h1 className="text-4xl mb-6">Cadastro de Aluno</h1>
+      <StudentForm onSubmit={handleSubmit} />
+    </div>
   );
 };
 

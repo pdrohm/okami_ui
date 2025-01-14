@@ -39,7 +39,6 @@ const Dashboard = () => {
   console.log("aaa", topStudents);
 
   return (
-    <Layout>
       <div className="p-10 flex xl:flex-row flex-col xl:gap-x-10 gap-y-5">
         <div className="flex flex-col justify-center items-start w-1/2 gap-y-2">
           <div className="flex justify-center items-center gap-x-2">
@@ -76,7 +75,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-    </Layout>
+ 
   );
 };
 

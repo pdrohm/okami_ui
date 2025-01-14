@@ -23,6 +23,15 @@ const studentService = {
     }
   },
 
+  getStudentByPassword: async (password: string): Promise<Student> => {
+    try {
+      const response = await httpClient.post<Student>(`/students/by-password`, { password });
+      return response.data;
+    } catch (error: any) {
+      console.error("Erro ao obter aluno por senha:", error);
+      throw error
+  }},
+
   createStudent: async (studentData: Student): Promise<Student> => {
     try {
       console.log("studentData", studentData);

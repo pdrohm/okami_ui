@@ -8,12 +8,10 @@ const Account = () => {
   const { user } = useAuthStore();
 
   return (
-    <Layout>
-      <div className="flex justify-start w-full p-10 h-full flex-col">
-        {user && <MyAccount user={user} />}
-        <AddUser />
-      </div>
-    </Layout>
+    <div className="flex justify-start w-full p-10 h-full flex-col">
+      {user && <MyAccount user={user} />}
+      <AddUser />
+    </div>
   );
 };
 

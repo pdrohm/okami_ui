@@ -3,31 +3,41 @@ import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import appRoutes from "./routes";
+import Layout from "../components/Layout";
+import StorageService from "../services/storageService";
 
 const OkamiRoutes = () => {
-  const token = localStorage.getItem("token");
+  const token = StorageService.getItem("userToken");
 
   return (
     <HashRouter>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          {appRoutes.map(({ path, Component }) => {
-            return (
-              <Route
-                key={path}
-                path={path}
-                element={
-                  path === "/login" || token ? (
+      <Routes>
+        {appRoutes.map(({ path, Component }) => {
+          const isLoginRoute = path === "/login";
+
+          return (
+            <Route
+              key={path}
+              path={path}
+              element={
+                isLoginRoute ? (
+                  <Suspense fallback={<div className="p-10 justify-center items-center">Loading...</div>}>
                     <Component />
-                  ) : (
-                    <Navigate to="/login" />
-                  )
-                }
-              />
-            );
-          })}
-        </Routes>
-      </Suspense>
+                  </Suspense>
+                ) : token ? (
+                  <Layout>
+                    <Suspense fallback={<div className="p-10 justify-center items-center">Loading...</div>}>
+                      <Component />
+                    </Suspense>
+                  </Layout>
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+          );
+        })}
+      </Routes>
       <ToastContainer />
     </HashRouter>
   );

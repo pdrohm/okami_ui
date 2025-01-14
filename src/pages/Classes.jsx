@@ -14,22 +14,17 @@ const Classes = () => {
   }, []);
 
   return (
-    <Layout>
-      <div className="p-10 flex flex-col gap-y-10">
-        <div className="flex gap-x-3 ">
-          <div className="flex justify-center items-end text-orange">
-            <SportsKabaddiIcon fontSize="large" />
-          </div>
-          <h1 className="text-4xl">Treinos</h1>
-          <AddMemberButton
-            title="Criar treino"
-            urlNavigate="/treino/registro"
-          />
+    <div className="p-10 flex flex-col gap-y-10">
+      <div className="flex gap-x-3 ">
+        <div className="flex justify-center items-end text-orange">
+          <SportsKabaddiIcon fontSize="large" />
         </div>
-
-        <ClassTable classes={classes} />
+        <h1 className="text-4xl">Treinos</h1>
+        <AddMemberButton title="Criar treino" urlNavigate="/treino/registro" />
       </div>
-    </Layout>
+
+      <ClassTable classes={classes} />
+    </div>
   );
 };
 

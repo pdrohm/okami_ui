@@ -83,7 +83,7 @@ const classService = {
   markAttendance: async (code: string, classId: number): Promise<Attendance> => {
     console.log("service", code, classId);
     try {
-      const response = await httpClient.post<Attendance>("/attendance", { code, class_id: classId });
+      const response = await httpClient.post<Attendance>("/students/{id}/check-in", { code, class_id: classId });
       toast.success("Presença marcada com sucesso");
       return response.data;
     } catch (error: any) {

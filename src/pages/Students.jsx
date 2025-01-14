@@ -43,28 +43,29 @@ const Students = () => {
       }
     });
 
-    useEffect(() => {
-      getStudents()
-    }, []);
+  useEffect(() => {
+    getStudents();
+  }, []);
 
-    console.log('studentsdata', students)
+  console.log("studentsdata", students);
   return (
-    <Layout>
-      <div className="p-10">
-        <div className="flex gap-x-3">
-          <div className="flex justify-center items-end text-orange">
-            <PeopleAltIcon fontSize="large" />
-          </div>
-          <h1 className="text-4xl">Alunos</h1>
+    <div className="p-10">
+      <div className="flex gap-x-3">
+        <div className="flex justify-center items-end text-orange">
+          <PeopleAltIcon fontSize="large" />
         </div>
-        <div className="w-full flex gap-x-5 my-5">
-          <SearchBar value={searchInput} onChange={handleSearchInputChange} />
-          <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
-          <AddMemberButton title="Adicionar aluno" urlNavigate="/alunos/registro" />
-        </div>
-        <StudentsTable students={filteredStudents} />
+        <h1 className="text-4xl">Alunos</h1>
       </div>
-    </Layout>
+      <div className="w-full flex gap-x-5 my-5">
+        <SearchBar value={searchInput} onChange={handleSearchInputChange} />
+        <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
+        <AddMemberButton
+          title="Adicionar aluno"
+          urlNavigate="/alunos/registro"
+        />
+      </div>
+      <StudentsTable students={filteredStudents} />
+    </div>
   );
 };
 

@@ -1,18 +1,11 @@
 import { toast } from "react-toastify";
 import httpClient from "../utils/httpClient";
+import StorageService from "./storageService";
 
 const authService = {
   loginUser: async (userData: any) => {
     try {
-      console.log('userData:', userData);
       const response = await httpClient.post("/auth/login", userData);
-
-      console.log('response:', response);
-
-      localStorage.setItem("user", JSON.stringify(response.data.access_token));
-
-      toast.success("Login realizado com sucesso");
-
       return response.data;
     } catch (error: any) {
       toast.error("Erro ao realizar login");
@@ -33,6 +26,20 @@ const authService = {
       throw error;
     }
   },
+
+  refreshToken: async () => {
+    try {
+      const refreshToken = await StorageService.getItem("userRefreshToken");
+      const response = await httpClient.post("/auth/refresh-token", {refresh_token: refreshToken});
+
+      await StorageService.setItem("userToken", JSON.stringify(response.data.access_token));
+
+      return response.data;
+    } catch (error: any) {
+      console.error("Erro ao atualizar token:", error);
+      throw error;
+    }
+  }
 };
 
 export default authService;
