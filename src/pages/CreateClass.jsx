@@ -18,7 +18,7 @@ const CreateClass = () => {
   }, []);
 
   return (
-    <div className="p-10 flex flex-col gap-y-10 justify-center items-center">
+    <div className="p-10 flex flex-col gap-y-10 justify-center items-center w-screen">
       <div className="flex gap-x-2 w-full">
         <GetBack />
 

@@ -13,7 +13,7 @@ const LeftPanel = () => {
   };
 
   return (
-    <div className="w-24 bg-orange flex flex-col justify-between">
+    <div className="w-24 bg-orange flex flex-col justify-between h-screen sticky top-0">
       <div className="flex flex-col items-center">
         <img
           src={okamiLogo}
@@ -24,7 +24,7 @@ const LeftPanel = () => {
           <div
             key={menuTab.url}
             onClick={() => handleTabClick(menuTab.url)}
-            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light group  "
+            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light group"
           >
             <div className="text-whiter group-hover:text-orange-light">
               {React.createElement(menuTab.icon)}

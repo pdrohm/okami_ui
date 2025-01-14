@@ -27,7 +27,7 @@ const StudentRegister = () => {
   };
 
   return (
-    <div className="p-10">
+    <div className="md:p-10 flex justify-center items-center flex-col w-screen">
       <h1 className="text-4xl mb-6">Cadastro de Aluno</h1>
       <StudentForm onSubmit={handleSubmit} />
     </div>

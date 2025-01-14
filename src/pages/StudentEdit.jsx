@@ -1,11 +1,11 @@
 import React from "react";
 import Layout from "../components/Layout";
 import StudentForm from "../components/StudentForm/StudentForm";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useStudentStore } from "../store/useStudentStore";
 
 const EditStudent = ({ studentData }) => {
-  const {editStudent} = useStudentStore();
+  const { editStudent } = useStudentStore();
 
   const navigate = useNavigate();
 
@@ -17,19 +17,17 @@ const EditStudent = ({ studentData }) => {
       const date = new Date(data.birthDate);
       data.birthDate = date.toISOString();
     }
-    
+
     console.log("data", data);
     await editStudent(data);
     navigate("/alunos");
   };
 
   return (
-    <Layout>
-      <div className="p-10">
-        <h1 className="text-4xl mb-6">Editar Aluno</h1>
-        <StudentForm initialValues={studentData} onSubmit={handleSubmit} />
-      </div>
-    </Layout>
+    <div className="p-10">
+      <h1 className="text-4xl mb-6">Editar Aluno</h1>
+      <StudentForm initialValues={studentData} onSubmit={handleSubmit} />
+    </div>
   );
 };
 

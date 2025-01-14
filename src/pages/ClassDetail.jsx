@@ -19,8 +19,8 @@ const ClassDetail = () => {
   const location = useLocation();
   const { classData } = location.state || {};
 
-
-  const { getAttendancesByClass, attendancesByClass, daysWithClasses } = useClassStore();
+  const { getAttendancesByClass, attendancesByClass, daysWithClasses } =
+    useClassStore();
 
   let iconComponent;
   switch (classData?.modality) {
@@ -44,21 +44,19 @@ const ClassDetail = () => {
   }, [date]);
 
   return (
-    <Layout>
-      <div className="flex flex-col gap-y-10 p-10">
-        <div className="flex gap-x-3 ">
-          <GetBack />
-          <div className="flex items-end justify-center text-orange">
-            {iconComponent}
-          </div>
-          <h1 className="text-4xl"> {classData.name} </h1>
+    <div className="flex flex-col gap-y-10 p-10">
+      <div className="flex gap-x-3 ">
+        <GetBack />
+        <div className="flex items-end justify-center text-orange">
+          {iconComponent}
         </div>
-        <div className="flex items-center justify-center">
-          <Calendar setDate={setDate} daysWithClasses={daysWithClasses} />
-          <AttendanceDataGrid attendancesByClass={attendancesByClass} />
-        </div>
+        <h1 className="text-4xl"> {classData.name} </h1>
       </div>
-    </Layout>
+      <div className="flex items-center justify-center">
+        <Calendar setDate={setDate} daysWithClasses={daysWithClasses} />
+        <AttendanceDataGrid attendancesByClass={attendancesByClass} />
+      </div>
+    </div>
   );
 };
 

@@ -7,11 +7,14 @@ import StudentsTable from "../components/StudentTable/StudentTable";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { differenceInYears } from "date-fns";
 import { useStudentStore } from "../store/useStudentStore";
+import Pagination from "@mui/material/Pagination";
 
 const Students = () => {
   const { students, getStudents } = useStudentStore();
   const [searchInput, setSearchInput] = useState("");
   const [sortBy, setSortBy] = useState("name_asc");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage] = useState(10);
 
   const handleSearchInputChange = (event) => {
     setSearchInput(event.target.value);
@@ -19,6 +22,10 @@ const Students = () => {
 
   const handleSortByChange = (event) => {
     setSortBy(event.target.value);
+  };
+
+  const handlePageChange = (event, page) => {
+    setCurrentPage(page);
   };
 
   const filteredStudents = students
@@ -43,28 +50,42 @@ const Students = () => {
       }
     });
 
+  const paginatedStudents = filteredStudents.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
+
   useEffect(() => {
     getStudents();
   }, []);
 
-  console.log("studentsdata", students);
   return (
-    <div className="p-10">
-      <div className="flex gap-x-3">
-        <div className="flex justify-center items-end text-orange">
-          <PeopleAltIcon fontSize="large" />
+    <div className="flex justify-center w-screen">
+      <div className="p-10 w-full">
+        <div className="flex gap-x-3 mb-5">
+          <div className="flex justify-center items-end text-orange">
+            <PeopleAltIcon fontSize="large" />
+          </div>
+          <h1 className="text-4xl">Alunos</h1>
         </div>
-        <h1 className="text-4xl">Alunos</h1>
+        <div className="w-full flex gap-x-5 items-center">
+          <SearchBar value={searchInput} onChange={handleSearchInputChange} />
+          <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
+          <AddMemberButton
+            title="Adicionar aluno"
+            urlNavigate="/alunos/registro"
+          />
+          <div className="ml-auto">
+            <Pagination
+              count={Math.ceil(filteredStudents.length / rowsPerPage)}
+              page={currentPage}
+              onChange={handlePageChange}
+              color="primary"
+            />
+          </div>
+        </div>
+        <StudentsTable students={paginatedStudents} />
       </div>
-      <div className="w-full flex gap-x-5 my-5">
-        <SearchBar value={searchInput} onChange={handleSearchInputChange} />
-        <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
-        <AddMemberButton
-          title="Adicionar aluno"
-          urlNavigate="/alunos/registro"
-        />
-      </div>
-      <StudentsTable students={filteredStudents} />
     </div>
   );
 };

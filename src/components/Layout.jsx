@@ -6,11 +6,9 @@ const Layout = ({ children }) => {
   const { showLeftPanel } = useGlobalSettings();
 
   return (
-    <div className="flex min-h-screen min-w-screen bg-white">
+    <div className="flex">
       {showLeftPanel && <LeftPanel />}
-      <div className={`h-full ${showLeftPanel ? "w-full ml-64" : "w-full"}`}>
-        {children}
-      </div>
+      {children}
     </div>
   );
 };

@@ -63,7 +63,7 @@ const StudentForm = ({ initialValues, onSubmit }) => {
     <FormProvider {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className="space-y-6 bg-white shadow-md rounded-lg p-8 max-w-4xl mx-auto"
+        className="space-y-6 bg-white shadow-md rounded-lg p-8 md:w-2/3 w-full mx-auto"
       >
         <h1 className="text-2xl font-bold text-gray-700 text-center">
           {formTitle}
