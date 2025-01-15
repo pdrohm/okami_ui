@@ -20,8 +20,11 @@ const Dashboard = () => {
   const {
     studentsCountByModality,
     getStudentsCountPerDayByModality,
-    getTopStudentsByClass
+    getTopStudentsByClass,
+    getClasses,
   } = useClassStore();
+
+  const { getStudents } = useStudentStore();
 
   const fetchTopStudents = async () => {
     const students = await getTopStudentsByClass();
@@ -34,46 +37,47 @@ const Dashboard = () => {
 
   useEffect(() => {
     fetchTopStudents();
+    getClasses();
+    getStudents();
   }, []);
 
   return (
-      <div className="p-10 flex xl:flex-row flex-col xl:gap-x-10 gap-y-5">
-        <div className="flex flex-col justify-center items-start w-1/2 gap-y-2">
-          <div className="flex justify-center items-center gap-x-2">
-            <ToggleChart
-              isBarActive={isBarActive}
-              setIsBarActive={setIsBarActive}
-            />
-            <MonthChartSelector
-              selectedMonth={selectedMonth}
-              setSelectedMonth={setSelectedMonth}
-            />
-          </div>
-
-          {isBarActive ? (
-            <BarChart studentsCountByModality={studentsCountByModality} />
-          ) : (
-            <LineChart studentsCountByModality={studentsCountByModality} />
-          )}
+    <div className="p-10 flex xl:flex-row flex-col xl:gap-x-10 gap-y-5">
+      <div className="flex flex-col justify-center items-start w-1/2 gap-y-2">
+        <div className="flex justify-center items-center gap-x-2">
+          <ToggleChart
+            isBarActive={isBarActive}
+            setIsBarActive={setIsBarActive}
+          />
+          <MonthChartSelector
+            selectedMonth={selectedMonth}
+            setSelectedMonth={setSelectedMonth}
+          />
         </div>
-        <div className="flex   flex-col ">
-          <div className="flex gap-x-2">
-            <TotalStudentsRegistered />
-            <TotalClassesCreated />
-          </div>
-          <div>
-            {topStudents &&
-              Object.entries(topStudents).map(([modality, students]) => (
-                <TopStudentsTable
-                  key={modality}
-                  modality={modality}
-                  students={students}
-                />
-              ))}
-          </div>
+
+        {isBarActive ? (
+          <BarChart studentsCountByModality={studentsCountByModality} />
+        ) : (
+          <LineChart studentsCountByModality={studentsCountByModality} />
+        )}
+      </div>
+      <div className="flex   flex-col ">
+        <div className="flex gap-x-2">
+          <TotalStudentsRegistered />
+          <TotalClassesCreated />
+        </div>
+        <div>
+          {topStudents &&
+            Object.entries(topStudents).map(([modality, students]) => (
+              <TopStudentsTable
+                key={modality}
+                modality={modality}
+                students={students}
+              />
+            ))}
         </div>
       </div>
- 
+    </div>
   );
 };
 
