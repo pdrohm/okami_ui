@@ -13,18 +13,21 @@ const LeftPanel = () => {
   };
 
   return (
-    <div className="w-24 bg-orange flex flex-col justify-between h-screen sticky top-0">
+    <div className="w-24 bg-green flex flex-col justify-between h-screen sticky top-0">
       <div className="flex flex-col items-center">
-        <img
-          src={okamiLogo}
-          onClick={() => handleTabClick("/")}
-          className="w-2/3 cursor-pointer"
-        />
+        <div className="bg-orange justify-center items-center">
+          <img
+            src={okamiLogo}
+            onClick={() => handleTabClick("/")}
+            className="cursor-pointer"
+          />
+        </div>
+
         {menuTabs.map((menuTab) => (
           <div
             key={menuTab.url}
             onClick={() => handleTabClick(menuTab.url)}
-            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-orange-light group"
+            className="cursor-pointer border-b-[1px] w-full flex flex-col items-center justify-center p-5 border-green-dark group"
           >
             <div className="text-whiter group-hover:text-orange-light">
               {React.createElement(menuTab.icon)}
