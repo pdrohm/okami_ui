@@ -22,7 +22,7 @@ const StudentRow = ({ student }) => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  const { getStudents } =  useStudentStore()
+  const { getStudents } = useStudentStore();
 
   const handleDeleteClick = async (id) => {
     await studentService.deleteStudent(id);
@@ -34,18 +34,23 @@ const StudentRow = ({ student }) => {
   };
 
   const handleEditStudent = (student) => {
-    navigate("/alunos/registro", { state: { studentData: student, editStudent: true } });
+    navigate("/alunos/registro", {
+      state: { studentData: student, editStudent: true },
+    });
   };
 
   const today = new Date();
 
   const age = differenceInYears(today, student.birthDate);
 
+  console.log("student", student);
+
   return (
     <>
       <TableRow
         key={student.name}
         sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+        onClick={() => setOpen(!open)}
       >
         <TableCell>
           <IconButton
@@ -59,10 +64,10 @@ const StudentRow = ({ student }) => {
         <TableCell component="th" scope="student">
           {student.name}
         </TableCell>
-        <TableCell align="left">{student.number}</TableCell>
+        <TableCell align="left">{student.phone}</TableCell>
         <TableCell align="left">{student.email}</TableCell>
         <TableCell align="left">{age}</TableCell>
-       
+
         <TableCell>
           <VisibilityIcon
             className="cursor-pointer hover:text-orange"
@@ -72,52 +77,51 @@ const StudentRow = ({ student }) => {
       </TableRow>
       <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
         <Collapse in={open} timeout="auto" unmountOnExit>
-          <Box className="h-24 flex justify-start items-center  box-student">
-            <div className="w-16 container-data ml-20">
+          <Box className="h-auto flex justify-start items-center gap-x-10 p-4">
+            <div className="w-16 h-16">
               <img
                 src={defaultAvatar}
                 alt="Preview"
-                className="w-full h-full rounded-full"
+                className="w-full h-full rounded-full object-cover"
               />
             </div>
-            <div className="flex px-20 justify-center items-center">
-              <div className="w-32 container-data ml-10">
-                <h1>Faixa</h1>
-                <div className="flex gap-x-1">
-                  <span>{student.belt_description ?? "Nao informada"}</span>
-                  <span>
-                    {student.degree_description
-                      ? student.degree_description + " graus"
-                      : null}
-                  </span>
-                </div>
+            <div className="flex flex-wrap w-full gap-x-10">
+              <div className="w-32">
+                <h1 className="font-bold">Faixa</h1>
+                <span>
+                  {student.belt.description ?? "Não informada"}{" "}
+                  {student.degree.description
+                    ? student.degree.description + " graus"
+                    : ""}
+                </span>
               </div>
-              <div className="w-20 container-data">
-                <h1>Peso</h1>
+              
+              <div className="w-32">
+                <h1 className="font-bold">Peso</h1>
                 <span>{student.weight ? student.weight + " kg" : "-"}</span>
               </div>
-              <div className="w-28 container-data">
-                <h1>Gênero</h1>
-                <span>{student.gender == "M" ? "Masculino" : "Feminino"}</span>
+              <div className="w-32">
+                <h1 className="font-bold">Gênero</h1>
+                <span>{student.gender === "M" ? "Masculino" : "Feminino"}</span>
               </div>
               <div className="w-64">
                 <h1 className="font-bold">Endereço</h1>
                 <span>{student.address ?? "-"}</span>
               </div>
-              <div className="flex flex-col container-data">
-                <h1 className="font-bold">Contato emergência</h1>
-                <div className="flex flex-col justify-start items-start">
+              <div className="flex flex-col w-64">
+                <h1 className="font-bold">Contato de Emergência</h1>
+                <div>
                   <span>
-                    {student.emergency_contact ?? ""}
+                    {student.emergencyContact ?? ""}
                     {student.relationship
                       ? ` - ${
-                        relationshipEmergencyContact.find(
-                            (item) => item.value === student.relation
+                          relationshipEmergencyContact.find(
+                            (item) => item.value === student.relationship
                           )?.description
                         }`
                       : ""}
                   </span>
-                  <span>{student.emergency_contact_number ?? "-"}</span>
+                  <span>{student.emergencyPhone ?? "-"}</span>
                 </div>
               </div>
             </div>
