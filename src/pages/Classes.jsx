@@ -15,12 +15,14 @@ const Classes = () => {
 
   return (
     <div className="p-10 flex flex-col gap-y-10 w-screen h-screen">
-      <div className="flex gap-x-3 ">
+      <div className="flex gap-x-3 items-center">
         <div className="flex justify-center items-end text-orange">
           <SportsKabaddiIcon fontSize="large" />
         </div>
-        <h1 className="text-4xl">Treinos</h1>
-        <AddMemberButton title="Criar treino" urlNavigate="/treino/registro" />
+        <h1 className="text-4xl flex-grow">Treinos</h1>
+        <div className="ml-auto">
+          <AddMemberButton title="Criar treino" urlNavigate="/treino/registro" />
+        </div>
       </div>
 
       <ClassTable classes={classes} />
