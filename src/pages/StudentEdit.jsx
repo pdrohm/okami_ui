@@ -18,17 +18,11 @@ const EditStudent = ({ studentData }) => {
       data.birthDate = date.toISOString();
     }
 
-    console.log("data", data);
     await editStudent(data);
     navigate("/alunos");
   };
 
-  return (
-    <div className="p-10">
-      <h1 className="text-4xl mb-6">Editar Aluno</h1>
-      <StudentForm initialValues={studentData} onSubmit={handleSubmit} />
-    </div>
-  );
+  return <StudentForm initialValues={studentData} onSubmit={handleSubmit} />;
 };
 
 export default EditStudent;

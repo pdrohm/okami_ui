@@ -9,8 +9,6 @@ import Paper from "@mui/material/Paper";
 import ClassRow from "./ClassRow";
 
 export default function ClassTable({ classes }) {
-  console.log('classes', classes)
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

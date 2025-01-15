@@ -23,9 +23,7 @@ export const useClassStore = create((set) => ({
     }
   },
   getClassesByModality: (modalityId) => {
-    console.log("modalityId", modalityId);
     const allClasses = useClassStore.getState().classes;
-    console.log("allClasses", allClasses);
     const filteredClasses = allClasses.filter(
       (classItem) => classItem.modality.id === modalityId
     );
@@ -56,10 +54,15 @@ export const useClassStore = create((set) => ({
     set({ modalities: data });
   },
 
-  getAttendancesByClass: async (classId) => {
-    const date = dayjs().format('YYYY-MM-DD');
-    const attendances = await classService.getAttendancesByClass(classId, date);
-    set({ attendancesByClass: attendances });
+  getAttendancesByClass: async (classId, date) => {
+    try{
+      const formattedDate = date ? dayjs(date).format('YYYY-MM-DD') : dayjs().format('YYYY-MM-DD');
+      const attendances = await classService.getAttendancesByClass(classId, formattedDate);
+      set({ attendancesByClass: attendances });
+    } catch (error) {
+      console.error('Erro ao buscar aulas:', error);
+      set({ attendancesByClass: [] });
+    }
   },
 
   setAttendancesByClass: (attendances) => {

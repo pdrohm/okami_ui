@@ -25,6 +25,7 @@ const Checkin = () => {
     classes,
     getClassesByModality,
     getAttendancesByClass,
+    setAttendancesByClass,
     getModalities,
     modalities,
     getClasses,
@@ -133,6 +134,7 @@ const Checkin = () => {
     getModalities();
     getClasses();
     getAttendancesByClass(selectedClass?.value);
+    setAttendancesByClass(null)
   }, []);
 
   return (
@@ -145,7 +147,7 @@ const Checkin = () => {
         className={`${
           showLeftPanel
             ? "bg-white w-full rounded-md"
-            : "bg-white p-5 rounded-md w-2/3"
+            : "bg-white p-5 rounded-md w-2/3 min-h-[80vh]"
         }`}
       >
         <div className="p-10">
@@ -200,7 +202,7 @@ const Checkin = () => {
           </form>
         </div>
 
-        <div className="flex flex-col items-center justify-center gap-y-10">
+        <div className="flex flex-col items-center justify-center gap-y-10  mb-5">
           {selectedModality && selectedClass && (
             <input
               {...register("checkInCode")}
@@ -212,13 +214,13 @@ const Checkin = () => {
           )}
         </div>
 
-        {studentInfo && (
+       
           <StudentInfoCard
             handleMarkAttendance={handleMarkAttendance}
             studentInfo={studentInfo}
             setStudentInfo={setStudentInfo}
           />
-        )}
+   
 
         <AttendancesTable />
       </div>

@@ -89,7 +89,6 @@ const classService = {
     studentId: string,
     classId: number
   ): Promise<Attendance> => {
-    console.log("service", studentId, classId);
     try {
       const response = await httpClient.post(
         `/students/${studentId}/check-in/${classId}`

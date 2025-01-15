@@ -8,8 +8,6 @@ const PersonalDetailsForm = () => {
     formState: { errors },
   } = useFormContext();
 
-  console.log('errors', errors)
-
   return (
     <div className="space-y-4">
       <h2 className="text-lg font-semibold text-gray-700">Detalhes Pessoais</h2>

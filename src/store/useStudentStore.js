@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import studentService from "../services/studentService";
 import { toast } from "react-toastify";
+import classService from "../services/classService";
 
 export const useStudentStore = create((set) => ({
   students: [],
@@ -37,5 +38,5 @@ export const useStudentStore = create((set) => ({
     } catch (error) {
       console.error("Erro ao editar estudante:", error);
     }
-  },
+  }
 }));

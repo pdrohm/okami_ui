@@ -1,10 +1,22 @@
-import React from 'react';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import React from "react";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const StudentInfoCard = ({ studentInfo, handleMarkAttendance, setStudentInfo }) => {
+  if (!studentInfo) {
+    return (
+      <div className="flex items-center justify-center">
+        <div className="flex w-1/3 flex-col justify-center items-center rounded-lg border border-gray-300 shadow-lg bg-gray-100 text-gray-500 p-5  min-h-36">
+          <p className="text-center text-sm italic">
+            Insira o código de check-in do aluno
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="my-5 flex items-center justify-center">
+    <div className="flex items-center justify-center min-h-36">
       <div className="flex w-1/3 flex-col items-center rounded-lg border border-gray-300 shadow-lg bg-white text-gray-800 p-5">
         <h3 className="text-lg font-semibold">{studentInfo.name}</h3>
         <p className="text-sm text-gray-600">

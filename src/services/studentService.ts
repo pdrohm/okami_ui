@@ -34,8 +34,6 @@ const studentService = {
 
   createStudent: async (studentData: Student): Promise<Student> => {
     try {
-      console.log("studentData", studentData);
-
       const response = await httpClient.post<Student>("/students", studentData);
       toast.success("Aluno cadastrado com sucesso"); // Sucesso tratado aqui
       return response.data;

@@ -13,7 +13,6 @@ import classService from "../../../services/classService";
 import { useClassStore } from "../../../store/useClassStore";
 
 const ClassRow = ({ singleClass }) => {
-  console.log("singleClass", singleClass);
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { getClasses } = useClassStore();

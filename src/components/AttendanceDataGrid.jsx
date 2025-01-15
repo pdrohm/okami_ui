@@ -1,28 +1,19 @@
 import * as React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { format } from "date-fns";
 
-const AttendanceDataGrid = ({ attendancesByClass }) => {
-  const dataWithIds = React.useMemo(() => {
-    return attendancesByClass
-      .map((row, index) => ({
-        ...row,
-        id: index + 1,
-        checkin_time: format(new Date(row.checkin_time), "HH:mm dd/MM/yyyy"),
-      }))
-      .sort((a, b) => new Date(b.checkin_time) - new Date(a.checkin_time));
-  }, [attendancesByClass]);
-
-  const columns = [
-    { field: "student_name", headerName: "Aluno", flex: 1 },
-    { field: "belt_description", headerName: "Faixa", flex: 1 },
-    { field: "checkin_time", headerName: "Checkin", flex: 1 },
-  ];
+const AttendanceDataGrid = ({ rows, columns }) => {
+  // Processa os dados dinamicamente se necessário (ex.: adiciona IDs, formatações)
+  const processedRows = React.useMemo(() => {
+    return rows.map((row, index) => ({
+      ...row,
+      id: row.id || index + 1, // Adiciona um ID se não existir
+    }));
+  }, [rows]);
 
   return (
-    <div className="h-96 w-1/2">
+    <div className="h-96 w-full">
       <DataGrid
-        rows={dataWithIds}
+        rows={processedRows}
         columns={columns}
         components={{ Toolbar: GridToolbar }}
         pageSizeOptions={[10, 25, 50]}

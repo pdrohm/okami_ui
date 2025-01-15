@@ -60,7 +60,7 @@ const Students = () => {
   }, []);
 
   return (
-    <div className="flex justify-center w-screen">
+    <div className="flex justify-center w-screen bg-whiter">
       <div className="p-10 w-full">
         <div className="flex gap-x-3 mb-5">
           <div className="flex justify-center items-end text-orange">
@@ -68,7 +68,7 @@ const Students = () => {
           </div>
           <h1 className="text-4xl">Alunos</h1>
         </div>
-        <div className="w-full flex gap-x-5 items-center">
+        <div className="w-full flex gap-x-5 items-center mb-5">
           <SearchBar value={searchInput} onChange={handleSearchInputChange} />
           <Filters sortBy={sortBy} onSortByChange={handleSortByChange} />
           <AddMemberButton

@@ -11,7 +11,7 @@ const AddMemberButton = ({title, urlNavigate}) => {
 
   return (
     <button
-      className="flex justify-center items-center bg-orange px-5 rounded-md cursor-pointer hover:border-[1px] hover:border-black hover:text-whiter"
+      className="flex justify-center items-center bg-orange px-5 rounded-md cursor-pointer hover:border-[1px] hover:border-black hover:text-whiter h-14"
       onClick={handleNavigate}
     >
       {title}

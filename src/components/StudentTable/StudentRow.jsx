@@ -66,7 +66,7 @@ const StudentRow = ({ student }) => {
         <TableCell>
           <VisibilityIcon
             className="cursor-pointer hover:text-orange"
-            onClick={() => handleEditStudent(student)}
+            onClick={() => handleSelectStudent(student)}
           />
         </TableCell>
       </TableRow>

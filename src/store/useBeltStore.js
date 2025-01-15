@@ -24,8 +24,6 @@ export const useBeltStore = create((set) => ({
     try {
       const { data } = await beltService.getDegrees();
 
-      console.log('data', data);
-
       set({
         degrees: data,
       });
