@@ -8,6 +8,8 @@ import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import { differenceInYears } from "date-fns";
 import { useStudentStore } from "../store/useStudentStore";
 import Pagination from "@mui/material/Pagination";
+import { createTheme } from "@mui/material";
+
 
 const Students = () => {
   const { students, getStudents } = useStudentStore();
